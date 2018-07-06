@@ -1,7 +1,7 @@
 var express = require('express'),
 	search = require('./includes/search'),
 	call = require('./includes/call');
-
+var morgon = require('morgan');
 var app = express();
 var port = 8000;
 app.use('/search',search);
