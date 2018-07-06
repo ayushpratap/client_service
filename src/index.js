@@ -1,17 +1,21 @@
 var express = require('express'),
 	search = require('./includes/search'),
-	call = require('./includes/call');
+	call = require('./includes/call'),
+    newRecord = require('./includes/create'),
+    winston = require('./config/winston');
 var morgan = require('morgan');
 var fs = require('fs');
 var path = require('path');
 var app = express();
 var port = 8000;
 
-var logStream = fs.createWriteStream(path.join(__dirname, 'log/logfile.log'),{flag: 'a'});
 
-app.use(morgan('combined',{stream : logStream}));
+
+app.use(morgan('combined',{stream: winston.stream}));
 app.use('/search',search);
 app.use('/call',call);
+app.use('/create',newRecord);
 
+winston.info('Starting server at port :'+port);
 app.listen(port);
-console.log('Server running at port '+port);
+winston.info('Server running at port :'+port);
