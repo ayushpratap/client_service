@@ -2,10 +2,10 @@
   "name": "necti_client_service",
   "version": "0.0.1",
   "description": "This is client service which acts as the middle layer between necti cloud service and server",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon --watch src index.js",
+    "start": "node app.js",
+    "dev": "nodemon --watch src app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -15,8 +15,11 @@
   "license": "ISC",
   "dependencies": {
     "app-root-path": "^2.1.0",
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^6.0.0",
     "express": "^4.16.3",
     "fs": "0.0.1-security",
+    "jsonwebtoken": "^8.3.0",
     "morgan": "^1.9.0",
     "path": "^0.12.7",
     "winston": "^3.0.0"

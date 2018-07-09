@@ -12,9 +12,9 @@ var options = {
     colorize: false,
   },
   console: {
-    level: 'warn',
+    level: 'debug',
     handleExceptions: true,
-    json: false,
+    json: true,
     colorize: true,
   },
 };
