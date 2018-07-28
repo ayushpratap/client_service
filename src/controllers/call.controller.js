@@ -1,13 +1,18 @@
-var express = require('express');
-
-var router = express.Router();
-/*
-router.get('/',function(req,res){
-	res.send('GET handler for /call route');
-});*/
-
-router.post('/',function(req,res){
-	res.send('POST handler for /call route');
-});
-
-module.exports = router;
+const winston = require('../middleware/winston');
+winston.info('File : call.controller.js');
+var callController = {};
+callController.makeCall = function (numberType,callNumber) {
+	winston.info('makeCall');
+	winston.info('numberType = ',numberType);
+	winston.info('callNumber = ',callNumber);
+	if(numberType == 'extn'){
+		return 1;
+	}
+	else if(numberType == 'phone'){
+		return 2;
+	}
+	else{
+		return 0;
+	}
+}
+module.exports = callController;
