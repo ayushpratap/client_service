@@ -7,10 +7,11 @@ const express = require('express');
 const morgan = require('morgan');
 const winston = require('../middleware/winston');
 const callController = require('../controllers/call.controller');
+const bodyParser = require("body-parser");
 
 const app = express();
 const router = express.Router();
-
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(morgan('combined',{stream: winston.stream}));
