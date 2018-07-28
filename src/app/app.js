@@ -19,7 +19,9 @@ router.get('/',function(req,res){
 //  Calling route
 
 router.post('/api/makecall',function(req,res) {
-  var numberType = req.body.numberType;
+  winston.info(req.body);
+  res.send('callController');
+  /*var numberType = req.body.numberType;
   winston.info('numberType = ',numberType);
   var callNumber = req.body.callNumber;
   winston.info('callNumber = ',callNumber);
@@ -31,7 +33,7 @@ router.post('/api/makecall',function(req,res) {
   else
   {
     res.send('Error');
-  }
+  }*/
 });
 
 module.exports = router;
