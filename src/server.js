@@ -19,6 +19,6 @@ var credentials = {key: privateKey, cert: certificate};
 var httpsServer = https.createServer(credentials, server);
 
 winston.info('Starting server at port :' + CONFIG.port);
-server.all('/', app); // Redirect all the requests to app
+server.all('*', app); // Redirect all the requests to app
 httpsServer.listen(CONFIG.port);  // Server running at port = process.env.PORT
 winston.info('Server running at port :' + CONFIG.port);
