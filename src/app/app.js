@@ -12,10 +12,13 @@ const app = express();
 const router = express.Router();
 app.use(morgan('combined',{stream: winston.stream}));
 winston.info('executing app.js');
-router.get('/',function(req,res){
-    res.send('Fuck world');
+router.get('/api',function(req,res){
+  res.send('GET request done to /api');
 });
 
+router.post('/api',function(req,res){
+  res.send('POST request done to /api');
+});
 //  Calling route
 
 router.post('/api/makecall',function(req,res) {
