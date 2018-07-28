@@ -3,7 +3,8 @@ require('dotenv').config();
 let CONFIG = {};
 
 CONFIG.app = process.env.APP || 'dev';
-CONFIG.port = process.env.PORT || '8000';
+CONFIG.port_unsecured = process.env.PORT_UNSECURED || '8000';
+CONFIG.port = process.env.PORT || '8443';
 CONFIG.db_dialect = process.env.DB_DIALECT || 'mysql';
 CONFIG.db_host = process.env.DB_HOST || 'localhost';
 CONFIG.db_port = process.env.DB_PORT || '3306';
