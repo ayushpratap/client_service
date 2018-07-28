@@ -10,27 +10,44 @@ const callController = require('../controllers/call.controller');
 
 const app = express();
 const router = express.Router();
+
+app.use(express.json());
+app.use(express.urlencoded({extended:true}));
 app.use(morgan('combined',{stream: winston.stream}));
+
 winston.info('executing app.js');
 
 
 //  Calling route
 router.post('/api/makecall',function(req,res) {
-  winston.info(req.body);
-  res.send('callController');
-  /*var numberType = req.body.numberType;
+  var numberType = req.body.numberType;
   winston.info('numberType = ',numberType);
   var callNumber = req.body.callNumber;
   winston.info('callNumber = ',callNumber);
   var result = callController.makeCall(numberType,callNumber);
-  if(!result)
+  if(result)
   {
     res.send('Making call');
   }
   else
   {
     res.send('Error');
-  }*/
+  }
 });
 
+router.post('/api/getuser',function(req,res) {
+  // Extract variables
+  var username = req.body.name;
+
+  // Call pcrpo
+  var result = userController.getuser(username);
+  if(!result)
+  {
+    res.send('Could not fetch the user');
+  }
+  else
+  {
+    res.send(result);
+  }
+});
 module.exports = router;
