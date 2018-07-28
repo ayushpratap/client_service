@@ -1,18 +1,18 @@
 const winston = require('../middleware/winston');
+const oai = require('../middleware/oai.middleware');
 winston.info('File : call.controller.js');
 var callController = {};
+var result = 0;
 callController.makeCall = function (numberType,callNumber) {
 	winston.info('makeCall');
 	winston.info('numberType = ',numberType);
 	winston.info('callNumber = ',callNumber);
-	if(numberType == 'extn'){
-		return 1;
-	}
-	else if(numberType == 'phone'){
-		return 2;
+	if(numberType == 'extn' || numberType == 'phone'){
+		result = oai.makeCall(callNumber);
 	}
 	else{
-		return 0;
+		result = 0;
 	}
+	return result;
 }
 module.exports = callController;
