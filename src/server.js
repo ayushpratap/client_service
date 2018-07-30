@@ -12,6 +12,8 @@ const https = require('https');
 const http = require('http');
 const fs = require('fs');
 const server = express(); // Get an instace of express
+server.use(express.json());
+server.use(express.urlencoded({extended:true}));
 
 var privateKey  = fs.readFileSync('./certs/server.key');
 var certificate = fs.readFileSync('./certs/server.crt');

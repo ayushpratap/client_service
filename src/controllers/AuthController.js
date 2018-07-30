@@ -16,7 +16,7 @@ router.post('/register',function(req,res){
         name : req.body.name,
         email : req.body.email,
         exten : req.body.exten,
-        password : req.body.hashedPassword;
+        password : req.body.hashedPassword,
     },
     function(err, user){
         if(err)
@@ -26,7 +26,7 @@ router.post('/register',function(req,res){
 
         // create a token
         var token = jwt.sign({id: user._id},config.secret,{
-            expiresIn = 604800; // Expires in a week
+            expiresIn = 604800 // Expires in a week
         });
         res.status(200).send({ auth: true, token: token });
     });
