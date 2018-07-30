@@ -44,14 +44,16 @@ router.post('/api/getUser',function(req,res) {
   //console.log(req);
   var username = req.body.name;
   // Call pcrpo
-  var result = userController.getUser(username);
-  if(result == null)
+  userController.getUser(username,function(result){
+    res.send(result);
+  });
+  /*if(result == null)
   {
     res.send('Could not fetch the user');
   }
   else
   {
     res.send(result);
-  }
+  }*/
 });
 module.exports = router;

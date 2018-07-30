@@ -3,7 +3,7 @@ const CONFIG = require('../config/config');
 const winston = require('winston');
 const pcpro = {};
 
-pcpro.getUser = function(username) {
+pcpro.getUser = function(username,callback) {
   // Connect to database
   var test = "";
   var dbUrl = CONFIG.db_dialect+"://"+CONFIG.db_host+":"+CONFIG.db_port+"/";
@@ -43,10 +43,9 @@ pcpro.getUser = function(username) {
       console.log("TEST");
       console.log(test+"-------");
       console.log(typeof test);
-    return test;
+      callback(test);
+     // return test;
     });
-  })
- 
+  });
 }
-
 module.exports = pcpro;
