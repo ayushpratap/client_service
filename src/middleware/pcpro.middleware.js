@@ -8,7 +8,7 @@ pcpro.getUser = function(username,callback) {
   var test = "";
   var dbUrl = CONFIG.db_dialect+"://"+CONFIG.db_host+":"+CONFIG.db_port+"/";
   winston.info(dbUrl);
-  var myJSONObject = {'Name':username};
+  var myJSONObject = {'Name':username.toLowerCase()};
   MongoClient.connect(dbUrl,{ useNewUrlParser: true }, function(err, db) {
     if(err){
       throw err;
@@ -16,6 +16,7 @@ pcpro.getUser = function(username,callback) {
     var dbo = db.db(CONFIG.db_name);
     winston.info(dbo);
     dbo.collection("users").find({"Name": myJSONObject.Name}).toArray(function(err, result) {
+     // dbo.collection("users").find({"Name": "prince Sharma"}).toArray(function(err, result) {
       if (err) throw err;
       for (var i in result)
       {
