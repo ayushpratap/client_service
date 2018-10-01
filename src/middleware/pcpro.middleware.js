@@ -5,18 +5,28 @@ const pcpro = {};
 
 pcpro.getUser = function(username,callback) {
   // Connect to database
+	console.log("*DEBUG 1*".username);
   var test = "";
   var dbUrl = CONFIG.db_dialect+"://"+CONFIG.db_host+":"+CONFIG.db_port+"/";
   winston.info(dbUrl);
-  var myJSONObject = {'Name':username.toLowerCase()};
+  var myJSONObject = {'Name':username};
   MongoClient.connect(dbUrl,{ useNewUrlParser: true }, function(err, db) {
     if(err){
       throw err;
     }
+	console.log(CONFIG.db_name);
     var dbo = db.db(CONFIG.db_name);
-    winston.info(dbo);
-    dbo.collection("users").find({"Name": myJSONObject.Name}).toArray(function(err, result) {
-      if (err) throw err;
+	dbo.collection("users").findOne({"Name":username},function(err,result){
+	if(err) throw err;
+	console.log("-----------------------");
+	console.log(result.Extension);
+	console.log("-----------------------");
+	db.close();
+	});
+});
+/*    winston.info(dbo);
+    dbo.collection("users").find({"Name":myJSONObject.Name}).toArray(function(err, result) {
+      if(err){ throw err};
       for (var i in result)
       {
           if(result[i].Extension!=null)
@@ -31,13 +41,19 @@ pcpro.getUser = function(username,callback) {
           {
           console.log(result[i].Mobile_Number);
           }
-      }
-      db.close();
-      test = {
+      }*/
+//      db.close();
+/*      test = {
         'Name' : username,
         'Extension' : result[i].Extension,
         'Mobile_Number' : result[i].Mobile_Number
       };
+*/
+	test = {
+	'Name' : "Ayush",
+	'Extension' : 3034,
+	'Mobile Number' : 7835864601
+};
       test = JSON.stringify(test);
       //winston.info(test);
       console.log("TEST");
@@ -45,7 +61,7 @@ pcpro.getUser = function(username,callback) {
       console.log(typeof test);
       callback(test);
      // return test;
-    });
-  });
+   // });
+//  });
 }
 module.exports = pcpro;
