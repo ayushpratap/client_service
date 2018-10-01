@@ -15,6 +15,6 @@ callController.makeCall = function (numberType,callNumber,callback) {
 		}
 		callback(result);
 	  });
-	return result;
+//	return result;
 }
 module.exports = callController;

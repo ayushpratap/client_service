@@ -16,7 +16,6 @@ pcpro.getUser = function(username,callback) {
     var dbo = db.db(CONFIG.db_name);
     winston.info(dbo);
     dbo.collection("users").find({"Name": myJSONObject.Name}).toArray(function(err, result) {
-     // dbo.collection("users").find({"Name": "prince Sharma"}).toArray(function(err, result) {
       if (err) throw err;
       for (var i in result)
       {
