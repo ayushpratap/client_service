@@ -5,9 +5,8 @@ const pcpro = {};
 
 pcpro.getUser = function(username,callback) {
   // Connect to database
-	console.log("*DEBUG 1*");
-  console.log(username);
-  var test = "";
+  var test = {};
+var res;
   var dbUrl = CONFIG.db_dialect+"://"+CONFIG.db_host+":"+CONFIG.db_port+"/";
   winston.info(dbUrl);
   var myJSONObject = {'Name':username};
@@ -15,18 +14,17 @@ pcpro.getUser = function(username,callback) {
     if(err){
       throw err;
     }
-	console.log(CONFIG.db_name);
     var dbo = db.db(CONFIG.db_name);
 	dbo.collection("users").findOne({"Name":username},function(err,result){
-	if(err) throw err;
-	console.log("-----------------------");
-	console.log(result.Extension);
-	console.log("-----------------------");
-  test = {
+  if(err){ 
+    throw err;
+  }
+  callback(JSON.stringify(result));
+/*  test = {
   'Name' : result.Name,
   'Extension' : result.Extension,
   'Mobile Number' : result.Mobile_Number
-};
+};*/
 	db.close();
 	});
 });
@@ -55,15 +53,5 @@ pcpro.getUser = function(username,callback) {
         'Mobile_Number' : result[i].Mobile_Number
       };
 */
-	
-      test = JSON.stringify(test);
-      //winston.info(test);
-      console.log("TEST");
-      console.log(test+"-------");
-      console.log(typeof test);
-      callback(test);
-     // return test;
-   // });
-//  });
 }
 module.exports = pcpro;

@@ -19,7 +19,7 @@ winston.info('executing app.js');
 
 router.get('/',function(req,res) {
   res.send("Hello");
-  console.log("Hello");
+//  console.log("Hello");
 });
 
 //  Calling route
@@ -44,10 +44,7 @@ router.post('/api/makeCall',function(req,res) {
 });
 
 router.post('/api/getUser',function(req,res) {
-  console.log(req.body.username);
- // res.send([{"Name":"Prince Sharma","Extension":"2800","Mobile_Number":"7896541235"}]);
   // Extract variables
-  //console.log(req);
   var username = req.body.username;
   // Call pcrpo
   userController.getUser(username,function(result){
@@ -59,7 +56,6 @@ router.post('/api/getUser',function(req,res) {
   {
     res.send(result);
   }
-   // res.send(result);
   });
 });
 module.exports = router;
