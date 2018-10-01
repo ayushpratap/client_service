@@ -28,7 +28,9 @@ router.post('/api/makeCall',function(req,res) {
   winston.info('numberType = ',numberType);
   var callNumber = req.body.callNumber;
   winston.info('callNumber = ',callNumber);
- callController.makeCall(numberType,callNumber,function(result)
+  var userId = req.body.userId;
+  winston.info('userId = ',userId);
+ callController.makeCall(numberType,callNumber,userId,function(result)
  {
   console.log("Making Call");
   if(result==1)
