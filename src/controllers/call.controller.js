@@ -23,6 +23,10 @@ callController.makeCall = function (numberType,callNumber,userId,callback) {
 			db.close();
 		});
 	});
+	if(0 == sourceAddress)
+	{
+		callback(null);
+	}
 
 	oai.makeCall(numberType,callNumber,sourceAddress,function(result){
 	//	console.log(result+"hello1");
@@ -32,7 +36,7 @@ callController.makeCall = function (numberType,callNumber,userId,callback) {
 		if (err) throw err;
 		var dbo = db.db("amazon_accounts");
 		var myquery = { "_userId": userId };
-		var newvalues = { $set: {"is_available": 1} };
+		var newvalues = { $set: {"is_available": 1,"source_extension";0} };
 		dbo.collection("account_mapping").updateOne(myquery, newvalues, function(err, res) {
 			if (err) throw err;
 			console.log("1 document updated");
