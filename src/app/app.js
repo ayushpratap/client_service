@@ -44,11 +44,11 @@ router.post('/api/makeCall',function(req,res) {
 });
 
 router.post('/api/getUser',function(req,res) {
-  console.log(req.body.name);
-  res.send([{"Name":"Prince Sharma","Extension":"2800","Mobile_Number":"7896541235"}]);
+  console.log(req.body.username);
+ // res.send([{"Name":"Prince Sharma","Extension":"2800","Mobile_Number":"7896541235"}]);
   // Extract variables
   //console.log(req);
-  var username = req.body.name;
+  var username = req.body.username;
   // Call pcrpo
   userController.getUser(username,function(result){
     if(result == null)
