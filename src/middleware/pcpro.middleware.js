@@ -5,7 +5,8 @@ const pcpro = {};
 
 pcpro.getUser = function(username,callback) {
   // Connect to database
-	console.log("*DEBUG 1*".username);
+	console.log("*DEBUG 1*");
+  console.log(username);
   var test = "";
   var dbUrl = CONFIG.db_dialect+"://"+CONFIG.db_host+":"+CONFIG.db_port+"/";
   winston.info(dbUrl);
@@ -21,6 +22,11 @@ pcpro.getUser = function(username,callback) {
 	console.log("-----------------------");
 	console.log(result.Extension);
 	console.log("-----------------------");
+  test = {
+  'Name' : result.Name,
+  'Extension' : result.Extension,
+  'Mobile Number' : result.Mobile_Number
+};
 	db.close();
 	});
 });
@@ -49,11 +55,7 @@ pcpro.getUser = function(username,callback) {
         'Mobile_Number' : result[i].Mobile_Number
       };
 */
-	test = {
-	'Name' : "Ayush",
-	'Extension' : 3034,
-	'Mobile Number' : 7835864601
-};
+	
       test = JSON.stringify(test);
       //winston.info(test);
       console.log("TEST");
