@@ -32,15 +32,15 @@ router.post('/api/makeCall',function(req,res) {
   winston.info('userId = ',userId);
  callController.makeCall(numberType,callNumber,userId,function(result)
  {
-  console.log("Making Call");
   if(result==1)
   {
+    winston.info("Making call");
     res.send('Making call');
-    console.log("Making Call1");
   }
   else
   {
-    res.send('Error');
+    winston.info("Unable to make call because something went wrong");
+    res.send('Error');    
   }
 });
 });
