@@ -51,6 +51,7 @@ callController.makeCall = function (numberType,callNumber,userId,callback)
 }
 function getSourceAddress(userId,sourceAddrCallback)
 {
+	console.log(userId);
 	var url = "mongodb://localhost:27017/";
 	MongoClient.connect(url, { useNewUrlParser: true },function(err, db) {
 		if (err) throw err;
