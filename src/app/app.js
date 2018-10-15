@@ -25,11 +25,16 @@ router.get('/',function(req,res) {
 //  Calling route
 router.post('/api/makeCall',function(req,res) {
   var numberType = req.body.numberType;
-  winston.info('numberType = ',numberType);
+  console.log("++++++++++++++++++++++++++++++++++++");
+  console.log(numberType);
+  //winston.info('numberType = ',numberType);
   var callNumber = req.body.callNumber;
-  winston.info('callNumber = ',callNumber);
+  console.log(callNumber);
+  //winston.info('callNumber = ',callNumber);
   var userId = req.body.userId;
-  winston.info('userId = ',userId);
+  console.log(userId);
+  console.log("++++++++++++++++++++++++++++++++++++");
+  //winston.info('userId = ',userId);
  callController.makeCall(numberType,callNumber,userId,function(result)
  {
   if(result==1)

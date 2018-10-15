@@ -7,9 +7,14 @@ var result = 0;
 callController.makeCall = function (numberType,callNumber,userId,callback) 
 {
 	winston.info('makeCall');
-	winston.info('numberType = ',numberType);
+	/*winston.info('numberType = ',numberType);
 	winston.info('callNumber = ',callNumber);
-	winston.info('userId = ',userId);
+	winston.info('userId = ',userId);*/
+	console.log("------------------------");
+	console.log(numberType);
+	console.log(callNumber);
+	console.log(userId);
+	console.log("------------------------");
 	var sourceAddress = "";
 
 	// Get the source address from the database
