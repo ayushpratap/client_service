@@ -1,33 +1,36 @@
 const MongoClient = require('mongodb').MongoClient;
 const CONFIG = require('../config/config');
 const winston = require('winston');
+const db_connections = require('../controllers/connection.db');
 const pcpro = {};
 
 pcpro.getUser = function(username,callback) {
+  console.log("///***///  3 ///***///");
   // Connect to database
   var test = {};
-var res;
-  var dbUrl = CONFIG.db_dialect+"://"+CONFIG.db_host+":"+CONFIG.db_port+"/";
-  winston.info(dbUrl);
+  var res;
+  //var dbUrl = CONFIG.db_dialect+"://"+CONFIG.db_host+":"+CONFIG.db_port+"/";
+  //winston.info(dbUrl);
   var myJSONObject = {'Name':username};
-  MongoClient.connect(dbUrl,{ useNewUrlParser: true }, function(err, db) {
-    if(err){
-      throw err;
-    }
-    var dbo = db.db(CONFIG.db_name);
+  //MongoClient.connect(dbUrl,{ useNewUrlParser: true }, function(err, db) {                            
+    //if(err){
+      //throw err;
+    //}
+    var dbo = db_connections.alexa;
 	dbo.collection("users").findOne({"Name":username},function(err,result){
-  if(err){ 
+  if(err)
+  { 
     throw err;
   }
   callback(JSON.stringify(result));
+});
 /*  test = {
   'Name' : result.Name,
   'Extension' : result.Extension,
   'Mobile Number' : result.Mobile_Number
 };*/
-	db.close();
-	});
-});
+	//db.close();
+	//});
 /*    winston.info(dbo);
     dbo.collection("users").find({"Name":myJSONObject.Name}).toArray(function(err, result) {
       if(err){ throw err};

@@ -11,6 +11,7 @@ CONFIG.db_dialect = process.env.DB_DIALECT || 'mongodb';
 CONFIG.db_host = process.env.DB_HOST || 'localhost';
 CONFIG.db_port = process.env.DB_PORT || '27017';
 CONFIG.db_name = process.env.DB_NAME || 'Alexa';
+CONFIG.db_name_acc = process.env.DB_NAME_ACC || 'amazon_accounts';
 CONFIG.db_user = process.env.DB_USER || 'root';
 CONFIG.db_password = process.env.DB_PASSWORD || '';
 CONFIG.jwt_encryption = process.env.JWT_ENCRYPTION || 'LittleBitOFThisAndThat';

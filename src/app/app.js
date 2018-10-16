@@ -8,33 +8,38 @@ const morgan = require('morgan');
 const winston = require('../middleware/winston');
 const callController = require('../controllers/call.controller');
 const userController = require('../controllers/user.controller');
-//const bodyParser = require("body-parser");
 const app = express();
+const path = require('path');
 const router = express.Router();
-//app.use(bodyParser.urlencoded({extended: true}));
-//router.use(express.json());
-//router.use(express.urlencoded({extended:true}));
+const expressHbs = require('express-handlebars');
+//app.engine('.hbs', expressHbs({defaultLayout: 'layout', extname: '.hbs'}));
+//app.set('views', path.join(__dirname, 'views'));
+//app.set('view engine', '.hbs');
+
+
 app.use(morgan('combined',{stream: winston.stream}));
 winston.info('executing app.js');
 
 router.get('/',function(req,res) {
   res.send("Hello");
-//  console.log("Hello");
+  console.log("Hello");
 });
 
 //  Calling route
 router.post('/api/makeCall',function(req,res) {
+  console.log("///***///  4 ///***///");
   var numberType = req.body.numberType;
   console.log("++++++++++++++++++++++++++++++++++++");
   console.log(numberType);
   //winston.info('numberType = ',numberType);
-  var callNumber = req.body.callNumber;
+  var callNumber = req.body.CallNumber;
   console.log(callNumber);
   //winston.info('callNumber = ',callNumber);
   var userId = req.body.userId;
   console.log(userId);
   console.log("++++++++++++++++++++++++++++++++++++");
   //winston.info('userId = ',userId);
+  console.log("call callController.makeCall");
  callController.makeCall(numberType,callNumber,userId,function(result)
  {
   if(result==1)
@@ -50,17 +55,53 @@ router.post('/api/makeCall',function(req,res) {
 });
 });
 
+
+
+//-----------------------------------------------------------------------------
+//  Add user endpoint
+//-----------------------------------------------------------------------------
+
+
+
+//-----------------------------------------------------------------------------
+//  Add user data to DB
+//-----------------------------------------------------------------------------
+router.post('/api/addUser',function(req,res)
+{
+  console.log("POST REQUEST AT /api/addUser");
+  console.log(req.body.Name);
+  console.log(req.body.Extension);
+  console.log(req.body.Mobile_Number);
+  userController.addUser(req.body.Name,req.body.Extension,req.body.Mobile_Number,function(result){
+    if(1 == result)
+    {
+      res.send("User added");
+    }
+    else
+    {
+      res.send("Something went wrong");
+    }
+  });
+});
+
 router.post('/api/getUser',function(req,res) {
+  console.log("///***///  1 ///***///");
   // Extract variables
-  var username = req.body.username;
+  console.log("*******************************");
+  var tmp = req.body.username;
+  var username = tmp.toLowerCase();
+  console.log(username);
+  console.log("*******************************");
   // Call pcrpo
+  console.log("call userController.getUser");
   userController.getUser(username,function(result){
-    if(result == null)
+  if(result == null)
   {
     res.send('Could not fetch the user');
   }
   else
   {
+    console.log("RESULT "+result);
     res.send(result);
   }
   });

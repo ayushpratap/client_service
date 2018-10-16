@@ -14,6 +14,8 @@ const fs = require('fs');
 const server = express(); // Get an instace of express
 server.use(express.json());
 server.use(express.urlencoded({extended:true}));
+/*server.set('views', path.join(__dirname, 'views'));
+server.set('view engine', 'jade');*/
 
 var privateKey  = fs.readFileSync('./certs/server.key');
 var certificate = fs.readFileSync('./certs/server.crt');
