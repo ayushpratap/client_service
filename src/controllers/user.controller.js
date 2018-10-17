@@ -9,9 +9,6 @@ userController.getUser=function (username,callback) {
   console.log("username ="+username);
   console.log("call pcpro.getUser");
   pcpro.getUser(username,function(result){
-    /*console.log("RESULT - 1 start");
-    console.log(result);
-    console.log("RESULT - 1 end");*/
     if(result == null)
     {
       result = null;
@@ -39,5 +36,34 @@ userController.addUser=function(Name,Extension,Mobile_Number,callback){
     }
   });
   callback(result);
+}
+userController.getUserMulti=function(user1,user2,callback){
+  console.log("///***///  2 ///***///");
+  console.log("*******************************");
+  console.log(user1);
+  console.log(user2);
+  console.log("*******************************");
+  console.log("call pcpro.getUser");
+  var resultBody = {};
+  // Get user1
+  pcpro.getUser(user1,function(result){
+    if(null == result){
+      resultBody.user1.Extension = null;
+    }
+    else{
+      resultBody.user1.Extension = result.Extension;
+    }
+  });
+  // Get user2
+  pcpro.getUser(user2,function(result){
+    if(null == result){
+      resultBody.user2.Extension = null;
+    }
+    else{
+      resultBody.user2.Extension = result.Extension;
+    }
+  });
+  console.log(resultBody);
+  callback(JSON.stringify(resultBody));
 }
 module.exports = userController;

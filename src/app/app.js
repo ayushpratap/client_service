@@ -26,7 +26,8 @@ router.get('/',function(req,res) {
 });
 
 //  Calling route
-router.post('/api/makeCall',function(req,res) {
+router.post('/api/makeCall',function(req,res) 
+{
   console.log("///***///  4 ///***///");
   var numberType = req.body.numberType;
   console.log("++++++++++++++++++++++++++++++++++++");
@@ -40,22 +41,42 @@ router.post('/api/makeCall',function(req,res) {
   console.log("++++++++++++++++++++++++++++++++++++");
   //winston.info('userId = ',userId);
   console.log("call callController.makeCall");
- callController.makeCall(numberType,callNumber,userId,function(result)
- {
-  if(result==1)
+  callController.makeCall(numberType,callNumber,userId,function(result)
   {
-    winston.info("Making call");
-    res.send('Making call');
-  }
-  else
-  {
-    winston.info("Unable to make call because something went wrong");
-    res.send('Error');    
-  }
-});
+    if(result==1)
+    {
+      winston.info("Making call");
+      res.send('Making call');
+    }
+    else
+    {
+      winston.info("Unable to make call because something went wrong");
+      res.send('Error');    
+    }
+  });
 });
 
-
+//-----------------------------------------------------------------------------
+//  Get the multi call user information
+//-----------------------------------------------------------------------------
+router.post('/api/getUserMulti',function(req,res)
+{
+  console.log("///***///  1 ///***///");
+  console.log("POST REQUEST at /api/getUserMulti");
+  var tmp1 = req.body.user1;
+  var tmp2 = req.body.user2;
+  var user1 = tmp1.toLowerCase();
+  var user2 = tmp2.toLowerCase();
+  console.log("*******************************");
+  console.log(user1);
+  console.log(user2);
+  console.log("*******************************");
+  userController.getUserMulti(user1,user2,function(result)
+    {
+      res.send(result);
+    });
+}
+);
 
 //-----------------------------------------------------------------------------
 //  Add user endpoint
@@ -68,7 +89,7 @@ router.post('/api/makeCall',function(req,res) {
 //-----------------------------------------------------------------------------
 router.post('/api/addUser',function(req,res)
 {
-  console.log("POST REQUEST AT /api/addUser");
+  console.log("POST REQUEST at /api/addUser");
   console.log(req.body.Name);
   console.log(req.body.Extension);
   console.log(req.body.Mobile_Number);
@@ -84,7 +105,8 @@ router.post('/api/addUser',function(req,res)
   });
 });
 
-router.post('/api/getUser',function(req,res) {
+router.post('/api/getUser',function(req,res) 
+{
   console.log("///***///  1 ///***///");
   // Extract variables
   console.log("*******************************");
