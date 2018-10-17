@@ -57,6 +57,25 @@ router.post('/api/makeCall',function(req,res)
 });
 
 //-----------------------------------------------------------------------------
+//  Make multi call
+//-----------------------------------------------------------------------------
+router.post('/api/makeCallMulti',function(req,res){
+  console.log(req.body.stationB);
+  console.log(req.body.stationC);
+  console.log(req.body.userId);
+  callController.makeCallMulti(req.body.stationB,req.body.stationC,req.body.userId,function(result){
+    if(result == 1)
+    {
+     res.send('Making call'); 
+    }
+    else
+    {
+     res.send('Error');  
+    }
+  });
+});
+
+//-----------------------------------------------------------------------------
 //  Get the multi call user information
 //-----------------------------------------------------------------------------
 router.post('/api/getUserMulti',function(req,res)
