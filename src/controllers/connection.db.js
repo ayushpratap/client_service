@@ -10,6 +10,7 @@ MongoClient.connect(dbUrl,{ useNewUrlParser: true }, function(err, db) {
     }
     db_connections.alexa = db.db(CONFIG.db_name);
     db_connections.amazon_accounts = db.db(CONFIG.db_name_acc);
+    console.log("Connected to DB");
   });
 
 module.exports = db_connections;

@@ -38,32 +38,46 @@ userController.addUser=function(Name,Extension,Mobile_Number,callback){
   callback(result);
 }
 userController.getUserMulti=function(user1,user2,callback){
-  console.log("///***///  2 ///***///");
-  console.log("*******************************");
-  console.log(user1);
-  console.log(user2);
-  console.log("*******************************");
-  console.log("call pcpro.getUser");
   var resultBody = {};
+
   // Get user1
-  pcpro.getUser(user1,function(result){
-    if(null == result){
-      resultBody.user1.Extension = null;
+  pcpro.getUser(user1,function(result_user1){
+    if(null == result_user1){
+      resultBody.user1 = null;
+      resultBody.user2 = null;
+      console.log("1. resultBody");
+      console.log(resultBody);
+      callback(JSON.stringify(resultBody));
     }
-    else{
-      resultBody.user1.Extension = result.Extension;
+    else
+    {
+      var obj = JSON.parse(result_user1);
+      var user1_tmp = {};
+      user1_tmp.Extension = obj.Extension;
+      resultBody.user1 = user1_tmp;
+
+      // Get user2
+      pcpro.getUser(user2,function(result_user2){
+        if(null == result_user2)
+        {
+          resultBody.user1 = null;
+          resultBody.user2 = null;
+          console.log("1. ");
+          console.log(resultBody);
+          callback(resultBody);
+        }
+        else
+        {
+          var obj = JSON.parse(result_user2);
+          var user2_tmp = {};
+          user2_tmp.Extension = obj.Extension;
+          resultBody.user2 = user2_tmp;
+          console.log("2. ");
+          console.log(resultBody);
+          callback(resultBody);
+        }
+      });
     }
   });
-  // Get user2
-  pcpro.getUser(user2,function(result){
-    if(null == result){
-      resultBody.user2.Extension = null;
-    }
-    else{
-      resultBody.user2.Extension = result.Extension;
-    }
-  });
-  console.log(resultBody);
-  callback(JSON.stringify(resultBody));
 }
 module.exports = userController;
