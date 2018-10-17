@@ -60,22 +60,22 @@ router.post('/api/makeCall',function(req,res)
 //  Get the multi call user information
 //-----------------------------------------------------------------------------
 router.post('/api/getUserMulti',function(req,res)
-{
-  console.log("///***///  1 ///***///");
-  console.log("POST REQUEST at /api/getUserMulti");
-  var tmp1 = req.body.user1;
-  var tmp2 = req.body.user2;
-  var user1 = tmp1.toLowerCase();
-  var user2 = tmp2.toLowerCase();
-  console.log("*******************************");
-  console.log(user1);
-  console.log(user2);
-  console.log("*******************************");
-  userController.getUserMulti(user1,user2,function(result)
+  {
+    console.log("///***///  1 ///***///");
+    console.log("POST REQUEST at /api/getUserMulti");
+    var tmp1 = req.body.user1;
+    var tmp2 = req.body.user2;
+    var user1 = tmp1.toLowerCase();
+    var user2 = tmp2.toLowerCase();
+    console.log("*******************************");
+    console.log(user1);
+    console.log(user2);
+    console.log("*******************************");
+    userController.getUserMulti(user1,user2,function(result)
     {
-      res.send(result);
+        res.send(result);
     });
-}
+  }
 );
 
 //-----------------------------------------------------------------------------
