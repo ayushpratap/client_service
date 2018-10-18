@@ -33,16 +33,17 @@ userController.addUser=function(Name,Extension,Mobile_Number,callback){
     {
       console.log("User added");
       result = 1;
+      callback(result);
     }
   });
-  callback(result);
 }
 userController.getUserMulti=function(user1,user2,callback){
   var resultBody = {};
 
   // Get user1
   pcpro.getUser(user1,function(result_user1){
-    if(null == result_user1){
+    if(result_user1 == 'null'){
+      console.log("HELLOW");
       resultBody.user1 = null;
       resultBody.user2 = null;
       console.log("1. resultBody");
@@ -58,7 +59,7 @@ userController.getUserMulti=function(user1,user2,callback){
 
       // Get user2
       pcpro.getUser(user2,function(result_user2){
-        if(null == result_user2)
+        if('null' == result_user2)
         {
           resultBody.user1 = null;
           resultBody.user2 = null;

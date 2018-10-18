@@ -72,7 +72,7 @@ var numArr = {
 /****************************************************** START MONITOR ***************************************************************************************************/
 /* ----> */var start_monitor_to_sv9500          = Buffer.from([0xa1,0x24,0x30,0x22,0x02,0x01,0x25,0x02,0x01,0x68,0x30,0x1a,0xa0,0x06,0x04,0x01,0x01,0x04,0x01,0x7f,0x82,0x01,0x00,0xa3,0x0d,0x04,0x01,0x01,0x04,0x02,0x00,0x00,0x04,0x04,0x02,0x08,0x0a,0x01]);
 /***
-  Station to be monitored                      =  start_monitor_to_sv9500[35],start_monitor_to_sv9500[36],start_monitor_to_sv9500[37],start_monitor_to_sv9500[38]
+  Station to be monitored                      =  start_monitor_to_sv9500[34],start_monitor_to_sv9500[35],start_monitor_to_sv9500[36],start_monitor_to_sv9500[37]
 ***/
 /* <---- */var start_monitor_from_sv9500        = Buffer.from([0xa2,0x0f,0x30,0x0d,0x02,0x01,0x25,0x30,0x08,0xa0,0x06,0x04,0x01,0x01,0x04,0x01,0x7f]);
 /************************************************************************************************************************************************************************/
@@ -80,22 +80,22 @@ var numArr = {
 /****************************************************** MONITOR NOTIFY **************************************************************************************************/
 /* <---- */var monitor_notify_from_sv9500       = Buffer.from([0xa1,0x81,0x3a,0x30,0x81,0x37,0x02,0x02,0x1e,0x9e,0x02,0x01,0xb8,0x30,0x81,0x2d,0xa0,0x06,0x04,0x01,0x01,0x04,0x01,0x02,0x82,0x01,0x00,0xa3,0x0f,0xa0,0x0d,0x04,0x01,0x01,0x04,0x02,0x00,0x0a,0x04,0x04,0x02,0x08,0x0a,0x01,0xa4,0x0f,0xa0,0x0d,0x04,0x01,0x01,0x04,0x02,0x00,0x0a,0x04,0x04,0x02,0x08,0x0a,0x0a]);
 /***
-  Source station addresss                       = monitor_notify_from_sv9500[58],monitor_notify_from_sv9500[59],monitor_notify_from_sv9500[60],monitor_notify_from_sv9500[61]
-  Destination station address                   = monitor_notify_from_sv9500[41],monitor_notify_from_sv9500[42],monitor_notify_from_sv9500[43],monitor_notify_from_sv9500[44]
+  Source station addresss                       = monitor_notify_from_sv9500[57],monitor_notify_from_sv9500[58],monitor_notify_from_sv9500[59],monitor_notify_from_sv9500[60]
+  Destination station address                   = monitor_notify_from_sv9500[40],monitor_notify_from_sv9500[41],monitor_notify_from_sv9500[42],monitor_notify_from_sv9500[43]
 ***/
 /************************************************************************************************************************************************************************/
 
 /****************************************************** MAKE CONFERENCE *************************************************************************************************/
 /* ----> */var makeConference_to_sv9500         = Buffer.from([0xa1,0x3f,0x30,0x3d,0x02,0x01,0x29,0x02,0x01,0x69,0x30,0x35,0xa0,0x06,0x04,0x01,0x01,0x04,0x01,0x08,0xa2,0x0f,0xa0,0x0d,0x04,0x01,0x01,0x04,0x02,0x00,0x00,0x04,0x04,0x02,0x08,0x0a,0x0a,0xa3,0x06,0x80,0x04,0x03,0x0a,0x03,0x04,0x86,0x01,0x02,0xa7,0x0f,0xa0,0x0d,0x04,0x01,0x01,0x04,0x02,0x00,0x00,0x04,0x04,0x02,0x08,0x0a,0x01]);
 /***
-  Station A                                     = makeConference_to_sv9500[34],makeConference_to_sv9500[35],makeConference_to_sv9500[36],makeConference_to_sv9500[37]
-  Station B                                     = makeConference_to_sv9500[62],makeConference_to_sv9500[63],makeConference_to_sv9500[64],makeConference_to_sv9500[65]
-  Station C                                     = makeConference_to_sv9500[42],makeConference_to_sv9500[43],makeConference_to_sv9500[44],makeConference_to_sv9500[45]
+  Station A                                     = makeConference_to_sv9500[33],makeConference_to_sv9500[34],makeConference_to_sv9500[35],makeConference_to_sv9500[36]
+  Station B                                     = makeConference_to_sv9500[61],makeConference_to_sv9500[62],makeConference_to_sv9500[63],makeConference_to_sv9500[64]
+  Station C                                     = makeConference_to_sv9500[41],makeConference_to_sv9500[42],makeConference_to_sv9500[43],makeConference_to_sv9500[44]
 ***/
 /* <---- */var makeConference_from_sv9500       = Buffer.from([0xa2,0x2f,0x30,0x2d,0x02,0x01,0x29,0x30,0x28,0xa0,0x06,0x04,0x01,0x01,0x04,0x01,0x08,0xa1,0x1e,0xa0,0x0d,0x04,0x01,0x01,0x04,0x02,0x00,0x0a,0x04,0x04,0x02,0x08,0x0a,0x0a,0xa1,0x0d,0x04,0x01,0x01,0x04,0x02,0x00,0x0a,0x04,0x04,0x03,0x0a,0x03,0x04]);
 /***
-  Station A                                     = makeConference_from_sv9500[31],makeConference_from_sv9500[32],makeConference_from_sv9500[33],makeConference_from_sv9500[34]
-  Station C                                     = makeConference_from_sv9500[46],makeConference_from_sv9500[47],makeConference_from_sv9500[48],makeConference_from_sv9500[49]
+  Station A                                     = makeConference_from_sv9500[30],makeConference_from_sv9500[31],makeConference_from_sv9500[32],makeConference_from_sv9500[33]
+  Station C                                     = makeConference_from_sv9500[45],makeConference_from_sv9500[46],makeConference_from_sv9500[47],makeConference_from_sv9500[48]
 ***/
 /************************************************************************************************************************************************************************/
 oai.makeCall = function(numberType,callNumber,sourceAddress,callback) 
@@ -256,39 +256,46 @@ oai.makeCallMulti = function(stationA,stationB,stationC,callbackMulti){
   makecall_to_sv9500[44]            = numArr[stationB[3]];
 
   // Add the destination in monitor packets
-  start_monitor_to_sv9500[35]       = numArr[stationB[0]];
-  start_monitor_to_sv9500[36]       = numArr[stationB[1]];
-  start_monitor_to_sv9500[37]       = numArr[stationB[2]];
-  start_monitor_to_sv9500[38]       = numArr[stationB[3]];
+  start_monitor_to_sv9500[34]       = numArr[stationB[0]];
+  start_monitor_to_sv9500[35]       = numArr[stationB[1]];
+  start_monitor_to_sv9500[36]       = numArr[stationB[2]];
+  start_monitor_to_sv9500[37]       = numArr[stationB[3]];
+
+  console.log("/*-/*-/*-");
+  console.log(numArr[stationB[0]]);
+  console.log(numArr[stationB[1]]);
+  console.log(numArr[stationB[2]]);
+  console.log(numArr[stationB[3]]);
+  console.log("/*-/*-/*-");
 
   //Add the destination in monitor notify packet
-  monitor_notify_from_sv9500[41]    = numArr[stationB[0]];  
-  monitor_notify_from_sv9500[42]    = numArr[stationB[1]];  
-  monitor_notify_from_sv9500[43]    = numArr[stationB[2]];  
-  monitor_notify_from_sv9500[44]    = numArr[stationB[3]];
+  monitor_notify_from_sv9500[40]    = numArr[stationB[0]];  
+  monitor_notify_from_sv9500[41]    = numArr[stationB[1]];  
+  monitor_notify_from_sv9500[42]    = numArr[stationB[2]];  
+  monitor_notify_from_sv9500[43]    = numArr[stationB[3]];
 
   // Add the source in monitor notify packet  
-  monitor_notify_from_sv9500[58]    = numArr[stationA[0]];
-  monitor_notify_from_sv9500[59]    = numArr[stationA[1]];
-  monitor_notify_from_sv9500[60]    = numArr[stationA[2]];
-  monitor_notify_from_sv9500[61]    = numArr[stationA[3]];
+  monitor_notify_from_sv9500[57]    = numArr[stationA[0]];
+  monitor_notify_from_sv9500[58]    = numArr[stationA[1]];
+  monitor_notify_from_sv9500[59]    = numArr[stationA[2]];
+  monitor_notify_from_sv9500[60]    = numArr[stationA[3]];
 
   // Add StattionA , StattionB and StattionC in make conference pakcet
   // StationA
-  makeConference_to_sv9500[34]      = numArr[stationA[0]];
-  makeConference_to_sv9500[35]      = numArr[stationA[1]];
-  makeConference_to_sv9500[36]      = numArr[stationA[2]];
-  makeConference_to_sv9500[37]      = numArr[stationA[3]];
+  makeConference_to_sv9500[33]      = numArr[stationA[0]];
+  makeConference_to_sv9500[34]      = numArr[stationA[1]];
+  makeConference_to_sv9500[35]      = numArr[stationA[2]];
+  makeConference_to_sv9500[36]      = numArr[stationA[3]];
   //StationB
-  makeConference_to_sv9500[62]      = numArr[stationB[0]];
-  makeConference_to_sv9500[63]      = numArr[stationB[1]];
-  makeConference_to_sv9500[64]      = numArr[stationB[2]];
-  makeConference_to_sv9500[65]      = numArr[stationB[3]];
+  makeConference_to_sv9500[61]      = numArr[stationB[0]];
+  makeConference_to_sv9500[62]      = numArr[stationB[1]];
+  makeConference_to_sv9500[63]      = numArr[stationB[2]];
+  makeConference_to_sv9500[64]      = numArr[stationB[3]];
   //StationC
-  makeConference_to_sv9500[42]      = numArr[stationC[0]];
-  makeConference_to_sv9500[43]      = numArr[stationC[1]];
-  makeConference_to_sv9500[44]      = numArr[stationC[2]];
-  makeConference_to_sv9500[45]      = numArr[stationC[3]];
+  makeConference_to_sv9500[41]      = numArr[stationC[0]];
+  makeConference_to_sv9500[42]      = numArr[stationC[1]];
+  makeConference_to_sv9500[43]      = numArr[stationC[2]];
+  makeConference_to_sv9500[44]      = numArr[stationC[3]];
 
   var flag          = 0;
   var monitorStart  = 0;

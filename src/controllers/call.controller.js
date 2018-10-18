@@ -76,7 +76,7 @@ callController.makeCallMulti = function(stationB,stationC,userId,callbackMulti)
 			if(addr == 0)
 			{
 				winston.error(addr);
-				callback(null);
+				callbackMulti(null);
 				return;
 			}
 			else
@@ -93,7 +93,7 @@ callController.makeCallMulti = function(stationB,stationC,userId,callbackMulti)
 				{
 			  	result = null;
 				}
-				callback(result);
+				callbackMulti(result);
 				});
 			}	
 		});
