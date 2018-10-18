@@ -8,10 +8,6 @@ var result = 0;
 callController.makeCall = function (numberType,callNumber,userId,callback) 
 {
 	console.log("///***///  5 ///***///");
-	//winston.info('makeCall');
-	/*winston.info('numberType = ',numberType);
-	winston.info('callNumber = ',callNumber);
-	winston.info('userId = ',userId);*/
 	console.log("------------------------");
 	console.log(numberType);
 	console.log(callNumber);
@@ -23,7 +19,6 @@ callController.makeCall = function (numberType,callNumber,userId,callback)
 	getSourceAddress(userId,function(addr)
 	{
 		console.log("///***///  7 ///***///");
-		//winston.info("Source address is ");
 		if(addr == 0)
 		{
 			winston.error(addr);
