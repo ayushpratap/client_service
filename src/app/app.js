@@ -3,6 +3,9 @@
     Description :
 */
 // Require componenets
+console.log('---------------------------------------------------------------------------------');
+console.log('---------------------------------- APP ------------------------------------------');
+console.log('---------------------------------------------------------------------------------');
 const express = require('express');
 const morgan = require('morgan');
 const winston = require('../middleware/winston');
@@ -60,9 +63,12 @@ router.post('/api/makeCall',function(req,res)
 //  Make multi call
 //-----------------------------------------------------------------------------
 router.post('/api/makeCallMulti',function(req,res){
+  console.log('/api/makeCallMulti');
+  console.log(req.body);
   console.log(req.body.stationB);
   console.log(req.body.stationC);
   console.log(req.body.userId);
+  //console.log(req.body);
   callController.makeCallMulti(req.body.stationB,req.body.stationC,req.body.userId,function(result){
     if(result == 1)
     {

@@ -62,6 +62,10 @@ function getSourceAddress(userId,sourceAddrCallback)
 }
 callController.makeCallMulti = function(stationB,stationC,userId,callbackMulti)
 {
+	console.log("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-");
+	console.log(stationB);
+	console.log(stationC);
+	console.log("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-");
 	getSourceAddress(userId,function(addr)
 		{
 			if(addr == 0)
