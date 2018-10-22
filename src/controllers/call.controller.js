@@ -32,7 +32,7 @@ callController.makeCall = function (numberType,callNumber,userId,callback)
 			{
 					var dbo = db_connections.amazon_accounts;
 					var myquery = { "_userId": userId };
-					var newvalues = { $set: {"is_available": 1} };
+					var newvalues = { $set: {"is_available": 1,"source_extension":0000} };
 					console.log("Update DB");
 					dbo.collection("account_mapping").updateOne(myquery, newvalues, function(err, res) {
 						if (err) throw err;
@@ -79,7 +79,7 @@ callController.makeCallMulti = function(stationB,stationC,userId,callbackMulti)
 				oai.makeCallMulti(addr,stationB,stationC,function(result){
 					var dbo = db_connections.amazon_accounts;
 					var myquery = { "_userId": userId };
-					var newvalues = { $set: {"is_available": 1} };
+					var newvalues = { $set: {"is_available": 1,"source_extension":0000} };
 					console.log("Update DB");
 					dbo.collection("account_mapping").updateOne(myquery, newvalues, function(err, res) {
 						if (err) throw err;
