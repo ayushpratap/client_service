@@ -110,12 +110,12 @@ client.on('data', function(data) {
         console.log('Hello World > helloworld.txt');
       });
 
-      var url = "mongodb://localhost:27017/";
+      var url = "mongodb://127.0.0.1:27017/";
       
       MongoClient.connect(url, function(err, db) {
         if (err) throw err;
         var dbo = db.db("Alexa");
-        var myobj = { "Name": res.toString().trim(), "Extension": ext.toString().trim(), "Mobile_Number": ext2.toString().trim() };
+        var myobj = { "Name": res.toString().trim().toLowerCase(), "Extension": ext.toString().trim(), "Mobile_Number": ext2.toString().trim() };
         dbo.collection("users").insertOne(myobj, function(err, res) {
           if (err) throw err;
           console.log("1 document inserted");
