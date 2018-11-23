@@ -29,6 +29,7 @@ run composer install (it will create composer.lock and a folder named vendor)
 
 copy sip.conf from asterisk_alexa_agi to /etc/asterisk/
 copy extension.conf from asterisk_alexa_agi to /etc/asterisk/
+copy "token.pl" and "token_007.pl" and place them in "/home/alexa-vm/"
 --------------------------------------
 --------------------------------------
 For client service
