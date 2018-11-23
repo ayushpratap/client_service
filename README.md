@@ -49,3 +49,14 @@ execute run.sh
 	-> sudo asterisk -r
 	-> set agi debug on
 	-> core debug set 4
+-------------------------------------
+-------------------------------------
+Bitbucket cridentials
+email -> ayushs56@gmail.com
+password -> Iamthe1whonox
+
+
+
+
+# USE "master" branch for both the repos
+# Both the repos must exists in "/home/alexa-vm/Desktop/goliath/"
