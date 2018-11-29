@@ -83,6 +83,8 @@ const handlers =
             requestCert:false,
             body:
             {
+				"numberType":"extension",
+				"userId" : userId,
                 "user1":user1,
                 "user2":user2
             }
@@ -120,7 +122,7 @@ const handlers =
             }
             else
             {
-                OaiCallJSONObject.user1 = body.user1;
+               /* OaiCallJSONObject.user1 = body.user1;
                 OaiCallJSONObject.user2 = body.user2;
                 console.log("8. ")
                 console.log(OaiCallJSONObject);
@@ -134,7 +136,7 @@ const handlers =
                     {
                         response = "Unable to make a call to "+username;
                     }
-                });
+                });*/
             }
             console.log("9. "+response);
             this.emit(':tell',response);
@@ -166,7 +168,9 @@ const handlers =
             rejectUnauthorized:false,
             requestCert:false,
             body: {
-                "username": username
+                "username": username,
+				"numberType":"extension",
+				"userId" : userId
             }
         };
         var OaiCallJSONObject = 
@@ -194,7 +198,7 @@ const handlers =
             }
             else
             {
-                OaiCallJSONObject.CallNumber = body.Extension;
+                /*OaiCallJSONObject.CallNumber = body.Extension;
                 console.log("7. ");
                 console.log(OaiCallJSONObject);
                 sendRequest(makeCallOptions,function(body_call)
@@ -208,7 +212,7 @@ const handlers =
                         response = "Unable to make a call to "+username;
                     }
                 
-                });
+                });*/
             }
             console.log("8. "+response);
             this.emit(':tell',response);
