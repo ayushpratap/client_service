@@ -98,6 +98,9 @@ router.post('/api/getUserMulti',function(req,res)
 		console.log("*******************************");
 		userController.getUserMulti(user1,user2,function(result)
 			{
+		console.log(result.user1.length);
+		console.log(result.user2.lenghth);
+		console.log("*******************************");
 				if(null != result.user1.Extension || null != result.user2.Extension)
 				{
 			//res.send(result);
@@ -161,7 +164,7 @@ router.post('/api/getUser',function(req,res)
   console.log("call userController.getUser");
   userController.getUser(username,(result)=>
 {
-  if(undefined == typeof(result))
+  if(undefined == typeof(result) || 4 >= result.length)
   {
     res.send('Could not fetch the user');
     console.log('Could not fetch the user');
@@ -169,8 +172,8 @@ router.post('/api/getUser',function(req,res)
 	return;
   }
   
-	console.log(typeof(result), result);
-  if(result)
+	console.log(typeof(result), result.length);
+  if(4 < result.length)
   {
   var resultJason = JSON.parse(result);
   //winston.info('numberType = ',numberType);
