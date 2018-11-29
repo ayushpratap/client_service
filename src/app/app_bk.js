@@ -148,36 +148,8 @@ router.post('/api/getUser',function(req,res)
   }
   else
   {
-  console.log("RESULT "+result);
-  console.log("///***///  4 ///***///");
-  var numberType = req.body.numberType;
-  console.log("++++++++++++++++++++++++++++++++++++");
-  console.log(numberType);
-  var resultJason = JSON.parse(result);
-  //winston.info('numberType = ',numberType);
-  console.log("@@@@@@");console.log(typeof(result), JSON.parse(result));
-  var callNumber = resultJason.extension;
-  console.log(callNumber);
-  //winston.info('callNumber = ',callNumber);
-  var userId = req.body.userId;
-  console.log(userId);
-  console.log("++++++++++++++++++++++++++++++++++++");
-  //winston.info('userId = ',userId);
-  console.log("call callController.makeCall");
-  callController.makeCall(numberType,callNumber,userId,function(result)
-	  {
-	  if(result==1)
-	  {
-	  winston.info("Making call");
-	  res.send('Making call');
-	  }
-	  else
-	  {
-	  winston.info("Unable to make call because something went wrong");
-	  res.send('Error');    
-	  }
-	  });
- // res.send(result);
+    console.log("RESULT "+result);
+    res.send(result);
   }
   });
 });
