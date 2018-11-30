@@ -98,13 +98,21 @@ router.post('/api/getUserMulti',function(req,res)
 		console.log("*******************************");
 		userController.getUserMulti(user1,user2,function(result)
 			{
-				if(null != result.user1.Extension || null != result.user2.Extension)
+			console.log(" print result &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&" );
+//			console.log(typeof(result),KeyOf(result));
+			console.log(result.user1)
+			console.log(result.user2)
+				if(null == result.user1 || null == result.user2)
+				{
+				console.log('sorry user does not exist'); 
+
+				res.send('sorry user does not exist'); 
+				res.end(); 
+				return;
+				}
+				else
 				{
 			//res.send(result);
-			console.log(" print result &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&" );
-			console.log(typeof(result),result);
-			console.log(result.user1.Extension)
-			console.log(req.body.userId);
 			//console.log(req.body);
 			callController.makeCallMulti(result.user1.Extension,result.user2.Extension,req.body.userId,function(result){
 				if(result == 1)
@@ -161,7 +169,7 @@ router.post('/api/getUser',function(req,res)
   console.log("call userController.getUser");
   userController.getUser(username,(result)=>
 {
-  if(undefined == typeof(result))
+  if(undefined == typeof(result) || 4 >= result.length)
   {
     res.send('Could not fetch the user');
     console.log('Could not fetch the user');
@@ -170,7 +178,7 @@ router.post('/api/getUser',function(req,res)
   }
   
 	console.log(typeof(result), result);
-  if(result)
+  if(4 < result.length)
   {
   var resultJason = JSON.parse(result);
   //winston.info('numberType = ',numberType);

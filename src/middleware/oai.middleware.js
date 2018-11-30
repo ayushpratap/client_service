@@ -487,20 +487,21 @@ oai.makeCallMulti = function(stationA,stationB,stationC,callbackMulti){
     {
       console.log('CASE 12');
       console.log("flag = "+flag);
-      console.log("monitorStart = "+monitorStart);
-      console.log("openMoitoring = "+openMoitoring);
-      console.log("openNotify = "+openNotify);
+    //  console.log("monitorStart = "+monitorStart);
+     // console.log("openMoitoring = "+openMoitoring);
+     // console.log("openNotify = "+openNotify);
       // Check notify
       console.log('/*/*/*/*/*//*/');
       console.log(data.length);
       console.log('/*/*/*/*/*//*/');
-      console.log('**********');
-      console.log('monitor_notify_from_sv9500.length');
+    //  console.log('**********');
+     // console.log('monitor_notify_from_sv9500.length');
       console.log(monitor_notify_from_sv9500.length);
       console.log('**********');
-      //console.log(monitor_notify_from_sv9500);
+   //   console.log(monitor_notify_from_sv9500);
+      console.log(data.length);
       console.log('**********');
-      if(monitor_notify_from_sv9500.length == data.length)
+    //  if(monitor_notify_from_sv9500.length == data.length)
       {
         console.log(makeConference_to_sv9500.length);
         writeData(client,makeConference_to_sv9500);
