@@ -85,49 +85,23 @@ router.post('/api/makeCallMulti',function(req,res){
 //  Get the multi call user information
 //-----------------------------------------------------------------------------
 router.post('/api/getUserMulti',function(req,res)
-		{
-		console.log("///***///  1 ///***///");
-		console.log("POST REQUEST at /api/getUserMulti");
-		var tmp1 = req.body.user1;
-		var tmp2 = req.body.user2;
-		var user1 = tmp1.toLowerCase();
-		var user2 = tmp2.toLowerCase();
-		console.log("*******************************");
-		console.log(user1);
-		console.log(user2);
-		console.log("*******************************");
-		userController.getUserMulti(user1,user2,function(result)
-			{
-			console.log(" print result &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&" );
-//			console.log(typeof(result),KeyOf(result));
-			console.log(result.user1)
-			console.log(result.user2)
-				if(null == result.user1 || null == result.user2)
-				{
-				console.log('sorry user does not exist'); 
-
-				res.send('sorry user does not exist'); 
-				res.end(); 
-				return;
-				}
-				else
-				{
-			//res.send(result);
-			//console.log(req.body);
-			callController.makeCallMulti(result.user1.Extension,result.user2.Extension,req.body.userId,function(result){
-				if(result == 1)
-				{
-				res.send('Making call'); 
-				}
-				else
-				{
-				res.send('Error');  
-				}
-				});
-			}
-			});
-		});
-
+  {
+    console.log("///***///  1 ///***///");
+    console.log("POST REQUEST at /api/getUserMulti");
+    var tmp1 = req.body.user1;
+    var tmp2 = req.body.user2;
+    var user1 = tmp1.toLowerCase();
+    var user2 = tmp2.toLowerCase();
+    console.log("*******************************");
+    console.log(user1);
+    console.log(user2);
+    console.log("*******************************");
+    userController.getUserMulti(user1,user2,function(result)
+    {
+        res.send(result);
+    });
+  }
+);
 
 //-----------------------------------------------------------------------------
 //  Add user endpoint
@@ -167,50 +141,15 @@ router.post('/api/getUser',function(req,res)
   console.log("*******************************");
   // Call pcrpo
   console.log("call userController.getUser");
-  userController.getUser(username,(result)=>
-{
-  if(undefined == typeof(result) || 4 >= result.length)
+  userController.getUser(username,function(result){
+  if(result == null)
   {
     res.send('Could not fetch the user');
-    console.log('Could not fetch the user');
-	console.log(typeof(result), result);
-	return;
   }
-  
-	console.log(typeof(result), result);
-  if(4 < result.length)
+  else
   {
-  var resultJason = JSON.parse(result);
-  //winston.info('numberType = ',numberType);
-  console.log("@@@@@@");console.log(typeof(result), JSON.parse(result));
-  var callNumber = resultJason.Extension;
-  console.log(callNumber);
-  console.log("///***///  4 ///***///");
-  var numberType = req.body.numberType;
-  console.log("++++++++++++++++++++++++++++++++++++");
-  console.log(numberType);
-  //winston.info('callNumber = ',callNumber);
-  var userId = req.body.userId;
-  console.log(userId);
-  console.log("++++++++++++++++++++++++++++++++++++");
-  //winston.info('userId = ',userId);
-  console.log("call callController.makeCall");
-  callController.makeCall(numberType,callNumber,userId,function(result)
-	  {
-	  if(result==1)
-	  {
-	  winston.info("Making call");
-	  res.send('Making call');
-    		return 0;
-	  }
-	  else
-	  {
-	  winston.info("Unable to make call because something went wrong");
-	  res.send('Error');    
-    		return 0;
-	  }
-	  });
- // res.send(result);
+    console.log("RESULT "+result);
+    res.send(result);
   }
   });
 });
