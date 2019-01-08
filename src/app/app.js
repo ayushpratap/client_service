@@ -73,7 +73,15 @@ router.post('/api/makeCall',function(req,res)
 //-----------------------------------------------------------------------------
 router.post('/api/makeCallMulti',function(req,res){
   console.log(req.body);
-  res.send('/api/makeCallMulti : Hello');
+  var source = req.body.source;
+  var destinationA = req.body.destinationA;
+  var destinationB = req.body.destinationB;
+  callController.makeCallMulti(source,destinationA,destinationB,function(result){
+    if(1 == result)
+      res.send('/api/makeCallMulti : Making 3 party call');
+    else
+      res.send('/api/makeCallMulti : Error');
+  });
   /*console.log(req.body);
   console.log(req.body.stationB);
   console.log(req.body.stationC);
