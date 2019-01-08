@@ -20,6 +20,7 @@ tcpClient.on('data',function(data){
     // Get the route of the request
     switch(reqInfo.route){
         case '/':
+            console.log(reqInfo);
             // Make a HTTP request to client service
             options.method              = "GET";
             options.url                 = CONFIG.client_service_url+reqInfo.route;
@@ -30,13 +31,12 @@ tcpClient.on('data',function(data){
             request(options,function(error,res,body){
                 console.log(options);
                 options = {};
-                console.log(options);
                 console.log(body);
             });
-            console.log(reqInfo);
         break;
         case '/api/makeCall':
             // Make a HTTP request to client service
+            console.log(reqInfo);
             options.method              = "POST";
             options.url                 = CONFIG.client_service_url+reqInfo.route;
             options.json                = true;
@@ -46,13 +46,12 @@ tcpClient.on('data',function(data){
             request(options,function(error,res,body){
                 console.log(options);
                 options = {};
-                console.log(options);
                 console.log(body);
             });
-            console.log(reqInfo);
         break;
         case '/api/makeCallMulti':
             // Make a HTTP request to client service
+            console.log(reqInfo);
             options.method              = "POST";
             options.url                 = CONFIG.client_service_url+reqInfo.route;
             options.json                = true;
@@ -62,10 +61,8 @@ tcpClient.on('data',function(data){
             request(options,function(error,res,body){
                 console.log(options);
                 options = {};
-                console.log(options);
                 console.log(body);
             });
-            console.log(reqInfo);
          break;
         default:
             console.log("default");
