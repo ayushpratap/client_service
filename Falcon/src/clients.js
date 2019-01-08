@@ -3,6 +3,7 @@ const net  = require('net');
 var request = require('request');
 var CONFIG = require('./config/config');
 const JsonSocket = require('json-socket');
+var options = {};
 
 const tcpClient = net.createConnection(CONFIG.tcp_server_port,CONFIG.tcp_server_host);
 
@@ -23,30 +24,32 @@ tcpClient.on('data',function(data){
         break;
         case '/api/makeCall':
             // Make a HTTP request to client service
-            let options = {
-                method:"POST",
-                url:CONFIG.client_service_url+reqInfo.route,
-                json:true,
-                rejectUnauthorized:false,
-                requestCert:false,
-                body:reqInfo.data
-            };
+            options.method              = "POST";
+            options.url                 = CONFIG.client_service_url+reqInfo.route;
+            options.json                = true;
+            options.rejectUnauthorized  = false;
+            options.requestCert         = false;
+            options.body                = reqInfo.data;
             request(options,function(error,res,body){
+                console.log(options);
+                options = {};
+                console.log(options);
                 console.log(body);
             });
             console.log(reqInfo);
         break;
         case '/api/makeCallMulti':
             // Make a HTTP request to client service
-            let options = {
-                method:"POST",
-                url:CONFIG.client_service_url+reqInfo.route,
-                json:true,
-                rejectUnauthorized:false,
-                requestCert:false,
-                body:reqInfo.data
-            };
+            options.method              = "POST";
+            options.url                 = CONFIG.client_service_url+reqInfo.route;
+            options.json                = true;
+            options.rejectUnauthorized  = false;
+            options.requestCert         = false;
+            options.body                = reqInfo.data;
             request(options,function(error,res,body){
+                console.log(options);
+                options = {};
+                console.log(options);
                 console.log(body);
             });
             console.log(reqInfo);
