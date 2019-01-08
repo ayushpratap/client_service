@@ -20,6 +20,19 @@ tcpClient.on('data',function(data){
     // Get the route of the request
     switch(reqInfo.route){
         case '/':
+            // Make a HTTP request to client service
+            options.method              = "GET";
+            options.url                 = CONFIG.client_service_url+reqInfo.route;
+            options.json                = true;
+            options.rejectUnauthorized  = false;
+            options.requestCert         = false;
+            options.body                = reqInfo.data;
+            request(options,function(error,res,body){
+                console.log(options);
+                options = {};
+                console.log(options);
+                console.log(body);
+            });
             console.log(reqInfo);
         break;
         case '/api/makeCall':
