@@ -2,24 +2,25 @@ const winston = require('../middleware/winston');
 const oai = require('../middleware/oai.middleware');
 const MongoClient = require('mongodb').MongoClient;
 const db_connections = require('./connection.db');
-//winston.info('File : call.controller.js');
 var callController = {};
 var result = 0;
-callController.makeCall = function (numberType,callNumber,userId,callback) 
-{
-	console.log("///***///  5 ///***///");
-	console.log("------------------------");
-	console.log(numberType);
-	console.log(callNumber);
-	console.log(userId);
-	console.log("------------------------");
-	var sourceAddress = "";
 
+//callController.makeCall = function (numberType,callNumber,userId,callback) 
+callController.makeCall = function (source,destination,callback) 
+{
+	console.log("callController.makeCall");
+	console.log("source : " + source);
+	console.log("destination : " + destination);
+	oai.makeCall(source,destination,function(result){
+		if(null == result)
+			result = null;
+		callback(result);
+	});
 	// Get the source address from the database
-	getSourceAddress(userId,function(addr)
+	/*getSourceAddress(userId,function(addr)
 	{
 		console.log("///***///  7 ///***///");
-		if(addr == 0)
+	/*	if(addr == 0)
 		{
 			winston.error(addr);
 			callback(null);
@@ -44,22 +45,22 @@ callController.makeCall = function (numberType,callNumber,userId,callback)
 				callback(result);
 			});
 		}
-	});
+	});*/
 }
-function getSourceAddress(userId,sourceAddrCallback)
-{
-	console.log("///***///  6 ///***///");
-		var dbo = db_connections.amazon_accounts;
-		dbo.collection("account_mapping").findOne({"_userId":userId}, function(err, result) 
-		{
-			if (err) throw err;
+//function getSourceAddress(userId,sourceAddrCallback)
+//{
+//	console.log("///***///  6 ///***///");
+//		var dbo = db_connections.amazon_accounts;
+//		dbo.collection("account_mapping").findOne({"_userId":userId}, function(err, result) 
+//		{
+//			if (err) throw err;
 
-			console.log("--------- SOURCE ADDRESS -------------");
-			console.log(result.source_extension);
-			console.log("--------------------------------------");
-			sourceAddrCallback(result.source_extension);
-		});
-}
+//			console.log("--------- SOURCE ADDRESS -------------");
+//			console.log(result.source_extension);
+//			console.log("--------------------------------------");
+//			sourceAddrCallback(result.source_extension);
+//		});
+//}
 callController.makeCallMulti = function(stationB,stationC,userId,callbackMulti)
 {
 	console.log("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-");

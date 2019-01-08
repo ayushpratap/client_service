@@ -32,7 +32,14 @@ router.get('/',function(req,res) {
 router.post('/api/makeCall',function(req,res) 
 {
   console.log(req.body);
-  res.send("/api/makeCall :  Hello");
+  var source      = req.body.source;
+  var destination = req.body.destination;
+  callController.makeCall(source,destination,function(result){
+    if(1 ==  result)
+      res.send("/api/makeCall :  Making Call");
+    else
+      res.send("/api/makeCall :  Error");
+  });
   //console.log("///***///  4 ///***///");
   //var numberType = req.body.numberType;
   //console.log("++++++++++++++++++++++++++++++++++++");

@@ -99,14 +99,15 @@ var numArr = {
   Station C                                     = makeConference_from_sv9500[45],makeConference_from_sv9500[46],makeConference_from_sv9500[47],makeConference_from_sv9500[48]
 ***/
 /************************************************************************************************************************************************************************/
-oai.makeCall = function(numberType,callNumber,sourceAddress,callback) 
+//oai.makeCall = function(numberType,callNumber,sourceAddress,callback) 
+oai.makeCall = function(source,destination,callback) 
 {
-  console.log("///***///  8 ///***///");
-  var stringSourceAddress       = sourceAddress.toString();
-  var stringDestinationAddress  = callNumber.toString();
+  console.log("oai.makeCall");
+  var stringSourceAddress           = source.toString();
+  var stringDestinationAddress      = destination.toString();
   console.log("stringSourceAddress = "+stringSourceAddress);
   console.log("stringDestinationAddress = "+stringDestinationAddress);
-  
+  callback(1);
   // Add the source adress to end call packets
   endcall_to_sv9500[33]         = numArr[stringSourceAddress[0]];
   endcall_to_sv9500[34]         = numArr[stringSourceAddress[1]];
@@ -127,28 +128,25 @@ oai.makeCall = function(numberType,callNumber,sourceAddress,callback)
   var flag = 0;
   
   // Create connection
-   const client = net.createConnection(CONFIG.oai_port,CONFIG.oai_ip);
-   console.log("Client"+client);
-
+  /* 
+  const client = net.createConnection(CONFIG.oai_port,CONFIG.oai_ip);
+  console.log("Client"+client);
+*/
   // connect to OAI
-  client.on('connect',function()
-  {
+  //client.on('connect',function(){
    // winston.info('Connected to server');
-    console.log('Connected to server');
+    //console.log('Connected to server');
    
     // Send first packet
-    console.log("flag = "+flag);
+    /*console.log("flag = "+flag);
     console.log(connect_to_sv9500_1.length);
     writeData(client,connect_to_sv9500_1);
     flag = 1;
-    
-  });
+  });*/
 
   // On receivng data
-  client.on('data',function(data) 
-  {
-    if(1 == flag)
-    {
+  /*client.on('data',function(data){
+    if(1 == flag){
       console.log('CASE 1');
       console.log("flag = "+flag);
       console.log(connect_to_sv9500_2.length);
@@ -157,64 +155,56 @@ oai.makeCall = function(numberType,callNumber,sourceAddress,callback)
       writeData(client,connect_to_sv9500_3);
       flag=2;
     }
-    else if(2 == flag)
-    {
+    else if(2 == flag){
       console.log('CASE 2');
       console.log("flag = "+flag);
       console.log(connect_to_sv9500_4.length);
       writeData(client,connect_to_sv9500_4);
       flag=3;
     }    
-    else if(3 == flag && !(data.length == connect_from_sv9500_4.length))
-    {
+    else if(3 == flag && !(data.length == connect_from_sv9500_4.length)){
       console.log('CASE 3');
       console.log("flag = "+flag);
       console.log(connect_to_sv9500_5.length);
       writeData(client,connect_to_sv9500_5); 
       flag=4;
     }
-    else if(4 == flag)
-    {
+    else if(4 == flag){
       console.log('CASE 4');
       console.log("flag = "+flag);
       console.log(connect_to_sv9500_6.length);
       writeData(client,connect_to_sv9500_6);  
       flag = 5;
     }
-    else if(5 == flag)
-    {
+    else if(5 == flag){
       console.log('CASE 5');
       console.log("flag = "+flag);
       console.log(connect_to_sv9500_7.length);
       writeData(client,connect_to_sv9500_7);  
       flag = 6;
     }
-    else if(6 == flag)
-    {
+    else if(6 == flag){
       console.log('CASE 6');
       console.log("flag = "+flag);
       console.log(switch_control_to_sv9500.length);
       writeData(client,switch_control_to_sv9500);
       flag=7;
     }
-    else if(7 == flag)
-    {
+    else if(7 == flag){
           console.log('CASE 7');
           console.log("flag = "+flag);
           console.log(endcall_to_sv9500.length);
           writeData(client,endcall_to_sv9500);
           flag = 8;
     }
-    else if(8 == flag)
-    {
+    else if(8 == flag){
       console.log('CASE 8');
       console.log("flag = "+flag);
       console.log(makecall_to_sv9500.length);
       writeData(client,makecall_to_sv9500);
       flag =9;
     }
-    else if(9 == flag)
-    {
+    else if(9 == flag){
       flag = 0;
       console.log("Send callback");
       client.destroy();
@@ -225,12 +215,14 @@ oai.makeCall = function(numberType,callNumber,sourceAddress,callback)
       console.log("kuch aya");
     }
   });
+
   client.on('end',()=>{
     console.log('disconnected from server');
   });
+
   client.on('error', function(error) {
     console.log("Error");
-  });
+  });*/
 }
 
 oai.makeCallMulti = function(stationA,stationB,stationC,callbackMulti){
