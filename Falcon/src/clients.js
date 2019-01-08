@@ -28,7 +28,6 @@ tcpClient.on('data',function(data){
             options.requestCert         = false;
             options.body                = reqInfo.data;
             request(options,function(error,res,body){
-                console.log(options);
                 options = {};
                 console.log(body);
             });
@@ -43,7 +42,6 @@ tcpClient.on('data',function(data){
             options.requestCert         = false;
             options.body                = reqInfo.data;
             request(options,function(error,res,body){
-                console.log(options);
                 options = {};
                 console.log(body);
             });
@@ -58,7 +56,6 @@ tcpClient.on('data',function(data){
             options.requestCert         = false;
             options.body                = reqInfo.data;
             request(options,function(error,res,body){
-                console.log(options);
                 options = {};
                 console.log(body);
             });

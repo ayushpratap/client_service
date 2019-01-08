@@ -16,58 +16,19 @@ callController.makeCall = function (source,destination,callback)
 			result = null;
 		callback(result);
 	});
-	// Get the source address from the database
-	/*getSourceAddress(userId,function(addr)
-	{
-		console.log("///***///  7 ///***///");
-	/*	if(addr == 0)
-		{
-			winston.error(addr);
-			callback(null);
-			return;
-		}
-		else
-		{
-			winston.info(addr);
-			oai.makeCall(numberType,callNumber,addr,function(result)
-			{
-					var dbo = db_connections.amazon_accounts;
-					var myquery = { "_userId": userId };
-					var newvalues = { $set: {"is_available": 1,"source_extension":0000} };
-					console.log("Update DB");
-					dbo.collection("account_mapping").updateOne(myquery, newvalues, function(err, res) {
-						if (err) throw err;
-					});
-				if(result == null)
-				{
-			  	result = null;
-				}
-				callback(result);
-			});
-		}
-	});*/
 }
-//function getSourceAddress(userId,sourceAddrCallback)
-//{
-//	console.log("///***///  6 ///***///");
-//		var dbo = db_connections.amazon_accounts;
-//		dbo.collection("account_mapping").findOne({"_userId":userId}, function(err, result) 
-//		{
-//			if (err) throw err;
-
-//			console.log("--------- SOURCE ADDRESS -------------");
-//			console.log(result.source_extension);
-//			console.log("--------------------------------------");
-//			sourceAddrCallback(result.source_extension);
-//		});
-//}
-callController.makeCallMulti = function(stationB,stationC,userId,callbackMulti)
+//callController.makeCallMulti = function(stationB,stationC,userId,callbackMulti)
+callController.makeCallMulti = function(source,destinationA,destinationB,callbackMulti)
 {
-	console.log("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-");
-	console.log(stationB);
-	console.log(stationC);
-	console.log("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-");
-	getSourceAddress(userId,function(addr)
+	console.log("source 	  : " + source);
+	console.log("destinationA : " + destinationA);
+	console.log("destinationB : " + destinationB);
+	oai.makeCallMulti(source,destinationA,destinationB,function(result){
+		if(null == result)
+			result = null;
+		callbackMulti(result);
+	});
+	/*getSourceAddress(userId,function(addr)
 		{
 			if(addr == 0)
 			{
@@ -92,6 +53,6 @@ callController.makeCallMulti = function(stationB,stationC,userId,callbackMulti)
 				callbackMulti(result);
 				});
 			}	
-		});
+		});*/
 }
 module.exports = callController;
