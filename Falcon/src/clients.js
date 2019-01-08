@@ -13,7 +13,6 @@ tcpClient.on('connect',function(){
 
 tcpClient.on('data',function(data){
     console.log(typeof data);
-    console.log(data);
     let JsonData = JSON.parse(data.toString());
     console.log(JsonData);
 });
