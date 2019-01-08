@@ -14,5 +14,6 @@ tcpClient.on('connect',function(){
 tcpClient.on('data',function(data){
     console.log(typeof data);
     let JsonData = JSON.parse(data.toString());
+    console.log(typeof JsonData);
     console.log(JsonData);
 });
