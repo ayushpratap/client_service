@@ -24,7 +24,6 @@ tcpClient.on('data',function(data){
             // Make a HTTP request to client service
             options.method              = "GET";
             options.url                 = CONFIG.client_service_url+reqInfo.route;
-            options.json                = true;
             options.rejectUnauthorized  = false;
             options.requestCert         = false;
             options.body                = reqInfo.data;
