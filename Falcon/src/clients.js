@@ -22,6 +22,7 @@ tcpClient.on('data',function(data){
             console.log(reqInfo);
         break;
         case '/api/makeCall':
+            // Make a HTTP request to client service
             let options = {
                 method:"POST",
                 url:CONFIG.client_service_url+reqInfo.route,
