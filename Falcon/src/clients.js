@@ -1,5 +1,6 @@
 const express = require('express');
 const net  = require('net');
+var request = require('request');
 var CONFIG = require('./config/config');
 const JsonSocket = require('json-socket');
 
@@ -19,13 +20,36 @@ tcpClient.on('data',function(data){
     switch(reqInfo.route){
         case '/':
             console.log(reqInfo);
-            break;
+        break;
         case '/makeCall':
+            let options = {
+                method:"POST",
+                url:CONFIG.client_service_url+reqInfo.route,
+                json:true,
+                rejectUnauthorized:false,
+                requestCert:false,
+                body:reqInfo.data
+            };
+            request(options,function(error,res,body){
+                console.log(body);
+            });
             console.log(reqInfo);
-            break;
-        case '/makeCallMulti'
+        break;
+        case '/makeCallMulti':
+            // Make a HTTP request to client service
+            let options = {
+                method:"POST",
+                url:CONFIG.client_service_url+reqInfo.route,
+                json:true,
+                rejectUnauthorized:false,
+                requestCert:false,
+                body:reqInfo.data
+            };
+            request(options,function(error,res,body){
+                console.log(body);
+            });
             console.log(reqInfo);
-            break;
+         break;
         default:
             console.log("default");
     }
