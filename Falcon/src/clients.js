@@ -34,10 +34,6 @@ tcpClient.on('data',function(data){
                 console.log(body);
             });
             console.log(reqInfo);
-<<<<<<< HEAD
-            break;
-        case '/makeCallMulti':
-=======
         break;
         case '/makeCallMulti':
             // Make a HTTP request to client service
@@ -52,7 +48,6 @@ tcpClient.on('data',function(data){
             request(options,function(error,res,body){
                 console.log(body);
             });
->>>>>>> e7a5bb949c4958cd79f636da0cd9dab426d2fe52
             console.log(reqInfo);
          break;
         default:
