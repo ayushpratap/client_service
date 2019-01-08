@@ -23,7 +23,7 @@ tcpClient.on('data',function(data){
         case '/makeCall':
             console.log(reqInfo);
             break;
-        case '/makeCallMulti'
+        case '/makeCallMulti':
             console.log(reqInfo);
             break;
         default:
