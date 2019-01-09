@@ -3,9 +3,7 @@
     Description :
 */
 // Require componenets
-console.log('---------------------------------------------------------------------------------');
 console.log('---------------------------------- APP ------------------------------------------');
-console.log('---------------------------------------------------------------------------------');
 const express = require('express');
 const morgan = require('morgan');
 const winston = require('../middleware/winston');
@@ -15,9 +13,6 @@ const app = express();
 const path = require('path');
 const router = express.Router();
 const expressHbs = require('express-handlebars');
-//app.engine('.hbs', expressHbs({defaultLayout: 'layout', extname: '.hbs'}));
-//app.set('views', path.join(__dirname, 'views'));
-//app.set('view engine', '.hbs');
 
 
 app.use(morgan('combined',{stream: winston.stream}));
@@ -40,32 +35,6 @@ router.post('/api/makeCall',function(req,res)
     else
       res.send("/api/makeCall :  Error");
   });
-  //console.log("///***///  4 ///***///");
-  //var numberType = req.body.numberType;
-  //console.log("++++++++++++++++++++++++++++++++++++");
-  //console.log(numberType);
-  //winston.info('numberType = ',numberType);
-  //var callNumber = req.body.CallNumber;
-  //console.log(callNumber);
-  //winston.info('callNumber = ',callNumber);
-  //var userId = req.body.userId;
-  //console.log(userId);
-  //console.log("++++++++++++++++++++++++++++++++++++");
-  //winston.info('userId = ',userId);
-  //console.log("call callController.makeCall");
-  //callController.makeCall(numberType,callNumber,userId,function(result)
-  //{
-    //if(result==1)
-    //{
-      //winston.info("Making call");
-      //res.send('Making call');
-    //}
-    //else
-    //{
-      //winston.info("Unable to make call because something went wrong");
-      //res.send('Error');    
-    //}
-  //});
 });
 
 //-----------------------------------------------------------------------------
@@ -82,21 +51,6 @@ router.post('/api/makeCallMulti',function(req,res){
     else
       res.send('/api/makeCallMulti : Error');
   });
-  /*console.log(req.body);
-  console.log(req.body.stationB);
-  console.log(req.body.stationC);
-  console.log(req.body.userId);
-  //console.log(req.body);
-  callController.makeCallMulti(req.body.stationB,req.body.stationC,req.body.userId,function(result){
-    if(result == 1)
-    {
-     res.send('Making call'); 
-    }
-    else
-    {
-     res.send('Error');  
-    }
-  });*/
 });
 
 //-----------------------------------------------------------------------------
@@ -120,11 +74,6 @@ router.post('/api/getUserMulti',function(req,res)
     });
   }
 );
-
-//-----------------------------------------------------------------------------
-//  Add user endpoint
-//-----------------------------------------------------------------------------
-
 
 
 //-----------------------------------------------------------------------------
