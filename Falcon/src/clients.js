@@ -84,3 +84,8 @@ tcpClient.on('data',function(data){
             console.log("default");
     }
 });
+
+//  Handle error event
+tcpClient.on('error',function(err){
+    logger.error(err);
+});
