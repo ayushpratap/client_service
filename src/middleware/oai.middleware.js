@@ -5,7 +5,6 @@
 //------------------------------------------------------------------------------
 const CONFIG = require('../config/config');
 const net = require('net');
-const winston = require('winston');
 const oai = {};
 var flag=0;
 const logger = CONFIG.logger;

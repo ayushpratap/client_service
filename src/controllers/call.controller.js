@@ -3,12 +3,13 @@
     Description :
 */
 //------------------------------------------------------------------------------
-const winston 			= require('../middleware/winston');
 const oai 				= require('../middleware/oai.middleware');
 const MongoClient 		= require('mongodb').MongoClient;
 const db_connections 	= require('./connection.db');
+const CONFIG 			= require('../config/config');
 var callController 		= {};
 var result 				= 0;
+const logger 			= CONFIG.logger;
 //------------------------------------------------------------------------------
 
 logger.info('Starting up the call controller');
