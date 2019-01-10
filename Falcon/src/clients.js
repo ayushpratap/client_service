@@ -35,14 +35,14 @@ tcpClient.on('data',function(data){
             options.requestCert         = false;
             options.body                = reqInfo.data;
 
-            logger.debug(options);
+            logger.debug('HTTPS request options : %o',options);
             
             // Make HTTPS request
             request(options,function(error,res,body){
                 logger.info('Response for HTTPS request');
                 options = {};
-                logger.debug('Cleared HTTPS options',options);
-                logger.info(body);
+                logger.debug('Cleared HTTPS options : %o ',options);
+                logger.info('Response body : %o ',body);
             });
         break;
         case '/api/makeCall':

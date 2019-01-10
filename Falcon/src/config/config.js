@@ -21,6 +21,7 @@ const logger = winston.createLogger({
 												winston.format.timestamp({
 													format: 'HH:mm:ss DD-YYYY-MM'
 												}),
+												winston.format.splat(),
 												winston.format.json()
 											),
 										filename: appRoot+'/logs/error.log', 
@@ -34,7 +35,8 @@ const logger = winston.createLogger({
 												winston.format.timestamp({
 													format: 'HH:mm:ss DD-YYYY-MM'
 												}),
-												winston.format.json(),
+												winston.format.splat(),
+												winston.format.json()
 											),										
 										filename: appRoot+'/logs/combined.log',
 										level: 'silly'
@@ -48,6 +50,7 @@ if(process.env.ENV === 'prod'){
 	logger.add(new winston.transports.Console({
 		format: winston.format.combine(
 				winston.format.colorize(),
+				winston.format.splat(),
 				winston.format.simple()
 			),
 		level: 'info'
@@ -58,6 +61,7 @@ if(process.env.ENV === 'dev'){
 	logger.add(new winston.transports.Console({
 		format: winston.format.combine(
 				winston.format.colorize(),
+				winston.format.splat(),
 				winston.format.simple()
 			),
 		level: 'silly'
