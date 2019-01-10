@@ -3,7 +3,6 @@
     Description :
 */
 // Require componenets
-console.log('---------------------------------- APP ------------------------------------------');
 const express = require('express');
 const morgan = require('morgan');
 const winston = require('../middleware/winston');

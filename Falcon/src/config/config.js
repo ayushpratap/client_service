@@ -2,6 +2,7 @@ require('dotenv').config();
 var appRoot = require('app-root-path');
 const winston = require('winston');
 let CONFIG = {};
+
 //------------------------------------------------------------------------------
 CONFIG.app 					= process.env.APP 					|| 'dev';
 CONFIG.tcp_server_port 		= process.env.TCP_SERVER_PORT 		|| '9001';
@@ -26,7 +27,7 @@ const logger = winston.createLogger({
 												winston.format.prettyPrint(),
 												winston.format.printf(error => `${info.timestamp} ${info.level}: ${info.message}`)
 											),
-										filename: appRoot+'/logs/error-%DATE%.log', 
+										filename: appRoot+'/logs/error.log', 
 										level: 'error'
 									}),
 		new winston.transports.File({
@@ -45,7 +46,7 @@ const logger = winston.createLogger({
 													debug => `${info.timestamp} ${info.level}: ${info.message}`,
 													error => `${info.timestamp} ${info.level}: ${info.message}`)
 											),										
-										filename: appRoot+'/logs/combined-%DATE%.log',
+										filename: appRoot+'/logs/combined.log',
 										level: 'silly'
 									})
 	]
