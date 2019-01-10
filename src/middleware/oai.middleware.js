@@ -192,7 +192,7 @@ oai.makeCall = function(source,destination,callback){
     logger.debug('connect_to_sv9100 => %o',connect_to_sv9100);
     flag = 1;
     logger.debug('Flag set to = %d',flag);
-    client.write(connect_to_sv9500);
+    client.write(connect_to_sv9100);
   });
   
   client.on('data',function(){
@@ -202,11 +202,11 @@ oai.makeCall = function(source,destination,callback){
     if(1 == flag){
       logger.info('Flag = %d',flag);
       logger.debug('DATA => %o',data);
-      logger.info('Write switch_control_to_sv9500');
-      logger.debug('switch_control_to_sv9500 => %o',switch_control_to_sv9500);
+      logger.info('Write switch_control_to_sv9100');
+      logger.debug('switch_control_to_sv9100 => %o',switch_control_to_sv9100);
       flag = 2;
       logger.debug('Flag set to = %d',flag);
-      client.write(switch_control_to_sv9500);
+      client.write(switch_control_to_sv9100);
     }
     else if(2 == flag){ // Make call
       logger.info('Flag = %d',flag);
