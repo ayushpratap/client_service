@@ -22,7 +22,8 @@ const logger = winston.createLogger({
 													format: 'HH:mm:ss DD-YYYY-MM'
 												}),
 												winston.format.splat(),
-												winston.format.json()
+												winston.format.json(),
+												winston.format.prettyPrint()
 											),
 										filename: appRoot+'/logs/error.log', 
 										level: 'error'
@@ -36,7 +37,8 @@ const logger = winston.createLogger({
 													format: 'HH:mm:ss DD-YYYY-MM'
 												}),
 												winston.format.splat(),
-												winston.format.json()
+												winston.format.json(),
+												winston.format.prettyPrint()
 											),										
 										filename: appRoot+'/logs/combined.log',
 										level: 'silly'
