@@ -24,5 +24,5 @@ var httpsServer = https.createServer(credentials, server);
 
 server.all('*', app); // Redirect all the requests to app
 httpsServer.listen(CONFIG.port,()=>{
-	logger.info('HTTPS server listening at port : ',CONFIG.port);
+	logger.info('HTTPS server listening at port : %s',CONFIG.port);
 });  // Server running at port = process.env.PORT
