@@ -1,122 +1,96 @@
 /*
-    Filename : app.js
+    Filename    : app.js
     Description :
 */
-// Require componenets
-const express = require('express');
-const morgan = require('morgan');
-const winston = require('../middleware/winston');
-const callController = require('../controllers/call.controller');
-const userController = require('../controllers/user.controller');
-const app = express();
-const path = require('path');
-const router = express.Router();
-const expressHbs = require('express-handlebars');
+//----------------------------------------------------------------------------
+const express         = require('express');
+const callController  = require('../controllers/call.controller');
+const userController  = require('../controllers/user.controller');
+const CONFIG          = require('../config/config');
+const app             = express();
+const path            = require('path');
+const router          = express.Router();
+const expressHbs      = require('express-handlebars');
+const logger          = CONFIG.logger;
+//----------------------------------------------------------------------------
 
+logger.info('Starting up the App');
 
-app.use(morgan('combined',{stream: winston.stream}));
-winston.info('executing app.js');
-
+//----------------------------------------------------------------------------
+//  Default route
+//----------------------------------------------------------------------------
 router.get('/',function(req,res) {
+  logger.info("Request received at router.get('/')");
+  logger.debug('Request object : %o',req);
+  logger.info('Send the HTTPS request response : Hello');
+  
+  // Send the HTTPS request response
   res.send("Hello");
-  console.log("Hello");
 });
 
-//  Calling route
+
+//----------------------------------------------------------------------------
+//  Make single call
+//----------------------------------------------------------------------------
 router.post('/api/makeCall',function(req,res) 
 {
-  console.log(req.body);
+  logger.info("Request received at router.post('/api/makeCall')");
+  logger.debug('Request object : %o',req);
   var source      = req.body.source;
   var destination = req.body.destination;
-  callController.makeCall(source,destination,function(result){
+  logger.info('Calling : callController.makeCall with source : %s , destination : %s',source,destination);
+  callController.makeCall(source,destination,function(result)
+  {
     if(1 ==  result)
+    {
+      logger.debug('Result object : %o',result);
+      logger.info('Sending response for HTTPS request => /api/makeCall :  Making Call');
+
+      // Send the HTTPS request response
       res.send("/api/makeCall :  Making Call");
+    }
     else
+    {
+      logger.debug('Result object : %o',result);
+      logger.info('Sending response for HTTPS request => /api/makeCall :  Error');
+
+      // Send the HTTPS request response
       res.send("/api/makeCall :  Error");
+    }
   });
 });
 
-//-----------------------------------------------------------------------------
-//  Make multi call
-//-----------------------------------------------------------------------------
+//----------------------------------------------------------------------------
+//  Make 3 party call
+//----------------------------------------------------------------------------
 router.post('/api/makeCallMulti',function(req,res){
-  console.log(req.body);
-  var source = req.body.source;
-  var destinationA = req.body.destinationA;
-  var destinationB = req.body.destinationB;
+  logger.info("Request received at router.post('/api/makeCallMulti')");
+  logger.debug('Request object : %o',req);
+
+  var source        = req.body.source;
+  var destinationA  = req.body.destinationA;
+  var destinationB  = req.body.destinationB;
+
+  logger.info('Calling : callController.makeCall with source : %s , destinationA : %s , destinationB : %s',source,destinationA,destinationB);
   callController.makeCallMulti(source,destinationA,destinationB,function(result){
     if(1 == result)
+    {
+      logger.debug('Result object : %o',result);
+      logger.info('Sending response for HTTPS request => /api/makeCallMulti : Making 3 party call');
+
+      //  Send the HTTPS request response
       res.send('/api/makeCallMulti : Making 3 party call');
+    }
     else
+    {
+      logger.debug('Result object : %o',result);
+      logger.info('Sending response for HTTPS request => /api/makeCallMulti :  Error');
+
+      //  Send the HTTPS request response
       res.send('/api/makeCallMulti : Error');
-  });
-});
-
-//-----------------------------------------------------------------------------
-//  Get the multi call user information
-//-----------------------------------------------------------------------------
-router.post('/api/getUserMulti',function(req,res)
-  {
-    console.log("///***///  1 ///***///");
-    console.log("POST REQUEST at /api/getUserMulti");
-    var tmp1 = req.body.user1;
-    var tmp2 = req.body.user2;
-    var user1 = tmp1.toLowerCase();
-    var user2 = tmp2.toLowerCase();
-    console.log("*******************************");
-    console.log(user1);
-    console.log(user2);
-    console.log("*******************************");
-    userController.getUserMulti(user1,user2,function(result)
-    {
-        res.send(result);
-    });
-  }
-);
-
-
-//-----------------------------------------------------------------------------
-//  Add user data to DB
-//-----------------------------------------------------------------------------
-router.post('/api/addUser',function(req,res)
-{
-  console.log("POST REQUEST at /api/addUser");
-  console.log(req.body.Name);
-  console.log(req.body.Extension);
-  console.log(req.body.Mobile_Number);
-  userController.addUser(req.body.Name,req.body.Extension,req.body.Mobile_Number,function(result){
-    if(1 == result)
-    {
-      res.send("User added");
-    }
-    else
-    {
-      res.send("Something went wrong");
     }
   });
 });
 
-router.post('/api/getUser',function(req,res) 
-{
-  console.log("///***///  1 ///***///");
-  // Extract variables
-  console.log("*******************************");
-  var tmp = req.body.username;
-  var username = tmp.toLowerCase();
-  console.log(username);
-  console.log("*******************************");
-  // Call pcrpo
-  console.log("call userController.getUser");
-  userController.getUser(username,function(result){
-  if(result == null)
-  {
-    res.send('Could not fetch the user');
-  }
-  else
-  {
-    console.log("RESULT "+result);
-    res.send(result);
-  }
-  });
-});
+//----------------------------------------------------------------------------
 module.exports = router;

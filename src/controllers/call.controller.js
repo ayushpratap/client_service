@@ -1,58 +1,69 @@
-const winston = require('../middleware/winston');
-const oai = require('../middleware/oai.middleware');
-const MongoClient = require('mongodb').MongoClient;
-const db_connections = require('./connection.db');
-var callController = {};
-var result = 0;
+/*
+    Filename    : call.controller.js
+    Description :
+*/
+//------------------------------------------------------------------------------
+const winston 			= require('../middleware/winston');
+const oai 				= require('../middleware/oai.middleware');
+const MongoClient 		= require('mongodb').MongoClient;
+const db_connections 	= require('./connection.db');
+var callController 		= {};
+var result 				= 0;
+//------------------------------------------------------------------------------
 
+logger.info('Starting up the call controller');
+
+//------------------------------------------------------------------------------
+//	Make single call
+//------------------------------------------------------------------------------
 //callController.makeCall = function (numberType,callNumber,userId,callback) 
 callController.makeCall = function (source,destination,callback) 
 {
-	console.log("callController.makeCall");
-	console.log("source : " + source);
-	console.log("destination : " + destination);
+	logger.info('Function execution start : callController.makeCall()');
+	logger.debug('source : %s, destination : %s',source,destination);
+	
+	// Call the oai middleware
+	logger.info('Calling OAI middleware');
 	oai.makeCall(source,destination,function(result){
+		logger.debug('Result object : %o',result);
 		if(null == result)
+		{
+			logger.info('OAI middleware sends failure');
 			result = null;
+		}
+		else
+		{
+			logger.info('OAI middleware sends success');
+		}
 		callback(result);
 	});
 }
+
+//------------------------------------------------------------------------------
+//	Make 3 party call
+//------------------------------------------------------------------------------
 //callController.makeCallMulti = function(stationB,stationC,userId,callbackMulti)
 callController.makeCallMulti = function(source,destinationA,destinationB,callbackMulti)
 {
-	console.log("source 	  : " + source);
-	console.log("destinationA : " + destinationA);
-	console.log("destinationB : " + destinationB);
+	logger.info('Function execution start : callController.makeCallMulti()');
+	logger.debug('source : %s, destinationA : %s, destinationB : %s',source,destinationA,destinationB);
+	
+	//	Call the oai middleware
+	logger.info('Calling OAI middleware');
 	oai.makeCallMulti(source,destinationA,destinationB,function(result){
+		logger.debug('Result object : %o',result);
 		if(null == result)
+		{
+			logger.info('OAI middleware sends failure');
 			result = null;
+		}
+		else
+		{
+			logger.info('OAI middleware sends success');
+		}
 		callbackMulti(result);
 	});
-	/*getSourceAddress(userId,function(addr)
-		{
-			if(addr == 0)
-			{
-				winston.error(addr);
-				callbackMulti(null);
-				return;
-			}
-			else
-			{
-				oai.makeCallMulti(addr,stationB,stationC,function(result){
-					var dbo = db_connections.amazon_accounts;
-					var myquery = { "_userId": userId };
-					var newvalues = { $set: {"is_available": 1,"source_extension":0000} };
-					console.log("Update DB");
-					dbo.collection("account_mapping").updateOne(myquery, newvalues, function(err, res) {
-						if (err) throw err;
-					});
-					if(result == null)
-				{
-			  	result = null;
-				}
-				callbackMulti(result);
-				});
-			}	
-		});*/
 }
+
+//------------------------------------------------------------------------------
 module.exports = callController;

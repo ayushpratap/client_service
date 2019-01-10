@@ -1,10 +1,14 @@
+/*
+    Filename    : oai.middleware.js
+    Description :
+*/
+//------------------------------------------------------------------------------
 const CONFIG = require('../config/config');
 const net = require('net');
 const winston = require('winston');
 const oai = {};
 var flag=0;
-
-
+const logger = CONFIG.logger;
 var numArr = {
               "0": 0x0a,
               "1": 0x01,
@@ -17,6 +21,10 @@ var numArr = {
               "8": 0x08,
               "9": 0x09
             };
+//------------------------------------------------------------------------------
+
+logger.info('Starting up the OAI middleware');
+
 /****************************************************** CONNECT PACKETS *************************************************************************************************/
 /* ----> */var connect_to_sv9500_1              = Buffer.from([0x60,0x1c,0x80,0x02,0x00,0x00,0xa3,0x03,0x06,0x01,0x00,0xa4,0x11,0x08,0x0f,0x4e,0x45,0x43,0x20,0x43,0x26,0x43,0x20,0x28,0x4f,0x41,0x49,0x29,0x20,0x58]);
 /* <---- */var connect_from_sv9500_1            = Buffer.from([0x61,0x0c,0x80,0x02,0x00,0x00,0x81,0x01,0x00,0xa3,0x03,0x06,0x01,0x00]);
@@ -102,12 +110,15 @@ var numArr = {
 //oai.makeCall = function(numberType,callNumber,sourceAddress,callback) 
 oai.makeCall = function(source,destination,callback) 
 {
-  console.log("oai.makeCall");
+  logger.info('Function execution start : oai.makeCall()');
+  
   var stringSourceAddress           = source.toString();
   var stringDestinationAddress      = destination.toString();
-  console.log("stringSourceAddress = "+stringSourceAddress);
-  console.log("stringDestinationAddress = "+stringDestinationAddress);
-  callback(1);
+
+  logger.debug('source : %s , destination : %s',stringSourceAddress,stringDestinationAddress);
+  
+  
+  
   // Add the source adress to end call packets
   endcall_to_sv9500[33]         = numArr[stringSourceAddress[0]];
   endcall_to_sv9500[34]         = numArr[stringSourceAddress[1]];
