@@ -1,8 +1,8 @@
-const winston = require('../middleware/winston');
+
 const pcpro = require('../middleware/pcpro.middleware');
 const MongoClient = require('mongodb').MongoClient;
 const db_connections = require('./connection.db');
-winston.info('File : call.controller.js');
+
 var userController = {};
 userController.getUser=function (username,callback) {
   console.log("///***///  2 ///***///");
