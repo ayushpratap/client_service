@@ -195,7 +195,7 @@ oai.makeCall = function(source,destination,callback){
     client.write(connect_to_sv9100);
   });
   
-  client.on('data',function(){
+  client.on('data',function(data){
     logger.info('Data received');
 
     // Open switch control
