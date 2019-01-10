@@ -22,7 +22,7 @@ tcpClient.on('data',function(data){
 
     // Convert the Buffer to JSON object
     let reqInfo = JSON.parse(data.toString());
-    logger.debug(reqInfo);
+    logger.debug('Request info : %o ',reqInfo);
     // Get the route of the request
     switch(reqInfo.route){
         case '/':
@@ -39,7 +39,7 @@ tcpClient.on('data',function(data){
             
             // Make HTTPS request
             request(options,function(error,res,body){
-                logger.info('Response for HTTPS request');
+                logger.info('Response received for HTTPS request');
                 options = {};
                 logger.debug('Cleared HTTPS options : %o ',options);
                 logger.info('Response body : %o ',body);
