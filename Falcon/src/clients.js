@@ -56,36 +56,43 @@ tcpClient.on('data',function(data){
             options.requestCert         = false;
             options.body                = reqInfo.data;
 
-            logger.debug(options);
+            logger.debug('HTTPS request options : %o',options);
 
             //  Make HTTPS request
             request(options,function(error,res,body){
-                logger.info('Response for HTTPS request');
+                logger.info('Response received for HTTPS request');
                 options = {};
-                logger.debug('Cleared HTTPS options', options);
-                logger.info(body);
+                logger.debug('Cleared HTTPS options : %o',options);
+                logger.info('Response body : %o ',body);
             });
         break;
         case '/api/makeCallMulti':
-            // Make a HTTP request to client service
-            console.log(reqInfo);
+            logger.info("Case : /api/makeCallMulti");
+
+            //  Set the options for HTTPS request
             options.method              = "POST";
             options.url                 = CONFIG.client_service_url+reqInfo.route;
             options.json                = true;
             options.rejectUnauthorized  = false;
             options.requestCert         = false;
             options.body                = reqInfo.data;
+
+            logger.debug('HTTPS request options : %o',options);
+
+            // Make HTTPS request
             request(options,function(error,res,body){
+                logger.info('Response received for HTTPS request');
                 options = {};
-                console.log(body);
+                logger.debug('Cleared HTTPS options : %o',options);
+                logger.info('Response body : %o',body);
             });
          break;
         default:
-            console.log("default");
+            logger.error('No matching case');
     }
 });
 
 //  Handle error event
 tcpClient.on('error',function(err){
-    logger.error(err);
+    logger.error('Error : %o',err);
 });
