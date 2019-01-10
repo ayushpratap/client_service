@@ -1,0 +1,23 @@
+// 	Connect
+
+// 	Switch controll
+
+// --------------------- Single call -------------------------------------------
+// 	End call to NEC SIP
+
+// 	Make call to digital from NEC SIP
+
+// 	Make Call to analog from NEC SIP
+
+//-------------------- Multi party call ----------------------------------------
+//	End call to NEC SIP
+
+// 	Make call to digital from NEC SIP
+
+// 	Open Monitoring for digital
+
+// 	Open notify for digital
+
+// 	Start monitor for digital
+
+// 	Make conference to NEC SIP

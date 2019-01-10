@@ -106,9 +106,38 @@ logger.info('Starting up the OAI middleware');
   Station C                                     = makeConference_from_sv9500[45],makeConference_from_sv9500[46],makeConference_from_sv9500[47],makeConference_from_sv9500[48]
 ***/
 /************************************************************************************************************************************************************************/
+
+//------------------------------------------------------------------------------
+//  SV9100 Packets
+//------------------------------------------------------------------------------
+//****************************** Connect ***************************************
+//  60:1c:80:02:00:00:a3:03:06:01:00:a4:11:08:0f:4e:45:43:20:43:26:43:20:28:4f:41:49:29:20:58
+var connect_to_sv9100           =   Buffer.from([0x60,0x1c,0x80,0x02,0x00,0x00,0xa3,0x03,0x06,0x01,0x00,0xa4,0x11,0x08,0x0f,0x4e,0x45,0x43,0x20,0x43,0x26,0x43,0x20,0x28,0x4f,0x41,0x49,0x29,0x20,0x58]);
+//  61:0c:80:02:00:00:81:01:00:a3:03:06:01:00
+var connect_from_sv9100         =   Buffer.from([0x61,0x0c,0x80,0x02,0x00,0x00,0x81,0x01,0x00,0xa3,0x03,0x06,0x01,0x00]);
+//******************************************************************************
+//********************** Open Switch Control ***********************************
+//  a1:15:30:13:02:01:07:02:01:28:30:0b:a0:06:04:01:00:04:01:01:82:01:69
+var switch_control_to_sv9100    =   Buffer.from([0xa1,0x15,0x30,0x13,0x02,0x01,0x07,0x02,0x01,0x28,0x30,0x0b,0xa0,0x06,0x04,0x01,0x00,0x04,0x01,0x01,0x82,0x01,0x69]);
+//  a2:0f:30:0d:02:01:07:30:08:a0:06:04:01:00:04:01:01
+var switch_control_from_sv9100  =   Buffer.from([0xa2,0x0f,0x30,0x0d,0x02,0x01,0x07,0x30,0x08,0xa0,0x06,0x04,0x01,0x00,0x04,0x01,0x01]);
+//******************************************************************************
+//**************************** Terminate call **********************************
+//  a1:32:30:30:02:01:09:02:01:69:30:28:a0:06:04:01:01:04:01:02:a2:0e:a0:0c:04:01:01:04:02:00:00:04:03:01:0a:01:a3:0e:a1:0c:04:01:01:04:02:00:00:04:03:01:0a:02 
+var endcall_to_sv9100           =   Buffer.from([0xa1,0x32,0x30,0x30,0x02,0x01,0x09,0x02,0x01,0x69,0x30,0x28,0xa0,0x06,0x04,0x01,0x01,0x04,0x01,0x02,0xa2,0x0e,0xa0,0x0c,0x04,0x01,0x01,0x04,0x02,0x00,0x00,0x04,0x03,0x01,0x0a,0x01,0xa3,0x0e,0xa1,0x0c,0x04,0x01,0x01,0x04,0x02,0x00,0x00,0x04,0x03,0x01,0x0a,0x02]);
+//  a2:2d:30:2b:02:01:09:30:26:a0:06:04:01:01:04:01:02:a1:1c:a0:0c:04:01:01:04:02:00:0a:04:03:01:0a:01:a1:0c:04:01:01:04:02:00:0a:04:03:01:0a:02
+var endcall_from_sv9100         =   Buffer.from([0xa2,0x2d,0x30,0x2b,0x02,0x01,0x09,0x30,0x26,0xa0,0x06,0x04,0x01,0x01,0x04,0x01,0x02,0xa1,0x1c,0xa0,0x0c,0x04,0x01,0x01,0x04,0x02,0x00,0x0a,0x04,0x03,0x01,0x0a,0x01,0xa1,0x0c,0x04,0x01,0x01,0x04,0x02,0x00,0x0a,0x04,0x03,0x01,0x0a,0x02]);
+//******************************************************************************
+//**************************** Make call ***************************************
+//  a1:32:30:30:02:01:0f:02:01:69:30:28:a0:06:04:01:01:04:01:01:a2:0e:a0:0c:04:01:01:04:02:00:00:04:03:01:0a:02:a3:05:80:03:01:0a:01:84:01:02:85:01:03:86:01:01
+var makecall_to_sv9100          =   Buffer.from([0xa1,0x32,0x30,0x30,0x02,0x01,0x0f,0x02,0x01,0x69,0x30,0x28,0xa0,0x06,0x04,0x01,0x01,0x04,0x01,0x01,0xa2,0x0e,0xa0,0x0c,0x04,0x01,0x01,0x04,0x02,0x00,0x00,0x04,0x03,0x01,0x0a,0x02,0xa3,0x05,0x80,0x03,0x01,0x0a,0x01,0x84,0x01,0x02,0x85,0x01,0x03,0x86,0x01,0x01]);
+//  a2:2d:30:2b:02:01:0f:30:26:a0:06:04:01:01:04:01:01:a1:1c:a0:0c:04:01:01:04:02:00:0a:04:03:01:0a:02:a1:0c:04:01:01:04:02:00:0a:04:03:01:0a:01
+var makecall_from_sv9100        =   Buffer.from([0xa2,0x2d,0x30,0x2b,0x02,0x01,0x0f,0x30,0x26,0xa0,0x06,0x04,0x01,0x01,0x04,0x01,0x01,0xa1,0x1c,0xa0,0x0c,0x04,0x01,0x01,0x04,0x02,0x00,0x0a,0x04,0x03,0x01,0x0a,0x02,0xa1,0x0c,0x04,0x01,0x01,0x04,0x02,0x00,0x0a,0x04,0x03,0x01,0x0a,0x01]);
+//******************************************************************************
+
+
 //oai.makeCall = function(numberType,callNumber,sourceAddress,callback) 
-oai.makeCall = function(source,destination,callback) 
-{
+oai.makeCall = function(source,destination,callback){
   logger.info('Function execution start : oai.makeCall()');
   
   var stringSourceAddress           = source.toString();
@@ -117,7 +146,7 @@ oai.makeCall = function(source,destination,callback)
   logger.debug('source : %s , destination : %s',stringSourceAddress,stringDestinationAddress);
   
   
-  
+//------------------------------------------------------------------------------
   // Add the source adress to end call packets
   endcall_to_sv9500[33]         = numArr[stringSourceAddress[0]];
   endcall_to_sv9500[34]         = numArr[stringSourceAddress[1]];
@@ -135,12 +164,70 @@ oai.makeCall = function(source,destination,callback)
   makecall_to_sv9500[42]        = numArr[stringDestinationAddress[1]];
   makecall_to_sv9500[43]        = numArr[stringDestinationAddress[2]];
   makecall_to_sv9500[44]        = numArr[stringDestinationAddress[3]];
+//------------------------------------------------------------------------------
+  //  Add source to end call packets for SV9100
+  
+  //  Add source to make call packets for SV9100
+  makecall_to_sv9100[33]  = numArr[stringSourceAddress[0]];
+  makecall_to_sv9100[34]  = numArr[stringSourceAddress[1]];
+  makecall_to_sv9100[35]  = numArr[stringSourceAddress[2]];
+  //  Add destination to make call packets for SV9100
+  makecall_to_sv9100[40]  = numArr[stringDestinationAddress[0]];
+  makecall_to_sv9100[41]  = numArr[stringDestinationAddress[1]];
+  makecall_to_sv9100[42]  = numArr[stringDestinationAddress[2]];
+
   var flag = 0;
   
   // Create connection
-  /* 
+  logger.info('Creating connection with SV9100');
+  logger.info('Flag = %d',flag);
+
   const client = net.createConnection(CONFIG.oai_port,CONFIG.oai_ip);
-  console.log("Client"+client);
+  
+  logger.debug('Client socket to OAI object : %o',client);
+  
+  client.on('connect',function(){
+    logger.info('Connected to SV9100');
+    logger.info('Write connect_to_sv9100');
+    logger.debug('connect_to_sv9100 => %o',connect_to_sv9100);
+    flag = 1;
+    logger.debug('Flag set to = %d',flag);
+    client.write(connect_to_sv9500);
+  });
+  
+  client.on('data',function(){
+    logger.info('Data received');
+
+    // Open switch control
+    if(1 == flag){
+      logger.info('Flag = %d',flag);
+      logger.debug('DATA => %o',data);
+      logger.info('Write switch_control_to_sv9500');
+      logger.debug('switch_control_to_sv9500 => %o',switch_control_to_sv9500);
+      flag = 2;
+      logger.debug('Flag set to = %d',flag);
+      client.write(switch_control_to_sv9500);
+    }
+    else if(2 == flag){ // Make call
+      logger.info('Flag = %d',flag);
+      logger.debug('DATA => %o',data);
+      logger.info('Write makecall_to_sv9100');
+      logger.debug('makecall_to_sv9100 => %o',makecall_to_sv9100);
+      flag = 3;
+      logger.debug('Flag set to = %d',flag);
+      client.write(makecall_to_sv9100);
+     }
+     else if(3 == flag){  //  Callback
+      logger.info('Flag = %d',flag);
+      logger.debug('DATA => %o',data);
+      logger.info('Sending callback');
+      flag = 0;
+      logger.debug('Flag set to = %d',flag);
+      callback("1");
+     }
+  });
+}
+  /*console.log("Client"+client);
 */
   // connect to OAI
   //client.on('connect',function(){
@@ -233,7 +320,6 @@ oai.makeCall = function(source,destination,callback)
   client.on('error', function(error) {
     console.log("Error");
   });*/
-}
 
 //oai.makeCallMulti = function(source,destinationA,destinationB,callbackMulti){
 oai.makeCallMulti = function(source,destinationA,destinationB,callbackMulti){
