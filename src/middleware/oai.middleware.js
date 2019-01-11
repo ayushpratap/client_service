@@ -225,6 +225,10 @@ oai.makeCall = function(source,destination,callback){
       logger.debug('Flag set to = %d',flag);
       callback("1");
      }
+     else{
+      // Do nothing
+      logger.debug('Default case');
+     }
   });
   client.on('end',()=>{
     logger.info('Disconnected from the OAI server');
