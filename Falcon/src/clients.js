@@ -68,7 +68,7 @@ tcpClient.on('data',function(data){
                 logger.info('Response received for HTTPS request');
                 options = {};
                 logger.debug('Cleared HTTPS options : %o',options);
-                logger.info('Response body : %o ',body);
+                logger.info('Request body : %o ',body);
             });
         break;
         case '/api/makeCallMulti':
