@@ -226,6 +226,12 @@ oai.makeCall = function(source,destination,callback){
       callback("1");
      }
   });
+  client.on('end',()=>{
+    logger.info('Disconnected from the OAI server');
+  });
+  client.on('error',(error)=>{
+    logger.error('Error object => %o',error);
+  });
 }
   /*console.log("Client"+client);
 */
