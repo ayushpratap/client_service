@@ -13,9 +13,9 @@ const GET_FACT_MESSAGE      =   "Here's your fact: ";
 const HELP_MESSAGE          =   'You can say please call followed by the person you want to call';
 const HELP_REPROMPT         =   'What can I help you with?';
 const STOP_MESSAGE          =   'Goodbye!';
-const URL_APOLLO            =   'https://alexa_sv9500.nectechnologies.in:8443';
-const GET_USER_ENDPOINT     =   '/api/getUser';
-const MAKE_CALL_ENDPOINT    =   '/api/makeCall';
+const URL_APOLLO            =   'http://ec2-3-84-84-67.compute-1.amazonaws.com:9000';
+const GET_USER_ENDPOINT     =   '/getUser';
+const MAKE_CALL_ENDPOINT    =   '/makeCall';
 //=========================================================================================================================================
 //  Intent functions
 //=========================================================================================================================================
