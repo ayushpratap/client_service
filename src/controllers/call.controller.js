@@ -65,6 +65,5 @@ callController.makeCallMulti = function(source,destinationA,destinationB,callbac
 		callbackMulti(result);
 	});
 }
-
 //------------------------------------------------------------------------------
 module.exports = callController;

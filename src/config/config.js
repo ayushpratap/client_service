@@ -1,9 +1,14 @@
+/*
+	Filename: config.js
+	Description:
+ */
+//------------------------------------------------------------------------------
 require('dotenv').config();
-var appRoot = require('app-root-path');
-const winston = require('winston');
-
-let CONFIG = {};
-
+var appRoot 	= require('app-root-path');
+const winston 	= require('winston');
+let CONFIG 		= {};
+//------------------------------------------------------------------------------
+//	Add parameters to global CONFIG
 //------------------------------------------------------------------------------
 CONFIG.app 				= process.env.APP 				|| 'dev';
 CONFIG.port_unsecured 	= process.env.PORT_UNSECURED 	|| '8000';
@@ -21,8 +26,6 @@ CONFIG.jwt_encryption 	= process.env.JWT_ENCRYPTION 	|| 'LittleBitOFThisAndThat'
 CONFIG.jwt_expiration 	= process.env.JWT_EXPIRATION 	|| '604800';
 CONFIG.env 				= process.env.ENV				|| 'dev';
 //------------------------------------------------------------------------------
-
-
 // Create logger for logging
 const logger = winston.createLogger({
 		transports:[
@@ -87,7 +90,7 @@ if(process.env.ENV === 'dev'){
 		level: 'silly'
 	}));
 }
-
+//------------------------------------------------------------------------------
 // Add the logger instance to the global CONFIG
 //------------------------------------------------------------------------------
 CONFIG.logger = logger;

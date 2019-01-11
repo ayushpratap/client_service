@@ -1,11 +1,16 @@
-const express = require('express');
-const net  = require('net');
-var request = require('request');
-var CONFIG = require('./config/config');
-const JsonSocket = require('json-socket');
-var options = {};
-const logger = CONFIG.logger;
-
+/*
+    Filename: clients.js
+    Description:
+ */
+//------------------------------------------------------------------------------
+const express       = require('express');
+const net           = require('net');
+const request         = require('request');
+var CONFIG          = require('./config/config');
+const JsonSocket    = require('json-socket');
+const logger        = CONFIG.logger;
+var options         = {};
+//------------------------------------------------------------------------------
 // Create client socket
 logger.info('Creating client socket');
 const tcpClient = net.createConnection(CONFIG.tcp_server_port,CONFIG.tcp_server_host);
@@ -96,3 +101,4 @@ tcpClient.on('data',function(data){
 tcpClient.on('error',function(err){
     logger.error('Error : %o',err);
 });
+//------------------------------------------------------------------------------

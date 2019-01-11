@@ -1,18 +1,21 @@
+//------------------------------------------------------------------------------
 'use strict';
-const Alexa = require('alexa-sdk');
-const request = require('request');
+const Alexa     = require('alexa-sdk');
+const request   = require('request');
 
 //=========================================================================================================================================
 //  Global constants
 //=========================================================================================================================================
 
-const APP_ID = "amzn1.ask.skill.7d0ad3c5-0459-4df1-babf-601e00d7228f";
-const SKILL_NAME = 'Space Facts';
-const GET_FACT_MESSAGE = "Here's your fact: ";
-const HELP_MESSAGE = 'You can say please call followed by the person you want to call';
-const HELP_REPROMPT = 'What can I help you with?';
-const STOP_MESSAGE = 'Goodbye!';
-
+const APP_ID                =   "amzn1.ask.skill.7d0ad3c5-0459-4df1-babf-601e00d7228f";
+const SKILL_NAME            =   'Space Facts';
+const GET_FACT_MESSAGE      =   "Here's your fact: ";
+const HELP_MESSAGE          =   'You can say please call followed by the person you want to call';
+const HELP_REPROMPT         =   'What can I help you with?';
+const STOP_MESSAGE          =   'Goodbye!';
+const URL_APOLLO            =   'https://alexa_sv9500.nectechnologies.in:8443';
+const GET_USER_ENDPOINT     =   '/api/getUser';
+const MAKE_CALL_ENDPOINT    =   '/api/makeCall';
 //=========================================================================================================================================
 //  Intent functions
 //=========================================================================================================================================
@@ -142,80 +145,62 @@ const handlers =
             this.emit(':tell',response);
         });
     },
-    'OFFICEmakeCall' : function(){
-        var username = this.event.request.intent.slots.USER.value;
-        var userId = this.event.session.user.userId;
-        var response = "Some Error is there you may need to check";
-        console.log("1. "+username);
-        console.log("2. "+userId);
-        function sendRequest(options,callback_req)
-        {
-            console.log("4. sendRequest");
-            console.log("5. ");
-            console.log(options);
-            request(options,function(error,response,body)
-            {
-                console.log("6. ");
-                console.log(body);
-        		callback_req(body);
-        	});
-        }
-        var getUserOptions = 
-        {
-        	url:"https://alexa_sv9500.nectechnologies.in:8443/api/getUser",
-            method:"POST",
-            json:true,
-            rejectUnauthorized:false,
-            requestCert:false,
-            body: {
-                "username": username,
-				"numberType":"extension",
-				"userId" : userId
+    'OFFICEmakeCall' : function()
+    {
+    //--------------------------------------------------------------------------
+        console.info('Starting execution of function : OFFICEmakeCall');
+        var username        = this.event.request.intent.slots.USER.value;
+        var userId          = this.event.session.user.userId;
+        var voiceResponse   = "Some Error is there you may need to check";
+        var getUserOptions  = {};
+        var makeCallOptions = {};
+
+        console.info('Username  = ',username);
+        console.info('UserId    = ',userId);
+        console.info('Default response = ',voiceResponse);
+
+        // Make a HTTP request to Apollo server to get the user
+        getUserOptions.url      =   URL_APOLLO+GET_USER_ENDPOINT;
+        getUserOptions.method   =   'POST';
+        getUserOptions.json     =   true;
+        getUserOptions.body     =   {
+                                        "username":username
+                                    };
+        console.log('getUserOptions ',getUserOptions);
+
+        request(getUserOptions,function(error,res,body){
+            console.info('Got the response for GetUser request');
+            console.log('Response body',body);
+            if("User does not exist" == body){
+                voiceResponse = body;
+                console.info('Response updated to = ',voiceResponse);
             }
-        };
-        var OaiCallJSONObject = 
-        {
-            "numberType":"extension",
-            "userId" : userId
-        };
-        var makeCallOptions = 
-        {
-            url: "https://alexa_sv9500.nectechnologies.in:8443/api/makeCall",
-            method: "POST",
-            json: true,
-            rejectUnauthorized:false,
-            requestCert:false,
-            agent:false,
-            body: OaiCallJSONObject
-        };
-        console.log("3. ");
-        console.log(OaiCallJSONObject);
-        sendRequest(getUserOptions,function(body)
-        {
-            if(null == body)
-            {
-                response = "Sorry user do not exists";
-            }
-            else
-            {
-                /*OaiCallJSONObject.CallNumber = body.Extension;
-                console.log("7. ");
-                console.log(OaiCallJSONObject);
-                sendRequest(makeCallOptions,function(body_call)
-                {
-                    if(body_call=="Making call")
-                    {
-                        response = "Okay calling "+username;
+            else{
+            // Make a make call request using the body of the GetUser request
+            // Set the Make Call request options
+                makeCallOptions.url     = URL_APOLLO+MAKE_CALL_ENDPOINT;
+                makeCallOptions.method  = 'POST';
+                makeCallOption.json     = true;
+                makeCallOptions.body    = {
+                                                "userId":userId,
+                                                "destination":body.extension;
+                                          };
+                console.log('makeCallOptions ',makeCallOptions);
+
+                request(makeCallOptions,function(error,res,body){
+                    console.info('Got the response for MakeCall request');
+                    console.log('Response body ',body);
+                    if('Sending data to Falcon' == body){
+                        voiceResponse = "Trying make call to "+username;
+                        console.info('voiceResponse updated to =',voiceResponse);
                     }
-                    else
-                    {
-                        response = "Unable to make a call to "+username;
+                    else{
+                        voiceResponse = "Sorry some error occured";
+                        console.info('voiceResponse updated to =',voiceResponse);
                     }
-                
-                });*/
+                });
             }
-            console.log("8. "+response);
-            this.emit(':tell',response);
+            this.emit(':tell',voiceResponse);
         });
     }
 };
