@@ -183,7 +183,7 @@ const handlers =
                 makeCallOption.json     = true;
                 makeCallOptions.body    = {
                                                 "userId":userId,
-                                                "destination":body.extension;
+                                                "destination":body.Extension;
                                           };
                 console.log('makeCallOptions ',makeCallOptions);
 
