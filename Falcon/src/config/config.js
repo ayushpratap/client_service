@@ -27,7 +27,7 @@ const logger = winston.createLogger({
 												winston.format.splat(),
 												winston.format.json(),
 												winston.format.prettyPrint(),
-												winston.format.printf(error => `${info.timestamp} ${info.level}: ${info.message}`)
+												winston.format.printf(error => `${error.timestamp} ${error.level}: ${error.message}`)
 											),
 										filename: appRoot+'/logs/error.log', 
 										level: 'error'
@@ -45,8 +45,8 @@ const logger = winston.createLogger({
 												winston.format.prettyPrint(),
 												winston.format.printf(
 													info => `${info.timestamp} ${info.level}: ${info.message}`,
-													debug => `${info.timestamp} ${info.level}: ${info.message}`,
-													error => `${info.timestamp} ${info.level}: ${info.message}`)
+													debug => `${debug.timestamp} ${debug.level}: ${debug.message}`,
+													error => `${error.timestamp} ${error.level}: ${error.message}`)
 											),										
 										filename: appRoot+'/logs/combined.log',
 										level: 'silly'
