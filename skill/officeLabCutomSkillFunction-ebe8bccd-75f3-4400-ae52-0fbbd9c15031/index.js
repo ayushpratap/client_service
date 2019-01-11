@@ -180,7 +180,7 @@ const handlers =
             // Set the Make Call request options
                 makeCallOptions.url     = URL_APOLLO+MAKE_CALL_ENDPOINT;
                 makeCallOptions.method  = 'POST';
-                makeCallOption.json     = true;
+                makeCallOptions.json     = true;
                 makeCallOptions.body    = {
                                                 "userId":userId,
                                                 "destination":body.Extension
