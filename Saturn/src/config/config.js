@@ -19,6 +19,9 @@ let CONFIG 									= {};
 //------------------------------------------------------------------------------
 //	Create logs folder if does not exists
 //------------------------------------------------------------------------------
+console.log("''''''''''''''''''");
+console.log(LOG_DIR);
+console.log("''''''''''''''''''");
 if(!fs.existsSync(LOG_DIR))
 {
 	fs.mkdirSync(LOG_DIR);
