@@ -10,6 +10,7 @@ const CONFIG 			= require('../config/config');
 var callController 		= {};
 var result 				= 0;
 const logger 			= CONFIG.logger;
+const reqlogger 		= CONFIG.reqlogger;
 //------------------------------------------------------------------------------
 
 logger.info('Starting up the call controller');
@@ -35,6 +36,23 @@ callController.makeCall = function (source,destination,callback)
 		else
 		{
 			logger.info('OAI middleware sends success');
+			// Remove the source address from database
+			let query = {
+				"source":source
+			};
+			let updates = {
+				$set:{
+					"source":"0000",
+					"is_available":1
+				}
+			};
+			CONFIG.db.collection("mapping").updateOne(query,updates,function(err,res){
+				if(err){
+					dblogger.error('Error object => %o',err);
+					throw err;
+				}
+				dblogger.info('Source address removed from database');
+			});
 		}
 		callback(result);
 	});
@@ -61,6 +79,23 @@ callController.makeCallMulti = function(source,destinationA,destinationB,callbac
 		else
 		{
 			logger.info('OAI middleware sends success');
+			// Remove the source address from database
+			let query = {
+				"source":source
+			};
+			let updates = {
+				$set:{
+					"source":"0000",
+					"is_available":1
+				}
+			};
+			CONFIG.db.collection("mapping").updateOne(query,updates,function(err,res){
+				if(err){
+					dblogger.error('Error object => %o',err);
+					throw err;
+				}
+				dblogger.info('Source address removed from database');
+			});
 		}
 		callbackMulti(result);
 	});

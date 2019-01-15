@@ -23,6 +23,8 @@ var httpsServer = https.createServer(credentials, server);
 
 
 server.all('*', app); // Redirect all the requests to app
-httpsServer.listen(CONFIG.port,()=>{
+/*httpsServer.listen(CONFIG.port,()=>{
 	logger.info('HTTPS server listening at port : %s',CONFIG.port);
-});  // Server running at port = process.env.PORT
+});*/  // Server running at port = process.env.PORT
+
+module.exports = httpsServer;

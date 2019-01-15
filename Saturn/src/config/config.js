@@ -4,9 +4,24 @@
  */
 //------------------------------------------------------------------------------
 require('dotenv').config();
-var appRoot 	= require('app-root-path');
-const winston 	= require('winston');
-let CONFIG 		= {};
+const appRoot 								= require('app-root-path');
+const winston 								= require('winston');
+const fs 									= require('fs');
+const LOG_DIR 								= appRoot+'/logs';
+const ERROR_LOG_FILE						= LOG_DIR+'/'+'error.json';
+const COMBINE_LOG_FILE						= LOG_DIR+'/'+'combine.json';
+const DB_LOG_FILE 							= LOG_DIR+'/'+'db.json';
+const SOCKET_LOG_FILE 						= LOG_DIR+'/'+'sockets.json';
+const REQUEST_LOG_FILE 						= LOG_DIR+'/'+'request.json';
+const TIMESTAMP_PATTERN						= 'DD-MM-YYYY HH:mm:ss';
+let CONFIG 									= {};
+//------------------------------------------------------------------------------
+//	Create logs folder if does not exists
+//------------------------------------------------------------------------------
+if(!fs.existsSync(LOG_DIR))
+{
+	fs.mkdirSync(LOG_DIR);
+}
 //------------------------------------------------------------------------------
 //	Add parameters to global CONFIG
 //------------------------------------------------------------------------------
@@ -21,79 +36,229 @@ CONFIG.db_port 			= process.env.DB_PORT 			|| 	'27017';
 CONFIG.db_url 			= process.env.DB_URL 			||	'mongodb://34.199.158.57:27017';
 CONFIG.db_name 			= process.env.DB_NAME 			|| 	'Alexa';
 CONFIG.db_name_acc 		= process.env.DB_NAME_ACC 		|| 	'amazon_accounts';
-CONFIG.db_user 			= process.env.DB_USER 			|| 	'root';
-CONFIG.db_password 		= process.env.DB_PASSWORD 		|| 	'';
-CONFIG.jwt_encryption 	= process.env.JWT_ENCRYPTION 	|| 	'LittleBitOFThisAndThat';
-CONFIG.jwt_expiration 	= process.env.JWT_EXPIRATION 	|| 	'604800';
 CONFIG.env 				= process.env.ENV				|| 	'dev';
 //------------------------------------------------------------------------------
-// Create logger for logging
+// Create logger for logging with two file transports
+//------------------------------------------------------------------------------
 const logger = winston.createLogger({
-		transports:[
+	format: winston.format.combine(
+		winston.format.splat(),
+		winston.format.label({label : path.basename(module.parent.filename)}),
+		winston.format.timestamp({format: TIMESTAMP_PATTERN}),
+	),
+	transports:[
 		new winston.transports.File({
-										format: winston.format.combine(
-												winston.format.label({
-														label: CONFIG.env
-													}),												
-												winston.format.timestamp({
-													format: 'HH:mm:ss DD-YYYY-MM'
-												}),
-												winston.format.splat(),
-												winston.format.json(),
-												winston.format.prettyPrint(),
-												winston.format.printf(error => `${error.timestamp} ${error.level}: ${error.message}`)
-											),
-										filename: appRoot+'/logs/error.log', 
-										level: 'error'
-									}),
+			format: winston.format.combine(
+				winston.format.json(),
+				winston.format.prettyPrint(),
+				winston.format.printf(
+					info => `${info.timestamp} ${info.level} [${info.label}] : ${info.message}`,
+					debug => `${debug.timestamp} ${debug.level} [${debug.label}] : ${debug.message}`,
+					error => `${error.timestamp} ${error.level} [${error.label}] : ${error.message}`
+				)
+			),
+			filename: COMBINE_LOG_FILE,
+			level: 'silly'
+		})
+	]
+});
+
+const errlogger = winston.createLogger({
+	format: winston.format.combine(
+		winston.format.splat(),
+		winston.format.label({label : path.basename(module.parent.filename)}),
+		winston.format.timestamp({format: TIMESTAMP_PATTERN})
+	),
+	transports:[
 		new winston.transports.File({
-										format: winston.format.combine(
-												winston.format.label({
-														label: CONFIG.env
-													}),
-												winston.format.timestamp({
-													format: 'HH:mm:ss DD-YYYY-MM'
-												}),
-												winston.format.splat(),
-												winston.format.json(),
-												winston.format.prettyPrint(),
-												winston.format.printf(
-													info => `${info.timestamp} ${info.level}: ${info.message}`,
-													debug => `${debug.timestamp} ${debug.level}: ${debug.message}`,
-													error => `${error.timestamp} ${error.level}: ${error.message}`)
-											),										
-										filename: appRoot+'/logs/combined.log',
-										level: 'silly'
-									})
+			format: winston.format.combine(
+				winston.format.json(),
+				winston.format.prettyPrint(),
+				winston.format.printf(
+					error => `${error.timestamp} ${error.level} [${error.label}] : ${error.message}`
+				)
+			),
+			filename: ERROR_LOG_FILE,
+			level: 'error'
+		})
+	]
+});
+
+const socklogger = winston.createLogger({
+	format: winston.format.combine(
+		winston.format.splat(),
+		winston.format.label({label : path.basename(module.parent.filename)}),
+		winston.format.timestamp({format: TIMESTAMP_PATTERN})
+	),
+	transports:[
+		new winston.transports.File({
+			format: winston.format.combine(
+				winston.format.json(),
+				winston.format.prettyPrint(),
+				winston.format.printf(
+					info => `${info.timestamp} ${info.level} [${info.label}] : ${info.message}`,
+					debug => `${debug.timestamp} ${debug.level} [${debug.label}] : ${debug.message}`,
+					error => `${error.timestamp} ${error.level} [${error.label}] : ${error.message}`
+				)
+			),
+			filename: COMBINE_LOG_FILE,
+			level: 'silly'
+		}),
+		new winston.transports.File({
+			format: winston.format.combine(
+				winston.format.json(),
+				winston.format.prettyPrint(),
+				winston.format.printf(
+					info => `${info.timestamp} ${info.level} [${info.label}] : ${info.message}`,
+					debug => `${debug.timestamp} ${debug.level} [${debug.label}] : ${debug.message}`,
+					error => `${error.timestamp} ${error.level} [${error.label}] : ${error.message}`
+				)
+			),
+			filename: SOCKET_LOG_FILE,
+			level: 'silly'
+		})
+	]
+});
+
+const reqlogger = winston.createLogger({
+	format: winston.format.combine(
+		winston.format.splat(),
+		winston.format.label({label : path.basename(module.parent.filename)}),
+		winston.format.timestamp({format: TIMESTAMP_PATTERN})
+	),
+	transports:[
+		new winston.transports.File({
+			format: winston.format.combine(
+				winston.format.json(),
+				winston.format.prettyPrint(),
+				winston.format.printf(
+					info => `${info.timestamp} ${info.level} [${info.label}] : ${info.message}`,
+					debug => `${debug.timestamp} ${debug.level} [${debug.label}] : ${debug.message}`,
+					error => `${error.timestamp} ${error.level} [${error.label}] : ${error.message}`
+				)
+			),
+			filename: COMBINE_LOG_FILE,
+			level: 'silly'
+		}),
+		new winston.transports.File({
+			format: winston.format.combine(
+				winston.format.json(),
+				winston.format.prettyPrint(),
+				winston.format.printf(
+					info => `${info.timestamp} ${info.level} [${info.label}] : ${info.message}`,
+					debug => `${debug.timestamp} ${debug.level} [${debug.label}] : ${debug.message}`,
+					error => `${error.timestamp} ${error.level} [${error.label}] : ${error.message}`
+				)
+			),
+			filename: REQUEST_LOG_FILE,
+			level: 'silly'
+		})
+	]
+});
+
+const dblogger = winston.createLogger({
+	format: winston.format.combine(
+		winston.format.splat(),
+		winston.format.label({label: path.basename(module.parent.filename)}),
+		winston.format.timestamp({format: TIMESTAMP_PATTERN})
+	),
+	transports:[
+		new winston.transports.File({
+			format: winston.format.combine(
+				winston.format.json(),
+				winston.format.prettyPrint(),
+				winston.format.printf(
+					info => `${info.timestamp} ${info.level} [${info.label}] : ${info.message}`,
+					debug => `${debug.timestamp} ${debug.level} [${debug.label}] : ${debug.message}`,
+					error => `${error.timestamp} ${error.level} [${error.label}] : ${error.message}`)
+				),
+			filename: COMBINE_LOG_FILE,
+			level: 'silly'
+		}),
+		new winston.transports.File({
+			format: winston.format.combine(
+				winston.format.json(),
+				winston.format.prettyPrint(),
+				winston.format.printf(
+					info => `${info.timestamp} ${info.level} [${info.label}] : ${info.message}`,
+					debug => `${debug.timestamp} ${debug.level} [${debug.label}] : ${debug.message}`,
+					error => `${error.timestamp} ${error.level} [${error.label}] : ${error.message}`
+				)
+			),
+			filename: DB_LOG_FILE,
+			level: 'silly'
+		})
 	]
 });
 
 // If application is running in dvelopemnt environment then show logs to console
 // else do not show logs on console
-if(process.env.ENV === 'prod'){
-	logger.add(new winston.transports.Console({
-		format: winston.format.combine(
-				winston.format.colorize(),
-				winston.format.splat(),
-				winston.format.simple()
-			),
-		level: 'info'
-	}));
-}
+logger.add(new winston.transports.Console({
+	level: CONFIG.env === 'dev' ? 'debug' : 'info',
+	format: winston.format.combine(
+		winston.format.colorize(),
+		winston.format.printf(
+			info => `${info.level} [${info.label}] : ${info.message}`,
+			debug => `${debug.level} [${debug.label}] : ${debug.message}`,
+			error => `${error.level} [${error.label}] : ${error.message}`
+		)
+	)
+}));
 
-if(process.env.ENV === 'dev'){
-	logger.add(new winston.transports.Console({
-		format: winston.format.combine(
-				winston.format.colorize(),
-				winston.format.splat(),
-				winston.format.simple()
-			),
-		level: 'silly'
-	}));
-}
+dblogger.add(new winston.transports.Console({
+	level: CONFIG.env === 'dev' ? 'debug' : 'info',
+	format: winston.format.combine(
+		winston.format.colorize(),
+		winston.format.printf(
+			info => `${info.level} [${info.label}] : ${info.message}`,
+			debug => `${debug.level} [${debug.label}] : ${debug.message}`,
+			error => `${error.level} [${error.label}] : ${error.message}`
+		)
+	)
+}));
+
+reqlogger.add(new winston.transports.Console({
+	level: CONFIG.env === 'dev' ? 'debug' : 'info',
+	format: winston.format.combine(
+		winston.format.colorize(),
+		winston.format.printf(
+			info => `${info.level} [${info.label}] : ${info.message}`,
+			debug => `${debug.level} [${debug.label}] : ${debug.message}`,
+			error => `${error.level} [${error.label}] : ${error.message}`
+		)
+	)
+}));
+
+socklogger.add(new winston.transports.Console({
+	level: CONFIG.env === 'dev' ? 'debug' : 'info',
+	format: winston.format.combine(
+		winston.format.colorize(),
+		winston.format.printf(
+			info => `${info.level} [${info.label}] : ${info.message}`,
+			debug => `${debug.level} [${debug.label}] : ${debug.message}`,
+			error => `${error.level} [${error.label}] : ${error.message}`
+		)
+	)
+}));
+
+errlogger.add(new winston.transports.Console({
+	level: CONFIG.env === 'dev' ? 'error' : 'info',
+	format: winston.format.combine(
+		winston.format.colorize(),
+		winston.format.printf(
+			info => `${info.level} [${info.label}] : ${info.message}`,
+			debug => `${debug.level} [${debug.label}] : ${debug.message}`,
+			error => `${error.level} [${error.label}] : ${error.message}`
+		)
+	)
+}));
 //------------------------------------------------------------------------------
 // Add the logger instance to the global CONFIG
 //------------------------------------------------------------------------------
-CONFIG.logger = logger;
+CONFIG.logger 		= logger;
+CONFIG.dblogger 	= dblogger;
+CONFIG.reqlogger 	= reqlogger;
+CONFIG.socklogger 	= socklogger;
+CONFIG.errlogger 	= errlogger;
 //------------------------------------------------------------------------------
 module.exports = CONFIG;

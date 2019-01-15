@@ -12,6 +12,7 @@ const path            = require('path');
 const router          = express.Router();
 const expressHbs      = require('express-handlebars');
 const logger          = CONFIG.logger;
+const reqlogger       = CONFIG.reqlogger;
 //----------------------------------------------------------------------------
 
 logger.info('Starting up the App');
@@ -21,7 +22,7 @@ logger.info('Starting up the App');
 //----------------------------------------------------------------------------
 router.get('/',function(req,res) {
   logger.info("Request received at router.get('/')");
-  logger.debug('Request object : %o',req);
+  reqlogger.debug('Request object : %o',req);
   logger.info('Send the HTTPS request response : Hello');
   
   // Send the HTTPS request response
@@ -35,7 +36,7 @@ router.get('/',function(req,res) {
 router.post('/api/makeCall',function(req,res) 
 {
   logger.info("Request received at router.post('/api/makeCall')");
-  logger.debug('Request object : %o',req);
+  reqlogger.debug('Request object : %o',req);
   var source      = req.body.source;
   var destination = req.body.destination;
   logger.info('Calling : callController.makeCall with source : %s , destination : %s',source,destination);
@@ -59,13 +60,12 @@ router.post('/api/makeCall',function(req,res)
     }
   });
 });
-
 //----------------------------------------------------------------------------
 //  Make 3 party call
 //----------------------------------------------------------------------------
 router.post('/api/makeCallMulti',function(req,res){
   logger.info("Request received at router.post('/api/makeCallMulti')");
-  logger.debug('Request object : %o',req);
+  reqlogger.debug('Request object : %o',req);
 
   var source        = req.body.source;
   var destinationA  = req.body.destinationA;

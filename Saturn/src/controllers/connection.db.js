@@ -7,6 +7,7 @@ const CONFIG 		= require('../config/config');
 const MongoClient 	= require('mongodb').MongoClient;
 var db_connections 	= {};
 const logger 		= CONFIG.logger;
+const httpsServer   = require('../server');
 //------------------------------------------------------------------------------
 
 logger.info('Starting up the databse connection');
@@ -24,11 +25,16 @@ MongoClient.connect(dbUrl,{ useNewUrlParser: true }, function(err, db) {
     	logger.error('Error : %o',err);
       	throw err;
     }
-    db_connections.alexa 			= db.db(CONFIG.db_name);
-    db_connections.amazon_accounts 	= db.db(CONFIG.db_name_acc);
-    logger.debug('DB Connection object : %o',db_connections);
+    CONFIG.db = db.db(CONFIG.db_name);
+    //db_connections.alexa 			= db.db(CONFIG.db_name);
+    //db_connections.amazon_accounts 	= db.db(CONFIG.db_name_acc);
+    logger.debug('DB Connection object : %o',CONFIG.db);
     logger.info('Connected to database');
-  });
+    logger.info('Starting HTTPS server');
+    httpsServer.listen(CONFIG.port,()=>{
+        logger.info('HTTPS server listening at port : %s',CONFIG.port);
+    });
+});
 
 //------------------------------------------------------------------------------
 module.exports = db_connections;
