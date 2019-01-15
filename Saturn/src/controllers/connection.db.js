@@ -11,7 +11,8 @@ const logger 		= CONFIG.logger;
 
 logger.info('Starting up the databse connection');
 
-var dbUrl = CONFIG.db_dialect+"://"+CONFIG.db_host+":"+CONFIG.db_port+"/";
+var dbUrl = CONFIG.db_url;
+//var dbUrl = CONFIG.db_dialect+"://"+CONFIG.db_host+":"+CONFIG.db_port+"/";
 logger.debug('Database URL : %s',dbUrl);
 
 //------------------------------------------------------------------------------
