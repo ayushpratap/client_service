@@ -7,6 +7,7 @@ require('dotenv').config();
 const appRoot 								= require('app-root-path');
 const winston 								= require('winston');
 const fs 									= require('fs');
+const path 									= require('path');
 const LOG_DIR 								= appRoot+'/logs';
 const ERROR_LOG_FILE						= LOG_DIR+'/'+'error.json';
 const COMBINE_LOG_FILE						= LOG_DIR+'/'+'combine.json';
