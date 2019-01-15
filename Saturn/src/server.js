@@ -13,6 +13,7 @@ const fs 		= require('fs');
 const server 	= express(); // Get an instace of express
 const logger 	= CONFIG.logger;
 const dblogger  = CONFIG.dblogger;
+const MongoClient 	= require('mongodb').MongoClient;
 server.use(express.json());
 server.use(express.urlencoded({extended:true}));
 
