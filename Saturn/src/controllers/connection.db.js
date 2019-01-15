@@ -8,6 +8,7 @@ const MongoClient 	= require('mongodb').MongoClient;
 var db_connections 	= {};
 const logger 		= CONFIG.logger;
 const httpsServer   = require('../server');
+logger.error('%o',httpsServer);
 //------------------------------------------------------------------------------
 
 logger.info('Starting up the databse connection');
@@ -19,7 +20,7 @@ logger.debug('Database URL : %s',dbUrl);
 //------------------------------------------------------------------------------
 //	Setting up the connection with Database
 //------------------------------------------------------------------------------
-MongoClient.connect(dbUrl,{ useNewUrlParser: true }, function(err, db) {                            
+/*MongoClient.connect(dbUrl,{ useNewUrlParser: true }, function(err, db) {                            
     if(err)
     {
     	logger.error('Error : %o',err);
@@ -34,7 +35,7 @@ MongoClient.connect(dbUrl,{ useNewUrlParser: true }, function(err, db) {
     httpsServer.listen(CONFIG.port,()=>{
         logger.info('HTTPS server listening at port : %s',CONFIG.port);
     });
-});
+});*/
 
 //------------------------------------------------------------------------------
 module.exports = db_connections;
