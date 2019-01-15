@@ -8,7 +8,6 @@ const callController  = require('../controllers/call.controller');
 const userController  = require('../controllers/user.controller');
 const CONFIG          = require('../config/config');
 const app             = express();
-const path            = require('path');
 const router          = express.Router();
 const expressHbs      = require('express-handlebars');
 const logger          = CONFIG.logger;
