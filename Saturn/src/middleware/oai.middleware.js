@@ -7,7 +7,7 @@ const CONFIG = require('../config/config');
 const net = require('net');
 const oai = {};
 var flag=0;
-const logger = CONFIG.logger;
+//const logger = CONFIG.logger;
 var numArr = {
               "0": 0x0a,
               "1": 0x01,
@@ -22,7 +22,7 @@ var numArr = {
             };
 //------------------------------------------------------------------------------
 
-logger.info('Starting up the OAI middleware');
+//logger.info('Starting up the OAI middleware');
 
 /****************************************************** CONNECT PACKETS *************************************************************************************************/
 /* ----> */var connect_to_sv9500_1              = Buffer.from([0x60,0x1c,0x80,0x02,0x00,0x00,0xa3,0x03,0x06,0x01,0x00,0xa4,0x11,0x08,0x0f,0x4e,0x45,0x43,0x20,0x43,0x26,0x43,0x20,0x28,0x4f,0x41,0x49,0x29,0x20,0x58]);
@@ -138,12 +138,12 @@ var makecall_from_sv9100        =   Buffer.from([0xa2,0x2d,0x30,0x2b,0x02,0x01,0
 
 //oai.makeCall = function(numberType,callNumber,sourceAddress,callback) 
 oai.makeCall = function(source,destination,callback){
-  logger.info('Function execution start : oai.makeCall()');
+  //logger.info('Function execution start : oai.makeCall()');
   
   var stringSourceAddress           = source.toString();
   var stringDestinationAddress      = destination.toString();
 
-  logger.debug('source : %s , destination : %s',stringSourceAddress,stringDestinationAddress);
+  //logger.debug('source : %s , destination : %s',stringSourceAddress,stringDestinationAddress);
   
   
 //------------------------------------------------------------------------------
@@ -179,19 +179,19 @@ oai.makeCall = function(source,destination,callback){
   var flag = 0;
   
   // Create connection
-  logger.info('Creating connection with SV9100');
-  logger.info('Flag = %d',flag);
+  //logger.info('Creating connection with SV9100');
+  //logger.info('Flag = %d',flag);
 
   const client = net.createConnection(CONFIG.oai_port,CONFIG.oai_ip);
   
-  logger.debug('Client socket to OAI object : %o',client);
+  //logger.debug('Client socket to OAI object : %o',client);
   
   client.on('connect',function(){
-    logger.info('Connected to SV9100');
-    logger.info('Write connect_to_sv9100');
-    logger.debug('connect_to_sv9100 => %o',connect_to_sv9100);
+    //logger.info('Connected to SV9100');
+    //logger.info('Write connect_to_sv9100');
+    //logger.debug('connect_to_sv9100 => %o',connect_to_sv9100);
     flag = 1;
-    logger.debug('Flag set to = %d',flag);
+    //logger.debug('Flag set to = %d',flag);
     client.write(connect_to_sv9100);
   });
   
@@ -200,41 +200,41 @@ oai.makeCall = function(source,destination,callback){
 
     // Open switch control
     if(1 == flag){
-      logger.info('Flag = %d',flag);
-      logger.debug('DATA => %o',data);
-      logger.info('Write switch_control_to_sv9100');
-      logger.debug('switch_control_to_sv9100 => %o',switch_control_to_sv9100);
+      //logger.info('Flag = %d',flag);
+      //logger.debug('DATA => %o',data);
+      //logger.info('Write switch_control_to_sv9100');
+      //logger.debug('switch_control_to_sv9100 => %o',switch_control_to_sv9100);
       flag = 2;
-      logger.debug('Flag set to = %d',flag);
+      //logger.debug('Flag set to = %d',flag);
       client.write(switch_control_to_sv9100);
     }
     else if(2 == flag){ // Make call
       logger.info('Flag = %d',flag);
-      logger.debug('DATA => %o',data);
-      logger.info('Write makecall_to_sv9100');
-      logger.debug('makecall_to_sv9100 => %o',makecall_to_sv9100);
+      //logger.debug('DATA => %o',data);
+      //logger.info('Write makecall_to_sv9100');
+      //logger.debug('makecall_to_sv9100 => %o',makecall_to_sv9100);
       flag = 3;
-      logger.debug('Flag set to = %d',flag);
+      //logger.debug('Flag set to = %d',flag);
       client.write(makecall_to_sv9100);
      }
      else if(3 == flag){  //  Callback
-      logger.info('Flag = %d',flag);
-      logger.debug('DATA => %o',data);
-      logger.info('Sending callback');
+      //logger.info('Flag = %d',flag);
+      //logger.debug('DATA => %o',data);
+      //logger.info('Sending callback');
       flag = 0;
-      logger.debug('Flag set to = %d',flag);
+      //logger.debug('Flag set to = %d',flag);
       callback("1");
      }
      else{
       // Do nothing
-      logger.debug('Default case');
+      //logger.debug('Default case');
      }
   });
   client.on('end',()=>{
-    logger.info('Disconnected from the OAI server');
+    //logger.info('Disconnected from the OAI server');
   });
   client.on('error',(error)=>{
-    logger.error('Error object => %o',error);
+    //logger.error('Error object => %o',error);
   });
 }
   /*console.log("Client"+client);
