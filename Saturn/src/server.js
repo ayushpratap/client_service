@@ -28,26 +28,22 @@ server.all('*', app);
 
 // Connect to database
 var dbUrl = CONFIG.db_url;
-dblogger.debug('Database URL : %s',dbUrl);
+dblogger.debug('[%s] , Database URL : %s',__file,dbUrl);
 //------------------------------------------------------------------------------
 //	Setting up the connection with Database
 //------------------------------------------------------------------------------
 MongoClient.connect(dbUrl,{ useNewUrlParser: true }, function(err, db) {                            
     if(err)
     {
-    	logger.error('Error : %o',err);
+    	logger.error('[%s] , Error : %o',__file,err);
       	throw err;
     }
     CONFIG.db = db.db(CONFIG.db_name);
     
-    dblogger.debug('DB Connection object : %o',CONFIG.db);
-    logger.info('Connected to database');
-    logger.info('Starting HTTPS server');
+    dblogger.debug('[%s] , DB Connection object : %o',__file,CONFIG.db);
+    logger.info('[%s] , Connected to database',__file);
+    logger.info('[%s] , Starting HTTPS server',__file);
     httpsServer.listen(CONFIG.port,()=>{
-        logger.info('HTTPS server listening at port : %s',CONFIG.port);
+        logger.info('[%s] , HTTPS server listening at port : %s',__file,CONFIG.port);
     });
 });
-
-/*httpsServer.listen(CONFIG.port,()=>{
-	logger.info('HTTPS server listening at port : %s',CONFIG.port);
-});*/  // Server running at port = process.env.PORT

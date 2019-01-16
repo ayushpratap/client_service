@@ -1,7 +1,6 @@
 const MongoClient = require('mongodb').MongoClient;
 const CONFIG = require('../config/config');
 const winston = require('winston');
-const db_connections = require('../controllers/connection.db');
 const pcpro = {};
 
 pcpro.getUser = function(username,callback) 

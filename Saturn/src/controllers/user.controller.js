@@ -1,7 +1,6 @@
 
 const pcpro = require('../middleware/pcpro.middleware');
 const MongoClient = require('mongodb').MongoClient;
-const db_connections = require('./connection.db');
 
 var userController = {};
 userController.getUser=function (username,callback) {

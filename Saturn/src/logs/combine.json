@@ -1,173 +1,19 @@
-15-01-2019 16:48:34 error [oai.middleware.js] : {}
-15-01-2019 16:48:34 debug [oai.middleware.js] : Database URL : mongodb://34.199.158.57:27017/
-15-01-2019 16:48:34 info [oai.middleware.js] : Starting up the databse connection
-15-01-2019 16:48:34 debug [oai.middleware.js] : Database URL : mongodb://34.199.158.57:27017/
-15-01-2019 16:48:34 info [oai.middleware.js] : Starting up the call controller
-15-01-2019 16:48:34 info [oai.middleware.js] : Starting up the App
-15-01-2019 16:48:35 debug [oai.middleware.js] : DB Connection object : Db {
-  _events: {},
-  _eventsCount: 0,
-  _maxListeners: undefined,
-  s:
-   { databaseName: 'local',
-     dbCache: {},
-     children: [ [length]: 0 ],
-     topology:
-      Server {
-        _events:
-         { serverOpening: { [Function] [length]: 2, [name]: '' },
-           serverDescriptionChanged: { [Function] [length]: 2, [name]: '' },
-           serverHeartbeatStarted: { [Function] [length]: 2, [name]: '' },
-           serverHeartbeatSucceeded: { [Function] [length]: 2, [name]: '' },
-           serverHeartbeatFailed: { [Function] [length]: 2, [name]: '' },
-           serverClosed: { [Function] [length]: 2, [name]: '' },
-           topologyOpening: { [Function] [length]: 2, [name]: '' },
-           topologyClosed: { [Function] [length]: 2, [name]: '' },
-           topologyDescriptionChanged: { [Function] [length]: 2, [name]: '' },
-           commandStarted: { [Function] [length]: 2, [name]: '' },
-           commandSucceeded: { [Function] [length]: 2, [name]: '' },
-           commandFailed: { [Function] [length]: 2, [name]: '' },
-           joined: { [Function] [length]: 2, [name]: '' },
-           left: { [Function] [length]: 2, [name]: '' },
-           ping: { [Function] [length]: 2, [name]: '' },
-           ha: { [Function] [length]: 2, [name]: '' },
-           authenticated: { [Function] [length]: 2, [name]: '' },
-           error: [ [Function], [Function], [length]: 2 ],
-           timeout: [ [Function], [Function], [length]: 2 ],
-           close: [ [Function], [Function], [length]: 2 ],
-           parseError: [ [Function], [Function], [length]: 2 ],
-           open: [ [Function], [Function], [length]: 2 ],
-           fullsetup: [ [Function], [Function], [length]: 2 ],
-           all: [ [Function], [Function], [length]: 2 ],
-           reconnect: [ [Function], [Function], [length]: 2 ] },
-        _eventsCount: 25,
-        _maxListeners: Infinity,
-        clientInfo:
-         { driver: { name: 'nodejs', version: '3.1.1' },
-           os:
-            { type: 'Linux',
-              name: 'linux',
-              architecture: 'x64',
-              version: '4.4.0-140-generic' },
-           platform: 'Node.js v10.7.0, LE' },
-        s:
-         { coreTopology:
-            Server {
-              _events: [Object],
-              _eventsCount: 20,
-              _maxListeners: undefined,
-              id: 0,
-              s: [Object],
-              ismaster: [Object],
-              lastIsMasterMS: 279,
-              monitoringProcessId: [Timeout],
-              initialConnect: false,
-              wireProtocolHandler: WireProtocol {},
-              _type: 'server',
-              clientInfo: [Object],
-              lastUpdateTime: 0,
-              lastWriteDate: 0,
-              staleness: 0 },
-           sCapabilities: null,
-           clonedOptions:
-            { host: '34.199.158.57',
-              port: 27017,
-              disconnectHandler: [Store],
-              cursorFactory: [Function],
-              reconnect: true,
-              emitError: true,
-              size: 5,
-              monitorCommands: false,
-              socketTimeout: 360000,
-              connectionTimeout: 30000,
-              promiseLibrary: [Function],
-              clientInfo: [Object],
-              servers: [Array],
-              useNewUrlParser: true,
-              socketTimeoutMS: 360000,
-              connectTimeoutMS: 30000,
-              bson: BSON {} },
-           reconnect: true,
-           emitError: true,
-           poolSize: 5,
-           storeOptions: { force: false, bufferMaxEntries: -1 },
-           store: Store { s: [Object], length: [Getter] },
-           host: '34.199.158.57',
-           port: 27017,
-           options:
-            { host: '34.199.158.57',
-              port: 27017,
-              disconnectHandler: [Store],
-              cursorFactory: [Function],
-              reconnect: true,
-              emitError: true,
-              size: 5,
-              monitorCommands: false,
-              socketTimeout: 360000,
-              connectionTimeout: 30000,
-              promiseLibrary: [Function],
-              clientInfo: [Object],
-              servers: [Array],
-              useNewUrlParser: true,
-              socketTimeoutMS: 360000,
-              connectTimeoutMS: 30000 },
-           sessionPool: ServerSessionPool { topology: [Server], sessions: [Array] },
-           sessions: [ [length]: 0 ],
-           promiseLibrary:
-            { [Function: Promise]
-              [length]: 1,
-              [name]: 'Promise',
-              [prototype]: [Promise],
-              [all]: [Function],
-              [race]: [Function],
-              [resolve]: [Function],
-              [reject]: [Function],
-              [Symbol(Symbol.species)]: [Getter] } } },
-     options:
-      { promiseLibrary:
-         { [Function: Promise]
-           [length]: 1,
-           [name]: 'Promise',
-           [prototype]:
-            Promise {
-              [constructor]: [Circular],
-              [then]: [Function],
-              [catch]: [Function],
-              [finally]: [Function],
-              [Symbol(Symbol.toStringTag)]: 'Promise' },
-           [all]: { [Function: all] [length]: 1, [name]: 'all' },
-           [race]: { [Function: race] [length]: 1, [name]: 'race' },
-           [resolve]: { [Function: resolve] [length]: 1, [name]: 'resolve' },
-           [reject]: { [Function: reject] [length]: 1, [name]: 'reject' },
-           [Symbol(Symbol.species)]: [Getter] } },
-     logger: Logger { className: 'Db' },
-     bson: BSON {},
-     readPreference: undefined,
-     bufferMaxEntries: -1,
-     parentDb: null,
-     pkFactory: undefined,
-     nativeParser: undefined,
-     promiseLibrary:
-      { [Function: Promise]
-        [length]: 1,
-        [name]: 'Promise',
-        [prototype]:
-         Promise {
-           [constructor]: [Circular],
-           [then]: { [Function: then] [length]: 2, [name]: 'then' },
-           [catch]: { [Function: catch] [length]: 1, [name]: 'catch' },
-           [finally]: { [Function: finally] [length]: 1, [name]: 'finally' },
-           [Symbol(Symbol.toStringTag)]: 'Promise' },
-        [all]: { [Function: all] [length]: 1, [name]: 'all' },
-        [race]: { [Function: race] [length]: 1, [name]: 'race' },
-        [resolve]: { [Function: resolve] [length]: 1, [name]: 'resolve' },
-        [reject]: { [Function: reject] [length]: 1, [name]: 'reject' },
-        [Symbol(Symbol.species)]: [Getter] },
-     noListener: false,
-     readConcern: undefined },
-  serverConfig: [Getter],
-  bufferMaxEntries: [Getter],
-  databaseName: [Getter] }
-15-01-2019 16:48:35 info [oai.middleware.js] : Connected to database
-15-01-2019 16:48:35 info [oai.middleware.js] : Starting HTTPS server
-15-01-2019 16:48:35 info [oai.middleware.js] : HTTPS server listening at port : 8443
+16-01-2019 10:32:38 info : Starting up the call controller
+16-01-2019 10:32:38 debug : [server] , Database URL : mongodb://34.199.158.57:27017/
+16-01-2019 10:32:38 info : [app] , Starting up the App
+16-01-2019 10:33:08 error : [server] , Error : { MongoNetworkError: failed to connect to server [34.199.158.57:27017] on first connect [MongoNetworkError: connection 0 to 34.199.158.57:27017 timed out]
+    at Pool.<anonymous> (/home/development/BitBucket/repo/necti_client_service/Saturn/src/node_modules/mongodb-core/lib/topologies/server.js:562:11)
+    at Pool.emit (events.js:159:13)
+    at Connection.<anonymous> (/home/development/BitBucket/repo/necti_client_service/Saturn/src/node_modules/mongodb-core/lib/connection/pool.js:316:12)
+    at Object.onceWrapper (events.js:254:19)
+    at Connection.emit (events.js:159:13)
+    at Socket.<anonymous> (/home/development/BitBucket/repo/necti_client_service/Saturn/src/node_modules/mongodb-core/lib/connection/connection.js:256:10)
+    at Object.onceWrapper (events.js:254:19)
+    at Socket.emit (events.js:159:13)
+    at Socket._onTimeout (net.js:411:8)
+    at ontimeout (timers.js:478:11)
+  name: 'MongoNetworkError',
+  message: 'failed to connect to server [34.199.158.57:27017] on first connect [MongoNetworkError: connection 0 to 34.199.158.57:27017 timed out]',
+  [stack]: 'MongoNetworkError: failed to connect to server [34.199.158.57:27017] on first connect [MongoNetworkError: connection 0 to 34.199.158.57:27017 timed out]\n    at Pool.<anonymous> (/home/development/BitBucket/repo/necti_client_service/Saturn/src/node_modules/mongodb-core/lib/topologies/server.js:562:11)\n    at Pool.emit (events.js:159:13)\n    at Connection.<anonymous> (/home/development/BitBucket/repo/necti_client_service/Saturn/src/node_modules/mongodb-core/lib/connection/pool.js:316:12)\n    at Object.onceWrapper (events.js:254:19)\n    at Connection.emit (events.js:159:13)\n    at Socket.<anonymous> (/home/development/BitBucket/repo/necti_client_service/Saturn/src/node_modules/mongodb-core/lib/connection/connection.js:256:10)\n    at Object.onceWrapper (events.js:254:19)\n    at Socket.emit (events.js:159:13)\n    at Socket._onTimeout (net.js:411:8)\n    at ontimeout (timers.js:478:11)',
+  errorLabels: [ 'TransientTransactionError', [length]: 1 ],
+  [Symbol(mongoErrorContextSymbol)]: {} }

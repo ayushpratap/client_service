@@ -5,7 +5,7 @@
 //------------------------------------------------------------------------------
 const oai 				= require('../middleware/oai.middleware');
 const MongoClient 		= require('mongodb').MongoClient;
-const db_connections 	= require('./connection.db');
+
 const CONFIG 			= require('../config/config');
 var callController 		= {};
 var result 				= 0;
