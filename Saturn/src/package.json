@@ -1,6 +1,6 @@
 {
-  "name": "necti_client_service",
-  "version": "0.0.1",
+  "name": "saturn",
+  "version": "1.0.0",
   "description": "This is client service which acts as the middle layer between necti cloud service and server",
   "main": "app.js",
   "scripts": {
@@ -13,7 +13,7 @@
     "NECTI"
   ],
   "author": "NECTI",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "app-root-path": "^2.1.0",
     "bcryptjs": "^2.4.3",
