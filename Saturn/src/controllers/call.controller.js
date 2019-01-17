@@ -11,6 +11,7 @@ var callController 		= {};
 var result 				= 0;
 const logger 			= CONFIG.logger;
 const reqlogger 		= CONFIG.reqlogger;
+const dblogger 			= CONFIG.dblogger;
 //------------------------------------------------------------------------------
 
 logger.info('Starting up the call controller');
