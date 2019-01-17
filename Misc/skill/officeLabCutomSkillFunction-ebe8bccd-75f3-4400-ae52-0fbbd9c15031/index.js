@@ -174,6 +174,7 @@ const handlers =
             if("User does not exist" == body){
                 voiceResponse = body;
                 console.info('Response updated to = ',voiceResponse);
+                this.emit(':tell',voiceResponse);
             }
             else{
             // Make a make call request using the body of the GetUser request
@@ -197,10 +198,10 @@ const handlers =
                     else{
                         voiceResponse = "Sorry some error occured";
                         console.info('voiceResponse updated to =',voiceResponse);
+                        this.emit(':tell',voiceResponse);
                     }
                 });
             }
-            this.emit(':tell',voiceResponse);
         });
     }
 };
