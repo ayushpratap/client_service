@@ -13,7 +13,7 @@ const GET_FACT_MESSAGE      =   "Here's your fact: ";
 const HELP_MESSAGE          =   'You can say please call followed by the person you want to call';
 const HELP_REPROMPT         =   'What can I help you with?';
 const STOP_MESSAGE          =   'Goodbye!';
-const URL_APOLLO            =   'http://ec2-3-84-84-67.compute-1.amazonaws.com:9000';
+const URL_APOLLO            =   'http://34.199.158.57:9000';
 const GET_USER_ENDPOINT     =   '/getUser';
 const MAKE_CALL_ENDPOINT    =   '/makeCall';
 //=========================================================================================================================================
