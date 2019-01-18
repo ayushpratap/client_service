@@ -124,8 +124,8 @@ var switch_control_to_sv9100    =   Buffer.from([0xa1,0x15,0x30,0x13,0x02,0x01,0
 var switch_control_from_sv9100  =   Buffer.from([0xa2,0x0f,0x30,0x0d,0x02,0x01,0x07,0x30,0x08,0xa0,0x06,0x04,0x01,0x00,0x04,0x01,0x01]);
 //******************************************************************************
 //**************************** Terminate call **********************************
-//  a1:32:30:30:02:01:09:02:01:69:30:28:a0:06:04:01:01:04:01:02:a2:0e:a0:0c:04:01:01:04:02:00:00:04:03:01:0a:01:a3:0e:a1:0c:04:01:01:04:02:00:00:04:03:01:0a:02 
-var endcall_to_sv9100           =   Buffer.from([0xa1,0x32,0x30,0x30,0x02,0x01,0x09,0x02,0x01,0x69,0x30,0x28,0xa0,0x06,0x04,0x01,0x01,0x04,0x01,0x02,0xa2,0x0e,0xa0,0x0c,0x04,0x01,0x01,0x04,0x02,0x00,0x00,0x04,0x03,0x01,0x0a,0x01,0xa3,0x0e,0xa1,0x0c,0x04,0x01,0x01,0x04,0x02,0x00,0x00,0x04,0x03,0x01,0x0a,0x02]);
+//  0xa1,0x34,0x30,0x32,0x02,0x01,0x09,0x02,0x01,0x69,0x30,0x2a,0xa0,0x06,0x04,0x01,0x01,0x04,0x01,0x02,0xa2,0x0e,0xa0,0x0c,0x04,0x01,0x01,0x04,0x02,0x00,0x00,0x04,0x03,0x01,0x0a,0x01,0xa3,0x10,0xa1,0x0e,0x04,0x01,0x01,0x04,0x02,0x00,0x00,0x04,0x05,0x09,0x02,0x02,0x02,0x02
+var endcall_to_sv9100           =   Buffer.from([0xa1,0x34,0x30,0x32,0x02,0x01,0x09,0x02,0x01,0x69,0x30,0x2a,0xa0,0x06,0x04,0x01,0x01,0x04,0x01,0x02,0xa2,0x0e,0xa0,0x0c,0x04,0x01,0x01,0x04,0x02,0x00,0x00,0x04,0x03,0x01,0x0a,0x01,0xa3,0x10,0xa1,0x0e,0x04,0x01,0x01,0x04,0x02,0x00,0x00,0x04,0x05,0x09,0x02,0x02,0x02,0x02]);
 //  a2:2d:30:2b:02:01:09:30:26:a0:06:04:01:01:04:01:02:a1:1c:a0:0c:04:01:01:04:02:00:0a:04:03:01:0a:01:a1:0c:04:01:01:04:02:00:0a:04:03:01:0a:02
 var endcall_from_sv9100         =   Buffer.from([0xa2,0x2d,0x30,0x2b,0x02,0x01,0x09,0x30,0x26,0xa0,0x06,0x04,0x01,0x01,0x04,0x01,0x02,0xa1,0x1c,0xa0,0x0c,0x04,0x01,0x01,0x04,0x02,0x00,0x0a,0x04,0x03,0x01,0x0a,0x01,0xa1,0x0c,0x04,0x01,0x01,0x04,0x02,0x00,0x0a,0x04,0x03,0x01,0x0a,0x02]);
 //******************************************************************************
@@ -167,6 +167,11 @@ oai.makeCall = function(source,destination,callback){
   makecall_to_sv9500[44]        = numArr[stringDestinationAddress[3]];
 //------------------------------------------------------------------------------
   //  Add source to end call packets for SV9100
+  endcall_to_sv9100[33]  = numArr[stringSourceAddress[0]];  
+  endcall_to_sv9100[34]  = numArr[stringSourceAddress[1]];
+  endcall_to_sv9100[35]  = numArr[stringSourceAddress[2]];
+  
+  //  We do not need to add destination address as it is static set to : 92222
   
   //  Add source to make call packets for SV9100
   makecall_to_sv9100[33]  = numArr[stringSourceAddress[0]];
@@ -180,19 +185,19 @@ oai.makeCall = function(source,destination,callback){
   var flag = 0;
   
   // Create connection
-  //logger.info('Creating connection with SV9100');
-  //logger.info('Flag = %d',flag);
+  logger.info('Creating connection with SV9100');
+  logger.info('Flag = %d',flag);
 
   const client = net.createConnection(CONFIG.oai_port,CONFIG.oai_ip);
   
-  //logger.debug('Client socket to OAI object : %o',client);
+  logger.debug('Client socket to OAI object : %o',client);
   
   client.on('connect',function(){
-    //logger.info('Connected to SV9100');
-    //logger.info('Write connect_to_sv9100');
-    //logger.debug('connect_to_sv9100 => %o',connect_to_sv9100);
+    logger.info('Connected to SV9100');
+    logger.info('Write connect_to_sv9100');
+    logger.debug('connect_to_sv9100 => %o',connect_to_sv9100);
     flag = 1;
-    //logger.debug('Flag set to = %d',flag);
+    logger.debug('Flag set to = %d',flag);
     client.write(connect_to_sv9100);
   });
   
@@ -201,29 +206,38 @@ oai.makeCall = function(source,destination,callback){
 
     // Open switch control
     if(1 == flag){
-      //logger.info('Flag = %d',flag);
-      //logger.debug('DATA => %o',data);
-      //logger.info('Write switch_control_to_sv9100');
-      //logger.debug('switch_control_to_sv9100 => %o',switch_control_to_sv9100);
+      logger.info('Flag = %d',flag);
+      logger.debug('DATA => %o',data);
+      logger.info('Write switch_control_to_sv9100');
+      logger.debug('switch_control_to_sv9100 => %o',switch_control_to_sv9100);
       flag = 2;
-      //logger.debug('Flag set to = %d',flag);
+      logger.debug('Flag set to = %d',flag);
       client.write(switch_control_to_sv9100);
     }
-    else if(2 == flag){ // Make call
+    else if(2 == flag){ // Terminate call
       logger.info('Flag = %d',flag);
-      //logger.debug('DATA => %o',data);
-      //logger.info('Write makecall_to_sv9100');
-      //logger.debug('makecall_to_sv9100 => %o',makecall_to_sv9100);
+      logger.debug('DATA => %o',data);
+      logger.info('Write endcall_to_sv9100');
+      logger.debug('endcall_to_sv9100 => %o',endcall_to_sv9100);
       flag = 3;
-      //logger.debug('Flag set to = %d',flag);
+      logger.debug('Flag set to = %d',flag);
+      client.write(endcall_to_sv9100);
+    }
+    else if(3 == flag){ // Make call
+      logger.info('Flag = %d',flag);
+      logger.debug('DATA => %o',data);
+      logger.info('Write makecall_to_sv9100');
+      logger.debug('makecall_to_sv9100 => %o',makecall_to_sv9100);
+      flag = 4;
+      logger.debug('Flag set to = %d',flag);
       client.write(makecall_to_sv9100);
      }
-     else if(3 == flag){  //  Callback
-      //logger.info('Flag = %d',flag);
-      //logger.debug('DATA => %o',data);
-      //logger.info('Sending callback');
+     else if(4 == flag){  //  Callback
+      logger.info('Flag = %d',flag);
+      logger.debug('DATA => %o',data);
+      logger.info('Sending callback');
       flag = 0;
-      //logger.debug('Flag set to = %d',flag);
+      logger.debug('Flag set to = %d',flag);
       callback("1");
      }
      else{
