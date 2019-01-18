@@ -154,6 +154,7 @@ const handlers =
         var voiceResponse   = "Some Error is there you may need to check";
         var getUserOptions  = {};
         var makeCallOptions = {};
+        var obj = this;
 
         console.info('Username  = ',username);
         console.info('UserId    = ',userId);
@@ -174,7 +175,7 @@ const handlers =
             if("User does not exist" == body){
                 voiceResponse = body;
                 console.info('Response updated to = ',voiceResponse);
-                this.emit(':tell',voiceResponse);
+                obj.emit(':tell',voiceResponse);
             }
             else{
             // Make a make call request using the body of the GetUser request
@@ -192,13 +193,14 @@ const handlers =
                     console.info('Got the response for MakeCall request');
                     console.log('Response body ',body);
                     if('Sending data to Falcon' == body){
-                        voiceResponse = "Trying make call to "+username;
+                        voiceResponse = "Okay";
                         console.info('voiceResponse updated to =',voiceResponse);
+                        obj.emit(':tell',voiceResponse);
                     }
                     else{
                         voiceResponse = "Sorry some error occured";
                         console.info('voiceResponse updated to =',voiceResponse);
-                        this.emit(':tell',voiceResponse);
+                        obj.emit(':tell',voiceResponse);
                     }
                 });
             }
