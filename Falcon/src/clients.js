@@ -19,7 +19,7 @@ const tcpClient = net.createConnection(CONFIG.tcp_server_port,CONFIG.tcp_server_
 //  Handle connect event
 tcpClient.on('connect',function(){
     logger.info("[%s] , Connected to the server at %s:%s",__file,CONFIG.tcp_server_host,CONFIG.tcp_server_port);
-    logger.info("[%s] , TCP client info [%s]",__file,tcpClient.address().address);
+    logger.info("[%s] , TCP client info %s",__file,tcpClient.address().address);
 });
 
 //  Handle data event
