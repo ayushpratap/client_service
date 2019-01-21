@@ -3,6 +3,7 @@
     Description:
  */
 //------------------------------------------------------------------------------
+require('magic-globals');
 const express       = require('express');
 const net           = require('net');
 const request         = require('request');
@@ -12,26 +13,26 @@ const logger        = CONFIG.logger;
 var options         = {};
 //------------------------------------------------------------------------------
 // Create client socket
-logger.info('Creating client socket');
+logger.info('[%s] , Creating client socket',__file);
 const tcpClient = net.createConnection(CONFIG.tcp_server_port,CONFIG.tcp_server_host);
 
 //  Handle connect event
 tcpClient.on('connect',function(){
-    logger.info("Connected to the server at "+CONFIG.tcp_server_host+":"+CONFIG.tcp_server_port);
-    logger.info("TCP client info "+tcpClient.address().address);
+    logger.info("[%s] , Connected to the server at %s:%s",__file,CONFIG.tcp_server_host,CONFIG.tcp_server_port);
+    logger.info("[%s] , TCP client info [%s]",tcpClient.address().address);
 });
 
 //  Handle data event
 tcpClient.on('data',function(data){
-    logger.info('Data recevied');
+    logger.info('[%s] , Data recevied',__file);
 
     // Convert the Buffer to JSON object
     let reqInfo = JSON.parse(data.toString());
-    logger.debug('Request info : %o ',reqInfo);
+    logger.debug('[%s] , Request info : %o ',__file,reqInfo);
     // Get the route of the request
     switch(reqInfo.route){
         case '/':
-            logger.info("Case : '/'");
+            logger.info("[%s] , Case : '/'",__file);
             
             // Set the options for HTTPS request
             options.method              = "GET";
@@ -40,18 +41,18 @@ tcpClient.on('data',function(data){
             options.requestCert         = false;
             options.body                = reqInfo.data;
 
-            logger.debug('HTTPS request options : %o',options);
+            logger.debug('[%s] , HTTPS request options : %o',__file,options);
             
             // Make HTTPS request
             request(options,function(error,res,body){
-                logger.info('Response received for HTTPS request');
+                logger.info('[%s] , Response received for HTTPS request',__file);
                 options = {};
-                logger.debug('Cleared HTTPS options : %o ',options);
-                logger.info('Response body : %o ',body);
+                logger.debug('[%s] , Cleared HTTPS options : %o ',__file,options);
+                logger.info('[%s] , Response body : %o ',__file,body);
             });
         break;
         case '/api/makeCall':
-            logger.info("Case : /api/makeCall");
+            logger.info("[%s] , Case : /api/makeCall",__file);
 
             // Set the options for HTTPS request
             options.method              = "POST";
@@ -61,18 +62,18 @@ tcpClient.on('data',function(data){
             options.requestCert         = false;
             options.body                = reqInfo.data;
 
-            logger.debug('HTTPS request options : %o',options);
+            logger.debug('[%s] , HTTPS request options : %o',__file,options);
 
             //  Make HTTPS request
             request(options,function(error,res,body){
-                logger.info('Response received for HTTPS request');
+                logger.info('[%s] , Response received for HTTPS request',__file);
                 options = {};
-                logger.debug('Cleared HTTPS options : %o',options);
-                logger.info('Request body : %o ',body);
+                logger.debug('[%s] , Cleared HTTPS options : %o',__file,options);
+                logger.info('[%s] , Request body : %o ',__file,body);
             });
         break;
         case '/api/makeCallMulti':
-            logger.info("Case : /api/makeCallMulti");
+            logger.info("[%s] , Case : /api/makeCallMulti",__file);
 
             //  Set the options for HTTPS request
             options.method              = "POST";
@@ -82,23 +83,23 @@ tcpClient.on('data',function(data){
             options.requestCert         = false;
             options.body                = reqInfo.data;
 
-            logger.debug('HTTPS request options : %o',options);
+            logger.debug('[%s] , HTTPS request options : %o',__file,options);
 
             // Make HTTPS request
             request(options,function(error,res,body){
-                logger.info('Response received for HTTPS request');
+                logger.info('[%s] , Response received for HTTPS request',__file);
                 options = {};
-                logger.debug('Cleared HTTPS options : %o',options);
-                logger.info('Response body : %o',body);
+                logger.debug('[%s] , Cleared HTTPS options : %o',__file,options);
+                logger.info('[%s] , Response body : %o',__file,body);
             });
          break;
         default:
-            logger.error('No matching case');
+            logger.error('[%s] , No matching case',__file);
     }
 });
 
 //  Handle error event
 tcpClient.on('error',function(err){
-    logger.error('Error : %o',err);
+    logger.error('[%s] , Error : %o',__file,err);
 });
 //------------------------------------------------------------------------------
