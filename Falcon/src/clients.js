@@ -12,6 +12,8 @@ const JsonSocket    = require('json-socket');
 const logger        = CONFIG.logger;
 var options         = {};
 //------------------------------------------------------------------------------
+console.log(CONFIG.tcp_server_host);
+console.log(CONFIG.tcp_server_port);
 // Create client socket
 logger.info('[%s] , Creating client socket',__file);
 const tcpClient = net.createConnection(CONFIG.tcp_server_port,CONFIG.tcp_server_host);

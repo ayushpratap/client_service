@@ -22,6 +22,7 @@ logger.info('Starting up the call controller');
 //callController.makeCall = function (numberType,callNumber,userId,callback) 
 callController.makeCall = function (source,destination,callback) 
 {
+
 	logger.info('Function execution start : callController.makeCall()');
 	logger.debug('source : %s, destination : %s',source,destination);
 	

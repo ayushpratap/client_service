@@ -8,6 +8,7 @@ const appRoot 								= require('app-root-path');
 const winston 								= require('winston');
 const fs 									= require('fs');
 const path            						= require('path');
+const chalk 								= require('chalk');
 const LOG_DIR 								= appRoot+'/logs';
 const ERROR_LOG_FILE						= LOG_DIR+'/'+'error.json';
 const COMBINE_LOG_FILE						= LOG_DIR+'/'+'combine.json';
@@ -29,8 +30,6 @@ if(!fs.existsSync(LOG_DIR))
 CONFIG.app 				= process.env.APP 				|| 	'dev';
 CONFIG.port_unsecured 	= process.env.PORT_UNSECURED 	|| 	'8000';
 CONFIG.port 			= process.env.PORT 				|| 	'8443';
-CONFIG.oai_ip 			= process.env.OAI_IP 			|| 	'10.0.97.243';
-CONFIG.oai_port 		= process.env.OAI_PORT 			|| 	'60030';
 CONFIG.db_dialect 		= process.env.DB_DIALECT 		|| 	'mongodb';
 CONFIG.db_host 			= process.env.DB_HOST 			|| 	'localhost';
 CONFIG.db_port 			= process.env.DB_PORT 			|| 	'27017';
@@ -38,6 +37,41 @@ CONFIG.db_url 			= process.env.DB_URL 			||	'mongodb://34.199.158.57:27017';
 CONFIG.db_name 			= process.env.DB_NAME 			|| 	'Alexa';
 CONFIG.db_name_acc 		= process.env.DB_NAME_ACC 		|| 	'amazon_accounts';
 CONFIG.env 				= process.env.ENV				|| 	'dev';
+
+switch(process.env.SIP_SERVER)
+{
+	case 'SV9500':
+		if(process.env.OAI_IP_SV9500 && process.env.OAI_PORT_SV9500)
+		{
+			CONFIG.oai_ip 			= process.env.OAI_IP_SV9500 			|| 	'10.0.97.243';
+			CONFIG.oai_port 		= process.env.OAI_PORT_SV9500 			|| 	'60030';
+			CONFIG.sip_server 		= process.env.SIP_SERVER				||	'SV9500'
+		}
+		else
+		{
+			console.log(chalk.bold.red('ENV params not set'));
+			process.exit(1);
+		}
+		
+	break;
+	case 'SV9100':
+		if(process.env.OAI_IP_SV9100 && process.env.OAI_PORT_SV9100)
+		{
+			CONFIG.oai_ip 			= process.env.OAI_IP_SV9100 			|| 	'10.0.97.243';
+			CONFIG.oai_port 		= process.env.OAI_PORT_SV9100 			|| 	'60030';	
+			CONFIG.sip_server 		= process.env.SIP_SERVER				||	'SV9100'
+		}
+		else
+		{
+			console.log(chalk.bold.red('ENV params not set'));
+			process.exit(1);	
+		}
+	break;
+	default:
+		console.log(chalk.bold.red('SIP Server env param error'));
+		process.exit(1);
+	break;
+}
 //------------------------------------------------------------------------------
 // Create logger for logging with two file transports
 //------------------------------------------------------------------------------

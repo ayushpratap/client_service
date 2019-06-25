@@ -43,7 +43,11 @@ MongoClient.connect(dbUrl,{ useNewUrlParser: true }, function(err, db) {
     dblogger.debug('[%s] , DB Connection object : %o',__file,CONFIG.db);
     logger.info('[%s] , Connected to database',__file);
     logger.info('[%s] , Starting HTTPS server',__file);
+    /*server.listen(CONFIG.port,()=>{
+        logger.info('[%s] , HTTPS server listening at port : %s',__file,CONFIG.port);
+    });*/
     httpsServer.listen(CONFIG.port,()=>{
         logger.info('[%s] , HTTPS server listening at port : %s',__file,CONFIG.port);
+        //logger.info('Application evironemet variables = %o ',CONFIG);
     });
 });
