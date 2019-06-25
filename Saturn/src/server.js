@@ -4,16 +4,19 @@
                 process.env.PORT
 */
 // Require componenets
-const express 	= require('express');
-const app 		= require('./app/app');
-const CONFIG 	= require('./config/config');
-const https 	= require('https');
-const http 		= require('http');
-const fs 		= require('fs');
-const server 	= express(); // Get an instace of express
-const logger 	= CONFIG.logger;
-const dblogger  = CONFIG.dblogger;
+const express 	    = require('express');
+const app 		    = require('./app/app');
+const CONFIG 	    = require('./config/config');
+const https 	    = require('https');
+const http 		    = require('http');
+const fs 		    = require('fs');
+const SIP           = require('sip');
+const IP            = require('ip');
+const server 	    = express(); // Get an instace of express
+const logger 	    = CONFIG.logger;
+const dblogger      = CONFIG.dblogger;
 const MongoClient 	= require('mongodb').MongoClient;
+
 server.use(express.json());
 server.use(express.urlencoded({extended:true}));
 
@@ -48,6 +51,14 @@ MongoClient.connect(dbUrl,{ useNewUrlParser: true }, function(err, db) {
     });*/
     httpsServer.listen(CONFIG.port,()=>{
         logger.info('[%s] , HTTPS server listening at port : %s',__file,CONFIG.port);
+        logger.info('[%s] , [%s]',__file,IP.address());
+        SIP.start(
+            {
+            protocol:'TCP',
+            address:IP.address(),
+            port:9001
+        },function(rq){});
+        CONFIG.SIP = SIP;
         //logger.info('Application evironemet variables = %o ',CONFIG);
     });
 });

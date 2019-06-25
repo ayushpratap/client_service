@@ -22,12 +22,14 @@
     "express": "^4.16.3",
     "express-handlebars": "^3.0.0",
     "fs": "0.0.1-security",
+    "ip": "^1.1.5",
     "jsonwebtoken": "^8.3.0",
     "magic-globals": "^0.9.1",
     "mongodb": "^3.1.1",
     "morgan": "^1.9.0",
     "path": "^0.12.7",
-    "pug": "^2.0.3",
+    "pug": "^2.0.4",
+    "sip": "0.0.5",
     "winston": "^3.0.0"
   },
   "devDependencies": {
