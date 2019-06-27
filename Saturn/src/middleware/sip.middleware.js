@@ -15,11 +15,14 @@ stack.startStack = function(){
     logger.info("[%s] , stack.startStack",__file);
     let sip_port = CONFIG.sip_port;
     logger.info(sip_port);
-    sip.start({protocol:'UDP',address:IP.address(),port:sip_port});
+    sip.start({protocol:'UDP',address:IP.address(),port:sip_port},(rs)=>{
+        logger.info("[%s] , %o",__file,rs);
+    });
+    register(sip);
+}
 
+register = function(sip){
     logger.info("[%s] , stack.register",__file);
-
-    
     let domain      = CONFIG.sip_domain
     let localExnt   = CONFIG.sip_local_extn
     let transport   = CONFIG.sip_transport;
@@ -27,7 +30,7 @@ stack.startStack = function(){
     let MaxFowards  = CONFIG.max_forwards;
     let regisAddr   = CONFIG.sip_regis_addr;
     let name        = CONFIG.sip_local_name;
-
+    let sip_port    = CONFIG.sip_port;
     let registerUri = 'sip:'+regisAddr;
     let from        = {name:name,uri:'sip:'+localExnt+'@'+domain,params:{tag:cryptoRand({length:10})}};
     let to          = {name:name,uri:'sip:'+localExnt+'@'+domain};
@@ -57,12 +60,21 @@ stack.startStack = function(){
             'User-Agent':UserAgent
         }
     };
-    logger.info(REGISTER);
-    sip.send(REGISTER,()=>{
-        logger.info('Test');
+    sip.send(REGISTER,(rs)=>{
+        switch(rs.status)
+        {
+            case 200:
+                logger.info("[%s] , status = [%d]",__file,rs.status);
+
+                //  After receving 200OK now send 
+                break;
+            default:
+                logger.info("[%s] , default case , status = [%d]",__file,rs.status);
+                sip.send(REGISTER);
+                break;
+        }
     });
 }
-
 stack.makeCall = function(source,destination,callback){
     logger.info("[%s] , stack.makeCall",__file);
 }
