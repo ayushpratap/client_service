@@ -17,6 +17,7 @@
   "dependencies": {
     "app-root-path": "^2.1.0",
     "bcryptjs": "^2.4.3",
+    "crypto-random-string": "^3.0.1",
     "dotenv": "^6.0.0",
     "ejs": "^2.6.1",
     "express": "^4.16.3",
@@ -26,7 +27,7 @@
     "jsonwebtoken": "^8.3.0",
     "magic-globals": "^0.9.1",
     "mongodb": "^3.1.1",
-    "morgan": "^1.9.0",
+    "morgan": "^1.9.1",
     "path": "^0.12.7",
     "pug": "^2.0.4",
     "sip": "0.0.5",

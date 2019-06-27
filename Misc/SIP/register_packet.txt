@@ -1,0 +1,19 @@
+Request-Line: REGISTER sip:10.0.97.21 SIP/2.0
+- Method : REGISTER
+- Request-URI Host Part : 10.0.97.21
+
+Message Header
+- Via: SIP/2.0/UDP 10.0.97.4;branch=53461215asdsadf;rpot
+- Max-Forwards : 70
+- From : vaibhav <sip:1004@ntilab.prv>;tag=3156sdf8
+- To : vaibhav <sip:1004@ntilab.prv>
+- Call_ID : sd54sd4fs54f
+- CSeq : 5654685 REGISTER
+- Allow :  INVITE, ACK, CANCEL, BYE, NOTIFY, REFER, OPTIONS, UPDATE
+- Authorization : Digest uername="000000000000",realm="ntilab",nonce="d5f4sd5f465sd4fg",uri="sip:10.0.97.21",response="5454dsf54v8564",algorithm=MD5,qop=auth,cnonce="546468",nc=00000001
+- Contact : vaibhav <sip:1004@10.0.97.4:5060;transpost=udp>
+- Expires : 300
+- Privacy : none
+- User-Agent : NECSDT800_ITY-8LDX/4.3.18.14_0060b9a70901
+- X-NEC-DT-Lic : seq=1;supp="Giga, LK16, LK32";curr=""
+- Content-Length : 0

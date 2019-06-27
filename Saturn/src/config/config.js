@@ -37,6 +37,14 @@ CONFIG.db_url 			= process.env.DB_URL 			||	'mongodb://34.199.158.57:27017';
 CONFIG.db_name 			= process.env.DB_NAME 			|| 	'Alexa';
 CONFIG.db_name_acc 		= process.env.DB_NAME_ACC 		|| 	'amazon_accounts';
 CONFIG.env 				= process.env.ENV				|| 	'dev';
+CONFIG.sip_port			= process.env.SIP_PORT 			||	'9001';
+CONFIG.mac_addr			= process.env.MAC_ADDR			||	'080027687d0d';
+CONFIG.sip_domain		= process.env.SIP_DOMAIN		||	'ntilab.prv';
+CONFIG.sip_transport 	= process.env.SIP_TRANSPORT 	||	'UDP';
+CONFIG.max_forwards		= process.env.MAX_FORWARDS 		||	'70';	
+CONFIG.sip_regis_addr 	= process.env.REGIS_ADDR 		||	'10.0.97.21';
+CONFIG.sip_local_extn 	= process.env.LOCAL_EXTN 		||	'1111';
+CONFIG.sip_local_name 	= process.env.LOCAL_NAME 		||	'test';
 
 switch(process.env.SIP_SERVER)
 {

@@ -11,7 +11,9 @@ const https 	    = require('https');
 const http 		    = require('http');
 const fs 		    = require('fs');
 const SIP           = require('sip');
+const stack         = require('./middleware/sip.middleware');
 const IP            = require('ip');
+//const stack         = require('./middleware/sip.middleware');
 const server 	    = express(); // Get an instace of express
 const logger 	    = CONFIG.logger;
 const dblogger      = CONFIG.dblogger;
@@ -52,13 +54,15 @@ MongoClient.connect(dbUrl,{ useNewUrlParser: true }, function(err, db) {
     httpsServer.listen(CONFIG.port,()=>{
         logger.info('[%s] , HTTPS server listening at port : %s',__file,CONFIG.port);
         logger.info('[%s] , [%s]',__file,IP.address());
-        SIP.start(
+        /*SIP.start(
             {
             protocol:'TCP',
             address:IP.address(),
             port:9001
-        },function(rq){});
-        CONFIG.SIP = SIP;
+        },()=>{});
+        CONFIG.SIP = SIP;*/
+        stack.startStack();
+        //stack.register();
         //logger.info('Application evironemet variables = %o ',CONFIG);
     });
 });
