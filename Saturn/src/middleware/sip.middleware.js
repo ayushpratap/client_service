@@ -17,6 +17,19 @@ stack.startStack = function(){
     logger.info(sip_port);
     sip.start({protocol:'UDP',address:IP.address(),port:sip_port},(rs)=>{
         logger.info("[%s] , %o",__file,rs);
+        
+         switch(rs.method)
+        {
+            case 'NOTIFY':
+                // Send 200OK
+
+                sip.send(sip.makeResponse(rs, 200, 'Ok'));
+                logger.info('CASE : NOTIFY');
+                break;
+            default:
+                logger.info("%o",rs);
+        }
+        
     });
     register(sip);
 }
