@@ -17,6 +17,23 @@ stack.startStack = function(){
     logger.info(sip_port);
     sip.start({protocol:'UDP',address:IP.address(),port:sip_port},(rs)=>{
         logger.info("[%s] , %o",__file,rs);
+        // logger.info("[%s] , %o",__file,rs.method); 
+        switch(rs.method)
+        {
+            case 'NOTIFY':
+                // Send 200OK
+                logger.info('[%s], CASE : NOTIFY ',__file);
+                sip.send(logger.info('[%s], %o',__file,sip.makeResponse(rs,200,'OK')));
+                
+                break;
+                case 'OPTIONS':
+                logger.info('[%s], CASE : OPTIONS ',__file)
+                sip.send(logger.info('[%s], %o',__file,sip.makeResponse(rs,200,'OK')));
+                
+                break;
+            default:
+                logger.info("%o",rs.method);
+        }
     });
     register(sip);
 }
@@ -41,13 +58,15 @@ register = function(sip){
     let expires     = 3600;
     let privacy     = "none";
     let UserAgent   = "NECSDT800_ITY-8LDX/4.3.18.14_"+macAddr;
+    let via         = [{version:version,protocol:'UDP',host:IP.address(),port:sip_port,params:{branch:cryptoRand({length:16})}}];
+
 
     // Create the packet
     let REGISTER = {
         method:'REGISTER',
         uri:registerUri,
         headers:{
-            via:[],
+            via:via,
             'Max-Forwards':MaxFowards,
             from:from,
             to:to,
@@ -77,6 +96,31 @@ register = function(sip){
 }
 stack.makeCall = function(source,destination,callback){
     logger.info("[%s] , stack.makeCall",__file);
+    sip.start({protocol:'UDP',address:IP.address(),port:sip_port},(rs)=>{
+        //logger.info("[%s] , %o",__file,rs);
+        // logger.info("[%s] , %o",__file,rs.method); 
+        switch(rs.method)
+        {
+            case 'NOTIFY':
+                // Send 200OK
+                logger.info('[%s], CASE : NOTIFY ',__file);
+                sip.send(logger.info('[%s], %o',__file,sip.makeResponse(rs,200,'OK')));
+                
+                break;
+                case 'OPTIONS':
+                logger.info('[%s], CASE : OPTIONS ',__file)
+                sip.send(logger.info('[%s], %o',__file,sip.makeResponse(rs,200,'OK')));
+                
+                break;
+            default:
+                logger.info("%o",rs.method);
+        }
+    });
+    invite(sip,source,destination);
+}
+
+invite = function(sip,source,destination){
+
 }
 
 module.exports = stack;
