@@ -32,6 +32,7 @@ stack.startStack = function(){
                 break;
             default:
                 logger.info("%o",rs.method);
+                break;
         }
     });
     register(sip);
@@ -56,7 +57,8 @@ register = function(sip){
     let contact     = [{name:name,uri:'sip:'+localExnt+'@'+IP.address()+':'+sip_port+';transport='+transport}];
     let expires     = 3600;
     let privacy     = "none";
-    let UserAgent   = "NECSDT700_ITL-12G/3.0.21.19_"+macAddr;
+    //let UserAgent   = "NECSDT700_ITL-12G/3.0.21.19_"+macAddr;
+    let UserAgent   = "NECSDT800_ITY-8LDX/4.3.18.14_"+macAddr;
     let version     = "2.0";
     let via         = [{version:version,protocol:'UDP',host:IP.address(),port:sip_port,params:{branch:cryptoRand({length:16})}}];
     let content_length = 0;
@@ -98,7 +100,7 @@ register = function(sip){
     });
 }
 
-stack.makeCall = function(source,destination,callback){
+stack.referCall = function(source,destination,callback){
     logger.info("[%s] , stack.makeCall",__file);
     sip.start({protocol:'UDP',address:IP.address(),port:sip_port},(rs)=>{
         //logger.info("[%s] , %o",__file,rs);
@@ -135,7 +137,7 @@ refer = function(sip,source,destination){
     let sip_port    = CONFIG.sip_port;
     let registerUri = 'sip:'+regisAddr;
     let from        = {name:name,uri:'sip:'+localExnt+'@'+domain,params:{tag:cryptoRand({length:10})}};
-    let to          = {name:source,uri:'sip:'+source+'@'+domain};
+    let to          = {name:source,uri:'sip:'+source+'@'+domain,params:{gr:cryptoRand({length:9})}};
     let referTarget = {name:destination,uri:'sip:'+destination+'@'+domain};
     let call_id     = cryptoRand({length:14})+"@"+domain;
     let cseq        = {method:'REGISTER',seq:cryptoRand({length:9,characters: '1234567890'})};
@@ -143,7 +145,8 @@ refer = function(sip,source,destination){
     let contact     = [{name:name,uri:'sip:'+localExnt+'@'+IP.address()+':'+sip_port+';transport='+transport}];
     let expires     = 3600;
     let privacy     = "none";
-    let UserAgent   = "NECSDT700_ITL-12G/3.0.21.19_"+macAddr;
+    //let UserAgent   = "NECSDT700_ITL-12G/3.0.21.19_"+macAddr;
+    let UserAgent   = "NECSDT800_ITY-8LDX/4.3.18.14_"+macAddr;
     let version     = "2.0";
     let via         = [{version:version,protocol:'UDP',host:IP.address(),port:sip_port,params:{branch:cryptoRand({length:16})}}];
     let content_length = 0;
@@ -169,8 +172,48 @@ refer = function(sip,source,destination){
         }
     };
 
+    sip.send(REFER,(response)=>{
+        switch(response.status){
+            case 202 : 
+                logger.info('[%s], status = [%d]',__file,response.status);
+                break;
+                default :
+                logger.info('[%s], default case , status = [%d]',__file,response.status);
+                sip.send(REFER);
+                break;
+        };
+    });
 
 }
 
+
+stack.makeCall = function(source,destination,callback){
+    logger.info("[%s] , stack.makeCall",__file);
+    sip.start({protocol:'UDP',address:IP.address(),port:sip_port},(rs)=>{
+        //logger.info("[%s] , %o",__file,rs);
+        // logger.info("[%s] , %o",__file,rs.method); 
+        switch(rs.method)
+        {
+            case 'NOTIFY':
+                // Send 200OK
+                logger.info('[%s], CASE : NOTIFY ',__file);
+                sip.send(logger.info('[%s], %o',__file,sip.makeResponse(rs,200,'OK')));
+                
+                break;
+                case 'OPTIONS':
+                logger.info('[%s], CASE : OPTIONS ',__file)
+                sip.send(logger.info('[%s], %o',__file,sip.makeResponse(rs,200,'OK')));
+                
+                break;
+            default:
+                logger.info("%o",rs.method);
+        }
+    });
+    invite(sip,source,destination);
+}
+
+invite = function(sip,source,destination){
+
+}
 
 module.exports = stack;
