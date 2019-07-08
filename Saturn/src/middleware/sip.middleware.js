@@ -255,6 +255,7 @@ invite = function(sip,source,destination){
             'Privacy'       :   privacy,
             'User-Agent'    :   UserAgent,
         }
+    , content: 'v=0\r\no=source 53655765 2353687637 IN IP4 \r\ns=-\r\nc=IN IP4 domain\r\nt=0 0\r\nm=audio 6000 RTP/AVP 0\r\na=rtpmap:0 PCMU/8000'
     }
 
     sip.send(INVITE,(rs)=>{
