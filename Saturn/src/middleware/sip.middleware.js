@@ -26,7 +26,7 @@ stack.startStack = function(){
                 sip.send(logger.info('[%s], %o',__file,sip.makeResponse(rs,200,'OK')));
                 
                 break;
-                case 'OPTIONS':
+            case 'OPTIONS':
                 logger.info('[%s], CASE : OPTIONS ',__file)
                 sip.send(logger.info('[%s], %o',__file,sip.makeResponse(rs,200,'OK')));
                 break;
@@ -113,7 +113,7 @@ stack.referCall = function(source,destination,callback){
                 sip.send(logger.info('[%s], %o',__file,sip.makeResponse(rs,200,'OK')));
                 
                 break;
-                case 'OPTIONS':
+            case 'OPTIONS':
                 logger.info('[%s], CASE : OPTIONS ',__file)
                 sip.send(logger.info('[%s], %o',__file,sip.makeResponse(rs,200,'OK')));
                 
@@ -140,7 +140,7 @@ refer = function(sip,source,destination){
     let to          = {name:source,uri:'sip:'+source+'@'+domain,params:{gr:cryptoRand({length:9})}};
     let referTarget = {name:destination,uri:'sip:'+destination+'@'+domain};
     let call_id     = cryptoRand({length:14})+"@"+domain;
-    let cseq        = {method:'REGISTER',seq:cryptoRand({length:9,characters: '1234567890'})};
+    let cseq        = {method:'REFER',seq:cryptoRand({length:9,characters: '1234567890'})};
     let allow       = "INVITE, ACK, CANCEL, BYE, NOTIFY, REFER, OPTIONS, UPDATE";
     let contact     = [{name:name,uri:'sip:'+localExnt+'@'+IP.address()+':'+sip_port+';transport='+transport}];
     let expires     = 3600;
@@ -177,7 +177,7 @@ refer = function(sip,source,destination){
             case 202 : 
                 logger.info('[%s], status = [%d]',__file,response.status);
                 break;
-                default :
+            default :
                 logger.info('[%s], default case , status = [%d]',__file,response.status);
                 sip.send(REFER);
                 break;
@@ -200,7 +200,7 @@ stack.makeCall = function(source,destination,callback){
                 sip.send(logger.info('[%s], %o',__file,sip.makeResponse(rs,200,'OK')));
                 
                 break;
-                case 'OPTIONS':
+            case 'OPTIONS':
                 logger.info('[%s], CASE : OPTIONS ',__file)
                 sip.send(logger.info('[%s], %o',__file,sip.makeResponse(rs,200,'OK')));
                 
@@ -213,7 +213,64 @@ stack.makeCall = function(source,destination,callback){
 }
 
 invite = function(sip,source,destination){
+    logger.info("[%s] , stack.refer",__file);
+    let domain      = CONFIG.sip_domain;
+    let localExnt   = CONFIG.sip_local_extn;
+    let transport   = CONFIG.sip_transport;
+    let macAddr     = CONFIG.mac_addr;
+    let MaxFowards  = CONFIG.max_forwards;
+    let regisAddr   = CONFIG.sip_regis_addr;
+    let name        = CONFIG.sip_local_name;
+    let sip_port    = CONFIG.sip_port;
+    let registerUri = 'sip:'+regisAddr;
+    let from        = {name:name,uri:'sip:'+source+'@'+domain,params:{tag:cryptoRand({length:10})}};
+    let to          = {name:source,uri:'sip:'+destination+'@'+domain};
+    let call_id     = cryptoRand({length:14})+"@"+domain;
+    let cseq        = {method:'INVITE',seq:cryptoRand({length:9,characters: '1234567890'})};
+    let allow       = "INVITE, ACK, CANCEL, BYE, NOTIFY, REFER, OPTIONS, UPDATE";
+    let contact     = [{name:name,uri:'sip:'+source+'@'+IP.address()+':'+sip_port+';transport='+transport}];
+    let expires     = 3600;
+    let privacy     = "none";
+    //let UserAgent   = "NECSDT700_ITL-12G/3.0.21.19_"+macAddr;
+    let UserAgent   = "NECSDT800_ITY-8LDX/4.3.18.14_"+macAddr;
+    let version     = "2.0";
+    let via         = [{version:version,protocol:'UDP',host:IP.address(),port:sip_port,params:{branch:cryptoRand({length:16})}}];
+    let content_length = 0;
 
+    let INVITE = {
+        method  : 'INVITE',
+        uri     : to,
+        version : version,
+        headers : {
+            via             :   via,
+            from            :   from,
+            to              :   to,
+            cseq            :   cseq,
+            contact         :   contact,
+            'refer-to'      :   referTarget,
+            'call-id'       :   call_id,
+            'Max-Forwards'  :   MaxFowards,
+            'Allow'         :   allow,
+            'Expires'       :   expires,
+            'Privacy'       :   privacy,
+            'User-Agent'    :   UserAgent,
+        }
+    }
+
+    sip.send(INVITE,(rs)=>{
+        switch(rs.status)
+        {
+            case 200:
+                logger.info("[%s] , status = [%d]",__file,rs.status);
+
+                //  After receving 200OK now send 
+                break;
+            default:
+                logger.info("[%s] , default case , status = [%d]",__file,rs.status);
+                sip.send(INVITE);
+                break;
+        }
+    });
 }
 
 module.exports = stack;
