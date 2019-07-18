@@ -52,7 +52,8 @@ MongoClient.connect(dbUrl,{ useNewUrlParser: true }, function(err, db) {
         logger.info('[%s] , HTTPS server listening at port : %s',__file,CONFIG.port);
     });*/
     httpsServer.listen(CONFIG.port,()=>{
-        logger.info('[%s] , HTTPS server listening at port : %s',__file,CONFIG.port);
+        logger.info('[%s] , [%s]',__file,IP.address());
+        logger.info('[%s] , HTTP server listening at port : %s',__file,CONFIG.port);
         logger.info('[%s] , [%s]',__file,IP.address());
         /*SIP.start(
             {

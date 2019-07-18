@@ -3,7 +3,7 @@
 	Description:
  */
 //------------------------------------------------------------------------------
-require('dotenv').config();
+require('dotenv').config({path: '/home/alexa-vm/Documents/bitbucket/necti_client_service/Saturn/src/.env'});
 const appRoot 								= require('app-root-path');
 const winston 								= require('winston');
 const fs 									= require('fs');

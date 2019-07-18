@@ -33,8 +33,14 @@ router.post('/api/makeCall',function(req,res)
   reqlogger.debug('[%s] , Request object : %o',__file,req);
   var source      = req.body.source;
   var destination = req.body.destination;
+  //------------------------------------------------------------------------------
+  //------------------------------------------------------------------------------
+  //request
+  var request = req.body.request;
+  //------------------------------------------------------------------------------
+  //------------------------------------------------------------------------------
   logger.info('[%s] , Calling : callController.makeCall with source : %s , destination : %s',__file,source,destination);
-  callController.makeCall(source,destination,function(result)
+  callController.makeCall(source,destination,/*extra*/request,function(result)
   {
     if(1 ==  result)
     {

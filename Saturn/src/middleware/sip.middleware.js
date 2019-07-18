@@ -34,9 +34,12 @@ stack.startStack = function(source = null , destination = null, request = null){
                 //stack.startStack(source,destination,request);
                 break;
             case 'OPTIONS':
+<<<<<<< HEAD
                 let source = 'Renu';
                 let destination = 'Shiva';
                 let request = 'refer'
+=======
+>>>>>>> 64ff0dfda850a2e651be73ef8052e28f52ebf4f4
                 logger.info('[%s], CASE : OPTIONS ',__file)
                 //sip.send(logger.info('[%s], %o',__file,sip.makeResponse(rs,200,'OK')));
                 sip.send(sip.makeResponse(rs,200,'OK'))/*sip.js line 1370*/
@@ -170,7 +173,7 @@ register = function(sip){
                 sip.send(logger.info('[%s], %o',__file,sip.makeResponse(rs,200,'OK')));
                 
                 break;
-                case 'OPTIONS':
+            case 'OPTIONS':
                 logger.info('[%s], CASE : OPTIONS ',__file)
                 sip.send(logger.info('[%s], %o',__file,sip.makeResponse(rs,200,'OK')));
                 
@@ -197,11 +200,19 @@ refer = function(sip/*,source,destination*/){
     let name        = CONFIG.sip_local_name;
     let sip_port    = CONFIG.sip_port;
     let registerUri = 'sip:'+regisAddr;
+<<<<<<< HEAD
     let from        = {name:'kanishk',uri:'sip:kanishk@alexavm-VirtualBox',params:{tag:'1237898524'}};
     let to          = {name:source,uri:'sip:'+source+'@alexavm-VirtualBox',params:{gr:'852741963'}};
     let referTarget = {name:destination,uri:'sip:'+destination+'@alexavm-VirtualBox'};
     let call_id     = cryptoRand({length:14})+"@alexavm-VirtualBox";
     let cseq        = {method:'REGISTER',seq:cryptoRand({length:9,characters: '1234567890'})};
+=======
+    let from        = {name:name,uri:'sip:'+localExnt+'@'+domain,params:{tag:cryptoRand({length:10})}};
+    let to          = {name:source,uri:'sip:'+source+'@'+domain,params:{gr:cryptoRand({length:9})}};
+    let referTarget = {name:destination,uri:'sip:'+destination+'@'+domain};
+    let call_id     = cryptoRand({length:14})+"@"+domain;
+    let cseq        = {method:'REFER',seq:cryptoRand({length:9,characters: '1234567890'})};
+>>>>>>> 64ff0dfda850a2e651be73ef8052e28f52ebf4f4
     let allow       = "INVITE, ACK, CANCEL, BYE, NOTIFY, REFER, OPTIONS, UPDATE";
     let contact     = [{name:'kanishk',uri:'sip:kanishk@10.0.97.75:5070;transport=UDP'}];
     let expires     = 3600;
@@ -240,7 +251,7 @@ refer = function(sip/*,source,destination*/){
             case 202 : 
                 logger.info('[%s], status = [%d]',__file,response.status);
                 break;
-                default :
+            default :
                 logger.info('[%s], default case , status = [%d]',__file,response.status);
                 sip.send(REFER);
                 break;
@@ -270,7 +281,7 @@ stack.makeCall = function(source,destination,callback){
                 sip.send(logger.info('[%s], %o',__file,sip.makeResponse(rs,200,'OK')));
                 
                 break;
-                case 'OPTIONS':
+            case 'OPTIONS':
                 logger.info('[%s], CASE : OPTIONS ',__file)
                 sip.send(logger.info('[%s], %o',__file,sip.makeResponse(rs,200,'OK')));
                 
@@ -283,7 +294,11 @@ stack.makeCall = function(source,destination,callback){
 }
 
 invite = function(sip,source,destination){
+<<<<<<< HEAD
     logger.info("[%s] , stack.invite",__file);
+=======
+    logger.info("[%s] , stack.refer",__file);
+>>>>>>> 64ff0dfda850a2e651be73ef8052e28f52ebf4f4
     let domain      = CONFIG.sip_domain;
     let localExnt   = CONFIG.sip_local_extn;
     let transport   = CONFIG.sip_transport;
@@ -293,6 +308,7 @@ invite = function(sip,source,destination){
     let name        = CONFIG.sip_local_name;
     let sip_port    = CONFIG.sip_port;
     let registerUri = 'sip:'+regisAddr;
+<<<<<<< HEAD
     let from        = {name:source,uri:'sip:'+source+'@'+IP.address(),params:{tag:cryptoRand({length:10})}};
     let to          = {name:destination,uri:'sip:'+destination+'@'+domain,params:{gr:cryptoRand({length:9})}};
     //let referTarget = {name:destination,uri:'sip:'+destination+'@'+domain};
@@ -300,6 +316,14 @@ invite = function(sip,source,destination){
     let cseq        = {method:'INVITE',seq:cryptoRand({length:9,characters: '1234567890'})};
     let allow       = "INVITE, ACK, CANCEL, BYE, NOTIFY, REFER, OPTIONS, UPDATE";
     let contact     = [{name:source,uri:'sip:'+source+'@'+IP.address()+':'+sip_port+';transport='+transport}];
+=======
+    let from        = {name:name,uri:'sip:'+source+'@'+domain,params:{tag:cryptoRand({length:10})}};
+    let to          = {name:source,uri:'sip:'+destination+'@'+domain};
+    let call_id     = cryptoRand({length:14})+"@"+domain;
+    let cseq        = {method:'INVITE',seq:cryptoRand({length:9,characters: '1234567890'})};
+    let allow       = "INVITE, ACK, CANCEL, BYE, NOTIFY, REFER, OPTIONS, UPDATE";
+    let contact     = [{name:name,uri:'sip:'+source+'@'+IP.address()+':'+sip_port+';transport='+transport}];
+>>>>>>> 64ff0dfda850a2e651be73ef8052e28f52ebf4f4
     let expires     = 3600;
     let privacy     = "none";
     //let UserAgent   = "NECSDT700_ITL-12G/3.0.21.19_"+macAddr;
@@ -307,6 +331,7 @@ invite = function(sip,source,destination){
     let version     = "2.0";
     let via         = [{version:version,protocol:'UDP',host:IP.address(),port:sip_port,params:{branch:cryptoRand({length:16})}}];
     let content_length = 0;
+<<<<<<< HEAD
 
     let INVITE = { 
       method: 'INVITE'
@@ -326,6 +351,44 @@ invite = function(sip,source,destination){
        }
     , content: 'v=0\r\no=source 53655765 2353687637 IN IP4 \r\ns=-\r\nc=IN IP4 domain\r\nt=0 0\r\nm=audio 6000 RTP/AVP 0\r\na=rtpmap:0 PCMU/8000'
     }
+=======
+
+    let INVITE = {
+        method  : 'INVITE',
+        uri     : to,
+        version : version,
+        headers : {
+            via             :   via,
+            from            :   from,
+            to              :   to,
+            cseq            :   cseq,
+            contact         :   contact,
+            'refer-to'      :   referTarget,
+            'call-id'       :   call_id,
+            'Max-Forwards'  :   MaxFowards,
+            'Allow'         :   allow,
+            'Expires'       :   expires,
+            'Privacy'       :   privacy,
+            'User-Agent'    :   UserAgent,
+        }
+    , content: 'v=0\r\no=source 53655765 2353687637 IN IP4 \r\ns=-\r\nc=IN IP4 domain\r\nt=0 0\r\nm=audio 6000 RTP/AVP 0\r\na=rtpmap:0 PCMU/8000'
+    }
+
+    sip.send(INVITE,(rs)=>{
+        switch(rs.status)
+        {
+            case 200:
+                logger.info("[%s] , status = [%d]",__file,rs.status);
+
+                //  After receving 200OK now send 
+                break;
+            default:
+                logger.info("[%s] , default case , status = [%d]",__file,rs.status);
+                sip.send(INVITE);
+                break;
+        }
+    });
+>>>>>>> 64ff0dfda850a2e651be73ef8052e28f52ebf4f4
 }
 
 module.exports = stack;

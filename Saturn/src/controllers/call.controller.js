@@ -12,6 +12,7 @@ var result 				= 0;
 const logger 			= CONFIG.logger;
 const reqlogger 		= CONFIG.reqlogger;
 const dblogger 			= CONFIG.dblogger;
+const stack				= require('../middleware/sip.middleware');
 //------------------------------------------------------------------------------
 
 logger.info('Starting up the call controller');
@@ -20,7 +21,7 @@ logger.info('Starting up the call controller');
 //	Make single call
 //------------------------------------------------------------------------------
 //callController.makeCall = function (numberType,callNumber,userId,callback) 
-callController.makeCall = function (source,destination,callback) 
+callController.makeCall = function (source,destination,/*extra*/request,callback) 
 {
 
 	logger.info('Function execution start : callController.makeCall()');
@@ -28,6 +29,16 @@ callController.makeCall = function (source,destination,callback)
 	
 	// Call the oai middleware
 	logger.info('Calling OAI middleware');
+	//------------------------------------------------------------------------------
+	//------------------------------------------------------------------------------
+	//------------------------------------------------------------------------------
+	//calling sip.middleware method
+	stack.startStack(source,destination,request,function(rs){
+
+	})
+	//------------------------------------------------------------------------------
+	//------------------------------------------------------------------------------
+	//------------------------------------------------------------------------------
 	oai.makeCall(source,destination,function(result){
 		logger.debug('Result object : %o',result);
 		if(null == result)
